@@ -1,0 +1,5 @@
+First <a href='https://en.wikipedia.org/wiki/WSPR_(amateur_radio_software)'>WSPR</a> client for android that can not only transmit beacon signals using phone's audio output, but also receive and decode beacons using phone's audio input.
+
+It can use device's camera flash to trigger yout radio's transmit circuitry, GPS to automaticaly update your GRID location the app transmits, and network to send received packets to wsprnet.org.
+
+Most of permissions are not required if those features are disabled in settings (which are disabled by default).
