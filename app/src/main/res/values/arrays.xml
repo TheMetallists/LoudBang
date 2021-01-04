@@ -1,0 +1,144 @@
+<resources>
+
+    <string-array name="sets_powerarr_name">
+        <item>0 dBm (1 mW)</item>
+        <item>3 dBm (2 mW)</item>
+        <item>7 dBm (5 mW)</item>
+        <item>10 dBm (10 mW)</item>
+        <item>13 dBm (20 mW)</item>
+        <item>17 dBm (50 mW)</item>
+        <item>20 dBm (100 mW)</item>
+        <item>23 dBm (200 mW)</item>
+        <item>27 dBm (500 mW)</item>
+        <item>30 dBm (1 W)</item>
+        <item>33 dBm (2 W)</item>
+        <item>37 dBm (5 W)</item>
+        <item>40 dBm (10 W)</item>
+        <item>43 dBm (20 W)</item>
+        <item>47 dBm (50 W)</item>
+        <item>50 dBm (100 W)</item>
+        <item>53 dBm (200 W)</item>
+        <item>57 dBm (500 W)</item>
+        <item>60 dBm (1 kW)</item>
+    </string-array>
+
+    <string-array name="sets_wattages">
+        <item>1 mW</item>
+        <item>2 mW</item>
+        <item>5 mW</item>
+        <item>10 mW</item>
+        <item>20 mW</item>
+        <item>50 mW</item>
+        <item>100 mW</item>
+        <item>200 mW</item>
+        <item>500 mW</item>
+        <item>1 W</item>
+        <item>2 W</item>
+        <item>5 W</item>
+        <item>10 W</item>
+        <item>20 W</item>
+        <item>50 W</item>
+        <item>100 W</item>
+        <item>200 W</item>
+        <item>500 W</item>
+        <item>1 kW</item>
+    </string-array>
+
+    <string-array name="sets_powerarr_value">
+        <item>0</item>
+        <item>3</item>
+        <item>7</item>
+        <item>10</item>
+        <item>13</item>
+        <item>17</item>
+        <item>20</item>
+        <item>23</item>
+        <item>27</item>
+        <item>30</item>
+        <item>33</item>
+        <item>37</item>
+        <item>40</item>
+        <item>43</item>
+        <item>47</item>
+        <item>50</item>
+        <item>53</item>
+        <item>57</item>
+        <item>60</item>
+    </string-array>
+
+
+    <string-array name="sets_bandarr_name">
+        <item>@string/bandplan_b33400m</item>
+        <item>@string/bandplan_b2200m</item>
+        <item>@string/bandplan_b600m</item>
+        <item>@string/bandplan_b160m</item>
+        <item>@string/bandplan_b80m</item>
+        <item>@string/bandplan_b80m_jp</item>
+        <item>@string/bandplan_b60m</item>
+        <item>@string/bandplan_b60m_eu</item>
+        <item>@string/bandplan_b40m</item>
+        <item>@string/bandplan_b30m</item>
+        <item>@string/bandplan_b20m</item>
+        <item>@string/bandplan_b17m</item>
+        <item>@string/bandplan_b15m</item>
+        <item>@string/bandplan_b12m</item>
+        <item>@string/bandplan_b10m</item>
+        <item>@string/bandplan_b6m</item>
+        <item>@string/bandplan_b4m</item>
+        <item>@string/bandplan_b2m</item>
+        <item>@string/bandplan_b70cm</item>
+        <item>@string/bandplan_b23cm</item>
+    </string-array>
+
+    <string-array name="sets_bandarr_value">
+        <item>0.0072</item>
+        <item>0.136</item>
+        <item>0.4742</item>
+        <item>1.8366</item>
+        <item>3.5926</item>
+        <item>3.5686</item>
+        <item>5.2872</item>
+        <item>5.3647</item>
+        <item>7.0386</item>
+        <item>10.1387</item>
+        <item>14.0956</item>
+        <item>18.1046</item>
+        <item>21.0946</item>
+        <item>24.9246</item>
+        <item>28.1246</item>
+        <item>50.293</item>
+        <item>70.091</item>
+        <item>144.489</item>
+        <item>432.300</item>
+        <item>1296.500</item>
+    </string-array>
+
+    <string-array name="sets_sndoutarr_name">
+        <item>Call (Headphones)</item>
+        <item>Ring</item>
+        <item>Music</item>
+        <item>Alarm</item>
+    </string-array>
+
+    <string-array name="sets_sndoutarr_value">
+        <item>call</item>
+        <item>ring</item>
+        <item>music</item>
+        <item>alarm</item>
+    </string-array>
+
+
+    <string-array name="sets_pttctl_name">
+        <item>No (VOX)</item>
+        <item>Front camera flash</item>
+        <item>Rear camera flash</item>
+    </string-array>
+
+    <string-array name="sets_pttctl_value">
+        <item>none</item>
+        <item>fbang_2</item>
+        <item>fbang_1</item>
+    </string-array>
+
+
+</resources>

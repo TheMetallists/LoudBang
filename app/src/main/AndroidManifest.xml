@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="aq.metallists.loudbang">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission
+        android:name="android.permission.FLASHLIGHT"
+        android:description="@string/prefab_flashbang_descr"
+        android:label="@string/prefab_flashbang_name"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".AboutWindow"
+            android:label="@string/title_activity_about_window"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service
+            android:name=".LBSpotUploadService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".MessageDetailsActivity"
+            android:label="@string/title_activity_message_details"
+            android:parentActivityName=".LBMainWindow"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="aq.metallists.loudbang.LBMainWindow" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".LBMainWindow">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="aq.metallists.loudbang.LBMainWindow" />
+        </activity>
+
+        <service
+            android:name=".LBService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".LBMainWindow"
+            android:label="@string/title_activity_lbmain_window"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>

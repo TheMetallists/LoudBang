@@ -1,0 +1,233 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Loud Bang</string>
+    <string name="title_activity_lbmain_window" translatable="false">Loud Bang</string>
+    <string name="tab_text_status">Status</string>
+    <string name="tab_text_log">Log</string>
+    <string name="test_title">TITLE</string>
+    <string name="test_description">Description</string>
+    <string name="lbl_status">Status</string>
+    <string name="lbl_status_default">Standing by.</string>
+    <string name="btn_onoff_on">LAUNCH</string>
+    <string name="btn_onoff_off">TERMINATE</string>
+    <string name="lbl_audio_level">Audio level:</string>
+    <string name="lbl_band">Band:</string>
+    <string name="lbl_band_default" translatable="false">360° band</string>
+    <string name="lbl_callsign">Callsign:</string>
+    <string name="lbl_callsign_default" translatable="false">RA0???</string>
+    <string name="lbl_grid">Grid:</string>
+    <string name="lbl_grid_default" translatable="false">XX42xx</string>
+    <string name="lbl_tx">TX:</string>
+    <string name="lbl_tx_default">DISABLED, no PTT</string>
+    <string name="lbl_tx_enabled">ENABLED</string>
+    <string name="lbl_tx_disabled">DISABLED</string>
+    <string name="tbt_txptt_noptt">, no PTT</string>
+    <string name="tbt_txptt_fc">, frontflash</string>
+    <string name="tbt_txptt_rc">, backflash</string>
+    <string name="sv_error_spotload">Cannot upload spot. Check yo network.</string>
+    <string name="sv_status_quittin">Quittin\'</string>
+    <string name="sv_status_startin">Startin\'</string>
+    <string name="sv_uneven_minute_msg">Waiting for the BANG… \nUneven minute: %d</string>
+    <string name="sv_second_remaining">A second remaining…</string>
+    <string name="sv_status_recording">Recording…</string>
+    <string name="sv_status_playingbk">Playing…</string>
+    <string name="sv_status_pbkok">Playback done.</string>
+    <string name="sv_status_pbkok2">Playback done, p2 required.</string>
+    <string name="sv_error_flashbang">Cannot use camera flash as PTT. Please disable this in settings.</string>
+    <string name="sv_error_flashbang_oldjunk">Cannot use camera flash as PTT because of old (below M version) android. Please disable this in settings or buy a new phone.</string>
+    <string name="prefab_flashbang_name">Flashlight</string>
+    <string name="prefab_flashbang_descr">Allows use of a camera flashlight as PTT control. Android M and higher only.</string>
+
+    <string name="sv_status_decoding">Decoding started</string>
+    <string name="sv_decoding_ended">Decoded %d contacts.</string>
+    <string name="mnu_lbl_settings">Settings</string>
+    <string name="mnu_lbl_bands">Set band</string>
+    <string name="mnu_lbl_msgdetails">Show raw messages</string>
+    <string name="mnu_lbl_wakelock_en">Keep sccreen on: ON</string>
+    <string name="mnu_lbl_wakelock_off">Keep sccreen on: OFF</string>
+    <string name="mnu_switch_next_mode">Switch RX/TX on next cycle</string>
+    <string name="status_lbl_mode_switched">RX/TX mode switched!</string>
+    <string name="status_lbl_mode_switched_rx">TX disabled starting from next cycle.</string>
+    <string name="status_lbl_mode_switched_tx">TX enabled starting from next cycle.</string>
+
+    <string name="log_lbl_dst">Distance:</string>
+    <string name="log_lbl_dst_tst" translatable="false">1234 km</string>
+    <string name="log_lbl_pwr">Power:</string>
+    <string name="log_lbl_pwr_tst" translatable="false">123W</string>
+    <string name="log_lbl_snr">SNR:</string>
+    <string name="log_lbl_snr_tst" translatable="false">-123</string>
+    <string name="log_lbl_freq">Freq:</string>
+    <string name="log_lbl_freq_tst" translatable="false">12.34567</string>
+    <string name="log_lbl_date">Timestamp:</string>
+    <string name="log_lbl_date_tst" translatable="false">01.02.2003 14:15:16</string>
+
+    <string name="sets_urdata_group">Your station</string>
+
+    <string name="sets_callsign_title">Callsign</string>
+    <string name="sets_grid_title">Grid square</string>
+    <string name="sets_your_power">Output power</string>
+    <string name="sets_band">Band</string>
+
+    <string name="sets_location_group">Location</string>
+    <string name="sets_use_gps">Use GPS</string>
+    <string name="sets_use_gps_sum">Updates your location as you move. Requires GPS hardware in your phone/tablet/etc.</string>
+    <string name="sets_use_celltower">Use cell towers</string>
+    <string name="sets_use_celltower_summary">to determine location if GPS is not available. Requires internet.</string>
+    <string name="sets_use_6letter">Transmit 6 letter locatior</string>
+    <string name="sets_use_6letter_sum">Provides finer position, requires 2 transmission cycles.</string>
+    <string name="error_fine_loca">Cannot obitain fine location. Check permissions or disable GPS in app settings.</string>
+    <string name="error_crap_loca">Cannot obitain coarse location. Check permissions or disable CellTowers in app settings.</string>
+
+    <string name="sets_transmit_group">Transmitter</string>
+    <string name="sets_use_transmit">Enable TX</string>
+    <string name="sets_use_transmit_sum">Requires a government-issued licence and band allocation. Check laws of your country.</string>
+    <string name="sets_tx_dutycycle">Duty cycle</string>
+    <string name="sets_tx_dutycycle_sum">Chance in %s of next two-minute cycle is being the transmition instead of reception.</string>
+    <string name="sets_tx_sndout">Audio output</string>
+    <string name="sets_tx_pttctl">PTT control</string>
+
+    <string name="sets_network_group">Network</string>
+    <string name="sets_use_upload_spots">Upload spots</string>
+    <string name="sets_use_upload_spots_sum">Upload spots to WSPRnet.org</string>
+
+    <string name="sets_error_title">Settings error</string>
+    <string name="sets_error_duty"><![CDATA[
+        TX probability (in percent) should be an integer between 0 and 100. (e.g. 25).\n
+        Do not include a percent sign or a comma.\n
+        Value was reset to 25.
+    ]]></string>
+
+    <string name="sets_error_bands">Not all the bands included in the app may be availablein your country. Please check laws before transmitting.</string>
+    <string name="sets_error_gridsq"><![CDATA[
+        You should enter a 6 character QTH locator in following format: XX00xx.\n
+        If you want to transmit only a 4 character locator, just uncheck this feature in the settings below.\n
+        If you don\'t know remaining two letters just append \"ll\" AND uncheck the full grid option.\n
+        However if you using an extended callsign, you cannot use a 4 character locator. \n
+        (just use \"ll\" for privacy or enable GPS/celltower location).
+    ]]></string>
+
+    <string name="sets_error_callsign"><![CDATA[
+        Invalid callsign provided.\n
+        The WSPR does not allow all the types of callsigns.\n
+        You may either use:\n
+        XXX/XX0XXX (RA0/IT0AAA, RU/DE3A)\n
+        XX0XXX (R0TST, RA0TST, R0T)\n
+        XX0XXX/X (R0TST/P, RA0TST/M, RA0TST/3)\n
+        XX0XXX/00 (R0TST/12)\n
+        Where:\n
+        X - a letter from A to Z, a number or absence of symbol\n
+        0 - a digit (0-9).\n
+        All the questions - to K1JT.
+    ]]></string>
+
+
+    <string name="bandplan_b33400m" translatable="false">33.4KM (7.2 kHz)</string>
+    <string name="bandplan_b2200m" translatable="false">2.2KM (163 kHz)</string>
+    <string name="bandplan_b600m" translatable="false">600M (474.2 kHz)</string>
+    <string name="bandplan_b160m" translatable="false">160M (1.8366 MHz)</string>
+    <string name="bandplan_b80m">80M Old (3.5926 MHz)</string>
+    <string name="bandplan_b80m_jp">80M New (w/Japain) (3.5686 MHz)</string>
+    <string name="bandplan_b60m" translatable="false">60M (5.2872 MHz)</string>
+    <string name="bandplan_b60m_eu" translatable="false">60M EU (5.3647 MHz)</string>
+    <string name="bandplan_b40m" translatable="false">40M (7.0386 MHz)</string>
+    <string name="bandplan_b30m" translatable="false">30M (10.1387 MHz)</string>
+    <string name="bandplan_b20m" translatable="false">20M (14.0956 MHz)</string>
+    <string name="bandplan_b17m" translatable="false">17M (18.1046 MHz)</string>
+    <string name="bandplan_b15m" translatable="false">15M (21.0946 MHz)</string>
+    <string name="bandplan_b12m" translatable="false">12M (24.9246 MHz)</string>
+    <string name="bandplan_b10m" translatable="false">10M (28.1246 MHz)</string>
+    <string name="bandplan_b6m" translatable="false">6M (50.2930 MHz)</string>
+    <string name="bandplan_b4m" translatable="false">4M (70.0910 MHz)</string>
+    <string name="bandplan_b2m" translatable="false">2M (144.4890 MHz)</string>
+    <string name="bandplan_b70cm" translatable="false">70CM (432.3000 MHz)</string>
+    <string name="bandplan_b23cm" translatable="false">23CM (1296.500 MHz)</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_message_details">Raw received messages</string>
+
+    <string name="welcomdlg_title" translatable="false">Loud Bang!!!</string>
+    <string name="welcomdlg_text" tools:ignore="Typos">Wanna WSPR? You\'ve got it!\nWelcome to the first decoding-capable WSPR client for android!</string>
+    <string name="welcomdlg_button" translatable="false">OK</string>
+
+    <string name="detailmsg_title">Message Details</string>
+    <string name="detailmsg_text"><![CDATA[
+        In this window you can see all the messages that was received since last database removal or app instalation.\n
+        Some of them start with a hash sign followed by a number (e.g. #1234) - this are TYPE-3 messages (see WSPR documentation).\n
+        They do not include a callsign, only it\'s hash and may not be added to the log if previous message with a valid callsign
+        was not received.\n
+        Log tab on the other hand contains all messages which callsigns are known, and their QTH field can be updated by TYPE-3 messages,
+        which themselves are not displayed in the log tab.
+    ]]></string>
+
+    <string name="sets_error_6letters">Cannot use 4 letter locator with pre/postfix callsign.</string>
+    <string name="lbl_time">Time:</string>
+    <string name="lbl_cannot_disable">Cannot disable the flash. Please, report to base.</string>
+    <string name="lbl_log_uploaded_yes">Uploaded</string>
+    <string name="lbl_log_uploaded_no">N/U</string>
+    <string name="lbl_upload_remaining">Upload pending spots</string>
+    <string name="state_uploading_spots">Uploading spots…</string>
+    <string name="state_uploading_spots_progress">Uploading spots [%d/%d]</string>
+    <string name="error_uploading_spots">Error uploading spots. Check internet connection, try again or report a bug.</string>
+    <string name="error_spotupload_nocall">Your callsign is not set. Set at least a random SWL callsign and try again.</string>
+
+    <string name="uploadabort_title">Spot upload abort</string>
+    <string name="uploadabort_text"><![CDATA[
+    Spot upload is in progress. \n
+    Do you want to abort?\n
+    (you may choose to do so if progress is not moving in a long time.
+    If it is still not moving after a few tries, check your internet connection or
+    upload spots later at home/hotel/base/bunker/etc if you are working portable in the middle of nowhere.)
+    ]]></string>
+    <string name="uploadabort_yes">Yes</string>
+    <string name="uploadabort_no">No</string>
+    <string name="mnu_about">About</string>
+    <string name="title_activity_about_window">About</string>
+    <string name="large_text">
+        "The Loud Bang project, Fully operational WSPR client for Android. v 0.40\n"
+        "Wanna WSPR? You've got it!\n"
+        "© 2020 The Metallists. \n\n"
+
+        "WARNING: Authors of this product do not like the use of nuclear power "
+        "for any purpose apart from peaceful energy generation/medical/scientific purposes.\n"
+        "However we shall note that even peaceful nuclear energy generaton can be VERY dangerous.\n\n"
+
+        "This software is distributed without any warranty under GNU GPL v.3 license, "
+        "text of which can be obitained here: \n"
+        "https://www.gnu.org/licenses/gpl-3.0.txt\n\n"
+
+        "This software uses source code of: \n"
+        "- wsprd by K1JT (C parts only),\n"
+        "- libfftw3 by (Matteo Frigo,Steven G. Johnson, others)\n"
+        "- WSPRenc by BD1ES\n"
+        "- and possibly other projects.\n"
+        "- Icons from https://www.flaticon.com/authors/freepik\n"
+        "Separate thanks to Guenael for his repository that suggested "
+        "that I can just trow away pieces of Fortran from original wsprd "
+        "https://github.com/Guenael/rtlsdr-wsprd"
+        "\n\n"
+
+        "A word on that: This software may be less sensitive because of that\n"
+        "so, if you know both Fortran and C, please help [by] porting the code to C.\n\n"
+
+        "If you want to translate this app to your language, you need to"
+        "find a file called strings.xml in the project source code, "
+        "open it in any text editor that supports UTF-8 and modify it "
+        "while following XML markup language. If your language is weirder than "
+        "mine, you need to provide additional details on what I should do with "
+        "numerals etc. But it may take a long time to implement all this, so "
+        "it's better if you prepare a separate file that will work somehow without "
+        "modifying large portions of code.\n\n"
+        "There is NO Iphone(r)©(tm) version planned. I do not have any Apple inc. "
+        "devices to code/test/debug on, I am unfamiliar with their systems."
+        "\n\n"
+
+        "We, HAMs need more skilled coders. So, if you want to say thanks with a coin, go and "
+        "pay someone who will create and release a new cool opensource app like this one. "
+        "(I mean REALLY cool, not another logbook).\n"
+        "If you still want to donate, you have to do this in Bitcoin, "
+        "since I prefer to remain anonymity:\n"
+        "- 3LHpmYMo2Zo3RaZqTvHsT3isFJ5rvj4xWU or:\n"
+        "- bc1qy633s5me0ytyalgl3ra8k2pgc4eaqcgcl3srwc \n"
+        "\n\n"
+
+    </string>
+
+</resources>

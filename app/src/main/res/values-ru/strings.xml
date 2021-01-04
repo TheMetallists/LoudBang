@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_onoff_off">ОСТАНОВИТЬ</string>
+    <string name="btn_onoff_on">ПУСК</string>
+    <string name="lbl_audio_level">Уровень записи:</string>
+    <string name="lbl_band">Диапазон:</string>
+    <string name="lbl_callsign">Позывной:</string>
+    <string name="lbl_grid">QTH:</string>
+    <string name="lbl_status">Статус:</string>
+    <string name="lbl_status_default">Готов, простаивает.</string>
+    <string name="lbl_tx">Передача:</string>
+    <string name="lbl_tx_default">ЗАПРЕЩЕНА, без PTT</string>
+    <string name="lbl_tx_enabled">РАЗРЕШЕНА</string>
+    <string name="lbl_tx_disabled">ЗАПРЕЩЕНА</string>
+    <string name="tbt_txptt_noptt">, без PTT</string>
+    <string name="tbt_txptt_fc">, пер. всп.</string>
+    <string name="tbt_txptt_rc">, зад. всп.</string>
+    <string name="log_lbl_date">Дата:</string>
+    <string name="log_lbl_dst">Расстояние:</string>
+    <string name="log_lbl_freq">Частота:</string>
+    <string name="log_lbl_pwr">Мощность:</string>
+    <string name="log_lbl_snr">С/Ш:</string>
+    <string name="mnu_lbl_bands">Установть диапазон</string>
+    <string name="mnu_lbl_msgdetails">Показать необработанные сообщения</string>
+    <string name="mnu_lbl_wakelock_en">Держать экран включённым: ВКЛ</string>
+    <string name="mnu_lbl_wakelock_off">Держать экран включённым: ВЫКЛ</string>
+    <string name="mnu_lbl_settings">Настройки</string>
+    <string name="prefab_flashbang_descr">Разрешает использование вспышки для управления передачей (PTT). Android M и выше.</string>
+    <string name="prefab_flashbang_name">Вспышка</string>
+    <string name="sets_band">Диапазон</string>
+    <string name="sets_callsign_title">Позывной</string>
+    <string name="sets_error_bands">Не все приведённые в программе диапазоны могут быть разрешены в вашей стране. Проверьте местрое законодательство.</string>
+    <string name="sets_error_title">Ошибка в настройках.</string>
+    <string name="sets_grid_title">QTH локатор</string>
+    <string name="sets_location_group">Местоположение</string>
+    <string name="sets_network_group">Сетка</string>
+    <string name="sets_transmit_group">Передача</string>
+    <string name="sets_tx_dutycycle">Вероятность выхода на передачу.</string>
+    <string name="sets_tx_dutycycle_sum">Шанс в % того, что следующий 2х минутный цикл будет циклом передачи.</string>
+    <string name="sets_tx_pttctl">Управление передачей (PTT)</string>
+    <string name="sets_tx_sndout">Вывод аудио</string>
+    <string name="sets_urdata_group">Ваша станция</string>
+    <string name="sets_use_6letter">Передавать 6 значный QTH-локатор</string>
+    <string name="sets_use_6letter_sum">Даёт большую точность, требует 2 цикла передачи.</string>
+    <string name="sets_use_celltower">Использовать сотовые вышки</string>
+    <string name="sets_use_celltower_summary">для определения координат, если GPS не доступен.</string>
+    <string name="sets_use_gps">Использовать GPS</string>
+    <string name="sets_use_gps_sum">Для обновления вашего QTH-локатора. Требует наличия GPS в вашем утройстве.</string>
+    <string name="sets_use_transmit">Разрешить передачу</string>
+    <string name="sets_use_transmit_sum">Требует выданной в установленном законом порядке лицензии.</string>
+    <string name="sets_use_upload_spots">Выгружать принятые сообщения</string>
+    <string name="sets_use_upload_spots_sum">Выгружать сообщения в WSPRnet.org</string>
+    <string name="sets_your_power">Выходная мощность</string>
+    <string name="sv_decoding_ended">Декодировано %d контактов.</string>
+    <string name="sv_error_flashbang">Не могу использовать вспышку для PTT. Отключите эту настройку.</string>
+    <string name="sv_error_flashbang_oldjunk">Не могу использовать вспышку для PTT из-за старой версии Android (ниже M). Отключите управление PTT в настройках или смените телефон.</string>
+    <string name="sv_second_remaining">Секундочку…</string>
+    <string name="sv_status_decoding">Декодирование запущено</string>
+    <string name="sv_status_pbkok">Воспроизведение закончено.</string>
+    <string name="sv_status_pbkok2">Воспроизведение закончено (1/2).</string>
+    <string name="sv_status_playingbk">Воспроизведение…</string>
+    <string name="sv_status_quittin">Выход</string>
+    <string name="sv_status_recording">Запись…</string>
+    <string name="sv_status_startin">Запуск службы</string>
+    <string name="sv_error_spotload">Не могу выгрузить спот. Проверьте сетку.</string>
+    <string name="tab_text_log">Журнал</string>
+    <string name="tab_text_status">Состояние</string>
+    <string name="test_description">Описание</string>
+    <string name="test_title">Заголовок</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="title_activity_message_details">Оригиналы сообщений</string>
+    <string name="bandplan_b80m_jp">80M Новый (+Япония) (3.5686 MHz)</string>
+    <string name="bandplan_b80m">80M Старый (3.5926 MHz)</string>
+    <string name="detailmsg_title">Оригиналы сообщений</string>
+    <string name="error_crap_loca">Не могу получить координаты по сотовым вышкам. Предоставьте разрешение или отключите в настройках.</string>
+    <string name="error_fine_loca">Не могу получить доступ к GPS. Предоставьте разрешение или отключите GPS в настройках.</string>
+    <string name="sets_error_gridsq"><![CDATA[
+        Вы должны ввести 6 значный QTH-локатор в таком формате: XX00xx.\n
+        Если вы хотите передавать только 4х значный локатор, то просто снимите галочку ниже.\n
+        Если вы не помните - просто допишите \"ll\" И вырубите переключатель.\n
+        Если вы используете позывной с префиксом или суфиксом, то вы не можете отключить шестизначний локатор. \n
+        (Используйте \"ll\" для приватности или включите GPS/определение координат по сотовым вышкам).
+    ]]></string>
+
+    <string name="sets_error_callsign"><![CDATA[
+        Указан недопустимый позывной.\n
+        WSPR не позволяет использовать некоторые типы позывных.\n
+        Вы можете использовать:\n
+        XXX/XX0XXX (RA0/IT0AAA, RU/DE3A)\n
+        XX0XXX (R0TST, RA0TST, R0T)\n
+        XX0XXX/X (R0TST/P, RA0TST/M, RA0TST/3)\n
+        XX0XXX/00 (R0TST/12)\n
+        Где:\n
+        X - буква от A до Z, цифра или отсутствие знака\n
+        0 - цифра (0-9).\n
+        Все вопросы - к K1JT.
+    ]]></string>
+    <string name="sets_error_duty"><![CDATA[
+        Вероятность передачи (в процентах) должна быть целым числом (от 0 до 100) (напр. 25).\n
+        НЕ ставьте знак процента или десятичную точку\n
+        Значение было сброшено на 25.
+    ]]></string>
+
+    <string name="sv_uneven_minute_msg">Ждём пуска… \nНечётная минута: %d</string>
+
+    <string name="detailmsg_text"><![CDATA[
+        В этом окне вы можете видеть все оригиналы сообщений с момента очистки базы или установки приложения.\n
+        Некоторые из этих сообщений начинаются с решётки с цифрами (напр. #1234) - это сообщения типа 3 (см. документацию WSPR).\n
+        Они не сожержат позывной - только его контрольную сумму и не могут быть декодированы, если ранее не было получено сообщение с позывным имеющим такой хэш.\n
+        Вкладка журнала содержит сообщения, чей позывной известен, их QTH локатор может быть обновлён при помощи сообщений 3-го типа, которые в журнале не отображаются.
+    ]]></string>
+
+    <string name="welcomdlg_text">Wanna WSPR? You\'ve got it!\nДобро пожаловать в первый WSPR-клиент с декодером!</string>
+    <string name="sets_error_6letters">Невозможно использовать 4-буквенный QTH локатор с префиксом/суффиксом в позывном.</string>
+    <string name="lbl_time">Time:</string>
+    <string name="mnu_switch_next_mode" translatable="false">Смена ПРД/ПРМ на след. цикле</string>
+    <string name="status_lbl_mode_switched">Режим передачи переключён.</string>
+    <string name="status_lbl_mode_switched_rx">Передача запрещена со следующего цикла.</string>
+    <string name="status_lbl_mode_switched_tx">Передача разрешена со следующего цикла.</string>
+    <string name="lbl_cannot_disable">Не могу отрубить вспышку. Пожалуйста, доложите на базу.</string>
+    <string name="lbl_log_uploaded_yes">Выгружено</string>
+    <string name="lbl_log_uploaded_no">Н/В</string>
+    <string name="lbl_upload_remaining">Выгрузить невыгруженные споты</string>
+    <string name="state_uploading_spots">Выгружаю споты…</string>
+    <string name="error_uploading_spots">Ошибка выгрузки спотов. Проверьте подключение, попробуйте снова или отправьте багрепорт.</string>
+    <string name="error_spotupload_nocall">Не задан ваш позывной. Введите хотя бы уникальный позывной наблюдателя и попробуйте снова.</string>
+    <string name="state_uploading_spots_progress">Выгружаю споты [%d/%d]</string>
+    <string name="uploadabort_yes">Да</string>
+    <string name="uploadabort_no">Нет</string>
+    <string name="uploadabort_title">Отмена выгрузки спотов</string>
+    <string name="uploadabort_text"><![CDATA[
+    Выгрузка спотов уже идёт.\n
+    Вы хотите её отменить?\n
+    (Если выгрузка идёт слишком долго, её можно перезапустить.
+    Если после нескольких перезапусков она по прежнему не двигается, проверьте подключение к интернету
+    или попробуйте выгрузить споты из дома/гостиницы/базы/бункера или другого места с более устойчивым
+    подключением, если вы сейчас в полевых условиях.)
+    ]]></string>
+    <string name="mnu_about">О программе</string>
+    <string name="large_text">
+        "The Loud Bang, Полнофункциональный WSPR клиент для Android. v 0.40\n"
+        "Хотите WSPR? Вы его получите!\n"
+        "© 2020 The Metallists. \n\n"
+
+        "ВНИМАНИЕ! Авторы данной программы не одобряют использование атомной "
+        "энергии в любых целях, кроме мирных (энергогенерация/медицина/наука).\n"
+        "При этом стоит отметить, что даже мирный атом может быть ОЧЕНЬ опасным.\n\n"
+
+        "Эта программа распространяется без каких-либо гарантий под лицензией GNU GPL v.3, "
+        "полный текст которой можно найти здесь: \n"
+        "https://www.gnu.org/licenses/gpl-3.0.txt\n\n"
+
+        "Эта программа использует части исходного кода отсюда: \n"
+        "- wsprd от K1JT (только части на СИ),\n"
+        "- libfftw3 от (Matteo Frigo,Steven G. Johnson, и других)\n"
+        "- WSPRenc от BD1ES\n"
+        "- и, возможно, из других мест.\n"
+        "- Иконки отсюда https://www.flaticon.com/authors/freepik\n"
+        "Отдельное спасибо Guenael за его репозиторий, откуда я узнал, "
+        "что куски на Фортране из оригинального wsprd можно просто выкинуть"
+        "https://github.com/Guenael/rtlsdr-wsprd"
+        "\n\n"
+
+        "Кстати, из-за этого программа мржет быть менее чувствительной по приёму.\n"
+        "Так что если вы знаете фортран, то могли бы помочь, переведя этот код на си.\n\n"
+
+        "Если вы хотите перевести эту программу на свой язык, то вам надо:"
+        "найти файл strings.xml в исходном коде проекта, "
+        "открыть его в любом текстовом редакторе с поддержкой UTF-8 и "
+        "отредактировать, следуя стандарту  XML. Если ваш язык страньше, чем мой, "
+        "то вам необходимо предоставить дополнительную информацию о том, что делать "
+        "с числительными и другими вещами. И переделка под такие особенности может занять "
+        "много времени, так что рекомендую подготовить второй файл, который будет кое-как "
+        "работать без переписывания половины программы.\n\n"
+        "Версия для Iphone(r)©(tm) НЕ планируется. У меня нет продукции Apple inc. "
+        "чтобы кодить/тестить/отлаживать код под них. Я не знаком с их программированием."
+        "\n\n"
+
+        "Нам, радиолюбителям нужно больше талантливых программеров, так что если хотите поблагодарить монеткой, "
+        "найдите кого-то, кто напишет настолько же крутое бесплатное приложение с открытым кодом и заплатите ему. "
+        "(я имею ввиду РЕАЛЬНО крутое, НЕ ещё один аппаратный журнал).\n"
+        "Если вы всё ещё хотите поблагодарить меня, вам приётся использовать Bitcoin, "
+        "поскольку я хочу сохранить приватность:\n"
+        "- 3LHpmYMo2Zo3RaZqTvHsT3isFJ5rvj4xWU или:\n"
+        "- bc1qy633s5me0ytyalgl3ra8k2pgc4eaqcgcl3srwc \n"
+        "\n\n"
+
+    </string>
+</resources>
