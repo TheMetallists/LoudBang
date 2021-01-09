@@ -14,10 +14,10 @@
 
         <TextView
             android:id="@+id/lt_message"
-            android:layout_width="437dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="447dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -54,8 +54,8 @@
             android:id="@+id/log_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:text="@string/log_lbl_pwr_tst"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/lt_lbl_distance" />

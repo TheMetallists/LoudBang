@@ -1,0 +1,2 @@
+First public release.
+Can decode and encode (receive and transmit) WSPR beacon signals.

@@ -101,12 +101,12 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 }
                 break;
             case "gridsq":
-                String grid = sharedPreferences.getString("gridsq","LO16xh");
+                String grid = sharedPreferences.getString("gridsq","LO05io");
 
                 Pattern gpatrn = Pattern.compile("^[A-Z]{2}[0-9]{2}[a-z]{2}$");
 
                 if(!gpatrn.matcher(grid).matches()){
-                    sharedPreferences.edit().putString("gridsq", "LO16xh").apply();
+                    sharedPreferences.edit().putString("gridsq", "LO05io").apply();
                     showFuckupDialog(R.string.sets_error_gridsq);
                 }
 

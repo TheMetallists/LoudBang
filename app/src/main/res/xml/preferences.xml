@@ -11,7 +11,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            android:defaultValue="LO16xh"
+            android:defaultValue="LO05io"
             android:key="gridsq"
             android:title="@string/sets_grid_title"
             app:useSimpleSummaryProvider="true" />

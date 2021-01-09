@@ -5,12 +5,12 @@
 
 struct snode {
     uint64_t encstate; // Encoder state
-    int gamma;		         // Cumulative metric to this node
+    int gamma;                 // Cumulative metric to this node
     unsigned int depth;               // depth of this node
     unsigned int jpointer;
 };
 
-struct snode *stack;
+extern struct snode *stack;
 
 int jelinek(unsigned int *metric,
             unsigned int *cycles,

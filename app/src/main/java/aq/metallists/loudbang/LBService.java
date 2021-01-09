@@ -88,7 +88,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
         Intent ni = new Intent(this, LBMainWindow.class);
         PendingIntent pi = PendingIntent.getActivity(this, 0, ni, 0);
         int icon = R.drawable.ic_bomb_colorful;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             icon = R.drawable.ic_bomb;
         }
         Notification nt = new NotificationCompat.Builder(this, NSC_ID)
@@ -120,8 +120,8 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
             }
         }
 
-        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"LoudBang::BangBang");
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LoudBang::BangBang");
 
         t = new Thread(this);
         this.quitter = false;
@@ -178,8 +178,8 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
         } catch (Exception x) {
             x.printStackTrace();
         }
-        
-        try{
+
+        try {
             switch (this.sp.getString("ptt_ctl", "none")) {
                 case "fbang_1":
                     this.setFlashbangMode(0, false);
@@ -189,13 +189,13 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                     break;
                 default:
             }
-        }catch(Exception x){
-            Toast.makeText(getApplicationContext(),getString(R.string.lbl_cannot_disable).concat("\n\n").concat(x.getMessage()),Toast.LENGTH_LONG).show();
+        } catch (Exception x) {
+            Toast.makeText(getApplicationContext(), getString(R.string.lbl_cannot_disable).concat("\n\n").concat(x.getMessage()), Toast.LENGTH_LONG).show();
         }
-        try{
-            if(wake != null)
+        try {
+            if (wake != null)
                 wake.release();
-        }catch (Exception x){
+        } catch (Exception x) {
             x.printStackTrace();
         }
     }
@@ -212,10 +212,10 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
         if (setStatusWithNotification) {
             int icon = R.drawable.ic_bomb_colorful;
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 icon = R.drawable.ic_bomb;
             }
-            
+
             Intent ni = new Intent(this, LBMainWindow.class);
             PendingIntent pi = PendingIntent.getActivity(this, 0, ni, 0);
             Notification nt = new NotificationCompat.Builder(this, NSC_ID)
@@ -277,11 +277,11 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 setsVersion = this.settings_version;
                 doTx = this.sp.getBoolean("use_tx", false);
 
-                boolean doSwitchMode = this.sp.getBoolean("switch_mode_next",false);
-                if(doSwitchMode){
+                boolean doSwitchMode = this.sp.getBoolean("switch_mode_next", false);
+                if (doSwitchMode) {
                     this.sp.edit()
-                            .putBoolean("use_tx",!doTx)
-                            .putBoolean("switch_mode_next",false)
+                            .putBoolean("use_tx", !doTx)
+                            .putBoolean("switch_mode_next", false)
                             .apply();
                     doTx = !doTx;
                     this.setStatus(getString(R.string.status_lbl_mode_switched));
@@ -306,7 +306,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                             use_txsound2 = true;
                             next_is_txsound2 = false;
 
-                            String locator = this.sp.getString("gridsq", "LO16xh");
+                            String locator = this.sp.getString("gridsq", "LO05io");
                             int power = Integer.parseInt(this.sp.getString("outpower", "0"));
 
                             txsound = CJarInterface.WSPREncodeToPCM(callsign, locator.substring(0, 4), power, 0, lsb_mode);
@@ -317,7 +317,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                             next_is_txsound2 = false;
                             txsound2 = new byte[]{};
 
-                            String locator = this.sp.getString("gridsq", "LO16xh");
+                            String locator = this.sp.getString("gridsq", "LO05io");
                             int power = Integer.parseInt(this.sp.getString("outpower", "0"));
 
 
@@ -327,7 +327,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                         use_txsound2 = true;
                         next_is_txsound2 = false;
 
-                        String locator = this.sp.getString("gridsq", "LO16xh");
+                        String locator = this.sp.getString("gridsq", "LO05io");
                         int power = Integer.parseInt(this.sp.getString("outpower", "0"));
 
                         txsound = CJarInterface.WSPREncodeToPCM(callsign, "", power, 0, lsb_mode);
@@ -610,7 +610,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        decodersRun(record,recordTimestamp);
+                        decodersRun(record, recordTimestamp);
                     }
                 }).start();
             }
@@ -618,9 +618,9 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
         }
 
-        if(wake != null && wake.isHeld())
+        if (wake != null && wake.isHeld())
             wake.release();
-        
+
         stopSelf();
 
 
@@ -639,7 +639,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
         }
     }
 
-    private void decodersRun(byte[] record,Date recordTimestamp) {
+    private void decodersRun(byte[] record, Date recordTimestamp) {
         this.setStatus(getString(R.string.sv_status_decoding));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -689,10 +689,10 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 } catch (Exception x) {
                     cv2.put("power", -1);
                 }
-                cv2.put("mygrid", sp.getString("gridsq", "LO16"));
+                cv2.put("mygrid", sp.getString("gridsq", "LO05io"));
                 long cID = dh.getWritableDatabase().insert("contacts", null, cv2);
 
-                sender.append(cID,parst[0], parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                sender.append(cID, parst[0], parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
             } else if (pt2.matcher(wm.getMSG()).matches()) {
                 Log.e("MSGPARSE", "Got lvl2 message: ".concat(wm.getMSG()));
@@ -713,10 +713,10 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 } catch (Exception x) {
                     cv2.put("power", -1);
                 }
-                cv2.put("mygrid", sp.getString("gridsq", "LO16"));
+                cv2.put("mygrid", sp.getString("gridsq", "LO05io"));
                 long cID = dh.getWritableDatabase().insert("contacts", null, cv2);
 
-                sender.append(cID,parst[0], "", parst[1], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                sender.append(cID, parst[0], "", parst[1], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
             } else if (pt3.matcher(wm.getMSG()).matches()) {
                 Log.e("MSGPARSE", "Got lvl3 message: ".concat(wm.getMSG()));
                 // level 3
@@ -752,7 +752,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
                 if (c.moveToFirst())
                     do {
-                        sender.append(c.getLong(c.getColumnIndex("id")),"<".concat(c.getString(c.getColumnIndex("call"))).concat(">"), parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                        sender.append(c.getLong(c.getColumnIndex("id")), "<".concat(c.getString(c.getColumnIndex("call"))).concat(">"), parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
                         if (c.getString(c.getColumnIndex("grid")).length() < parst[1].length()) {
                             toUpdate.add(c.getLong(c.getColumnIndex("id")));
@@ -782,7 +782,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
 
             if (this.sp.getBoolean("use_network", false)) {
-                String rxgrid = this.sp.getString("gridsq", "LO16xh");
+                String rxgrid = this.sp.getString("gridsq", "LO05io");
                 if (!this.sp.getBoolean("use_6letter", true)) {
                     rxgrid = rxgrid.substring(0, 4);
                 }
@@ -790,7 +790,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 String callsign = this.sp.getString("callsign", "RT3ST");
                 String band = this.sp.getString("band", Double.toString(10.1387));
 
-                sender.send(rxgrid,callsign,band);
+                sender.send(rxgrid, callsign, band);
             }
 
             Intent itt = new Intent("eme.eva.loudbang.message");
@@ -808,8 +808,6 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
     }
 
 
-
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         this.settings_version++;
@@ -818,7 +816,7 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
     private void saveLocation(double lat, double lon) {
         try {
             String newLoca = CJarInterface.WSPRLatLonToGSQ(lat, lon);
-            if (!sp.getString("gridsq", "LO16xh").equals(newLoca)) {
+            if (!sp.getString("gridsq", "LO05io").equals(newLoca)) {
                 sp.edit().putString("gridsq", newLoca).apply();
             }
         } catch (Exception x) {

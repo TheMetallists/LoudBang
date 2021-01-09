@@ -113,6 +113,7 @@
         <item>1296.500</item>
     </string-array>
 
+
     <string-array name="sets_sndoutarr_name">
         <item>Call (Headphones)</item>
         <item>Ring</item>
@@ -138,6 +139,79 @@
         <item>none</item>
         <item>fbang_2</item>
         <item>fbang_1</item>
+    </string-array>
+
+
+    <!-- FILTER INPUT VALUES -->
+
+    <string-array name="filter_bandarr_name">
+        <item>@string/bandplan_any</item>
+        <item>@string/bandplan_b33400m</item>
+        <item>@string/bandplan_b2200m</item>
+        <item>@string/bandplan_b600m</item>
+        <item>@string/bandplan_b160m</item>
+        <item>@string/bandplan_b80m</item>
+        <item>@string/bandplan_b80m_jp</item>
+        <item>@string/bandplan_b60m</item>
+        <item>@string/bandplan_b60m_eu</item>
+        <item>@string/bandplan_b40m</item>
+        <item>@string/bandplan_b30m</item>
+        <item>@string/bandplan_b20m</item>
+        <item>@string/bandplan_b17m</item>
+        <item>@string/bandplan_b15m</item>
+        <item>@string/bandplan_b12m</item>
+        <item>@string/bandplan_b10m</item>
+        <item>@string/bandplan_b6m</item>
+        <item>@string/bandplan_b4m</item>
+        <item>@string/bandplan_b2m</item>
+        <item>@string/bandplan_b70cm</item>
+        <item>@string/bandplan_b23cm</item>
+    </string-array>
+    <string-array name="filter_bandarr_value">
+        <item>0</item>
+        <item>0.0072</item>
+        <item>0.136</item>
+        <item>0.4742</item>
+        <item>1.8366</item>
+        <item>3.5926</item>
+        <item>3.5686</item>
+        <item>5.2872</item>
+        <item>5.3647</item>
+        <item>7.0386</item>
+        <item>10.1387</item>
+        <item>14.0956</item>
+        <item>18.1046</item>
+        <item>21.0946</item>
+        <item>24.9246</item>
+        <item>28.1246</item>
+        <item>50.293</item>
+        <item>70.091</item>
+        <item>144.489</item>
+        <item>432.300</item>
+        <item>1296.500</item>
+    </string-array>
+
+    <string-array name="filter_datearr_name">
+        <item>@string/filter_date_all</item>
+        <item>@string/filter_date_hr</item>
+        <item>@string/filter_date_6hr</item>
+        <item>@string/filter_date_12hr</item>
+        <item>@string/filter_date_1day</item>
+        <item>@string/filter_date_2day</item>
+        <item>@string/filter_date_1week</item>
+        <item>@string/filter_date_1month</item>
+        <item>@string/filter_date_1year</item>
+    </string-array>
+    <string-array name="filter_datearr_value">
+        <item>0</item>
+        <item>3600</item>
+        <item>21600</item>
+        <item>43200</item>
+        <item>86400</item>
+        <item>172800</item>
+        <item>604800</item>
+        <item>2678400</item>
+        <item>31536000</item>
     </string-array>
 
 

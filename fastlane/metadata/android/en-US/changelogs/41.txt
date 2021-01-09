@@ -1,0 +1,5 @@
+Added new features:
+1) error reporting library
+2) database export (IMPORT IS NOT IMPLEMENTED FOR NOW)
+3) filter in the spots tab (band and time filters)
+4) database delete option if app freezes because of large db.

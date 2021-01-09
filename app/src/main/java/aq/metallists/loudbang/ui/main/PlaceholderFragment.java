@@ -211,7 +211,7 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
         callsign.setText(this.sp.getString("callsign", "R0TST"));
 
         TextView grid = root.findViewById(R.id.lbl_grid);
-        grid.setText(this.sp.getString("gridsq", "LO16xh"));
+        grid.setText(this.sp.getString("gridsq", "LO05io"));
 
         TextView txstate = root.findViewById(R.id.lbl_txstate);
         String rxtx_state = "";
@@ -254,7 +254,7 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
                         today.monthDay, today.month, today.year, today.hour, today.minute, today.second);
 
                 Activity thisAct = getActivity();
-                if(thisAct == null){
+                if (thisAct == null) {
                     tmr.cancel();
                     tmr.purge();
                     return;
@@ -301,7 +301,15 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
     private SharedPreferences sp;
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) this.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        Context ctx = this.getActivity();
+        if (ctx == null) {
+            return false;
+        }
+
+        ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        if (manager == null)
+            return false;
+
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
@@ -327,7 +335,7 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
                 case "gridsq":
                     TextView grid = this.getView().findViewById(R.id.lbl_grid);
                     if (grid != null)
-                        grid.setText(this.sp.getString("gridsq", "LO16xh"));
+                        grid.setText(this.sp.getString("gridsq", "LO05io"));
                     break;
                 case "use_tx":
                 case "tx_probability":

@@ -6,13 +6,17 @@ android {
     defaultConfig {
         applicationId "aq.metallists.loudbang"
         minSdkVersion 14
-        targetSdkVersion 29
-        versionCode 40
-        versionName "0.40"
+        targetSdkVersion 30
+        versionCode 41
+        versionName "0.41"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -25,6 +29,7 @@ android {
             path file('CMakeLists.txt')
         }
     }
+    ndkVersion '22.0.7026061'
 }
 
 dependencies {
@@ -37,4 +42,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    def acraVersion = '5.7.0'
+    implementation "ch.acra:acra-mail:$acraVersion"
+    implementation "ch.acra:acra-dialog:$acraVersion"
+
 }

@@ -22,8 +22,7 @@
     <string name="log_lbl_snr">С/Ш:</string>
     <string name="mnu_lbl_bands">Установть диапазон</string>
     <string name="mnu_lbl_msgdetails">Показать необработанные сообщения</string>
-    <string name="mnu_lbl_wakelock_en">Держать экран включённым: ВКЛ</string>
-    <string name="mnu_lbl_wakelock_off">Держать экран включённым: ВЫКЛ</string>
+    <string name="mnu_lbl_wakelock">Держать экран включённым</string>
     <string name="mnu_lbl_settings">Настройки</string>
     <string name="prefab_flashbang_descr">Разрешает использование вспышки для управления передачей (PTT). Android M и выше.</string>
     <string name="prefab_flashbang_name">Вспышка</string>
@@ -69,7 +68,7 @@
     <string name="test_title">Заголовок</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_message_details">Оригиналы сообщений</string>
-    <string name="bandplan_b80m_jp">80M Новый (+Япония) (3.5686 MHz)</string>
+    <string name="bandplan_b80m_jp">80M Новый (3.5686 MHz)</string>
     <string name="bandplan_b80m">80M Старый (3.5926 MHz)</string>
     <string name="detailmsg_title">Оригиналы сообщений</string>
     <string name="error_crap_loca">Не могу получить координаты по сотовым вышкам. Предоставьте разрешение или отключите в настройках.</string>
@@ -138,13 +137,9 @@
     ]]></string>
     <string name="mnu_about">О программе</string>
     <string name="large_text">
-        "The Loud Bang, Полнофункциональный WSPR клиент для Android. v 0.40\n"
+        "The Loud Bang, Полнофункциональный WSPR клиент для Android. v 0.41\n"
         "Хотите WSPR? Вы его получите!\n"
-        "© 2020 The Metallists. \n\n"
-
-        "ВНИМАНИЕ! Авторы данной программы не одобряют использование атомной "
-        "энергии в любых целях, кроме мирных (энергогенерация/медицина/наука).\n"
-        "При этом стоит отметить, что даже мирный атом может быть ОЧЕНЬ опасным.\n\n"
+        "© 2020 Nuclear Awareness Team. \n\n"
 
         "Эта программа распространяется без каких-либо гарантий под лицензией GNU GPL v.3, "
         "полный текст которой можно найти здесь: \n"
@@ -185,5 +180,38 @@
         "- bc1qy633s5me0ytyalgl3ra8k2pgc4eaqcgcl3srwc \n"
         "\n\n"
 
+    </string>
+    <string name="acra_sendmail_required">Приложение LoudBang завершилось с ошибкой. Вы можете нажать ОК, чтобы отправить нам отчёт об ошибке на эл. почту (требуется почтовый клиент) или отмену, чтобы ничего не отправлять. Но тогда мы ничего не сможем починить.</string>
+    <string name="spot_upload_aborted">Вы отменили выгрузку спотов</string>
+    <string name="mnu_local_database">Локальная БД</string>
+    <string name="mnu_local_database_export">Экспорт в XML</string>
+    <string name="error_exportfile_exists">ОШИБКА: файл экспорта уже существует. Удалить его вручную, если он не содержит ничего важного и попробуйте снова.</string>
+    <string name="error_exporting">Ошибка экспорта базы!</string>
+    <string name="localdb_export_successfull">Экспорт БД успешно завершён.</string>
+    <string name="bandplan_any">ЛЮБОЙ</string>
+    <string name="filter_date_all">За всё время</string>
+    <string name="filter_date_hr">Последний час</string>
+    <string name="filter_date_6hr">Последние 6 часов</string>
+    <string name="filter_date_12hr">Последние 12 часов</string>
+    <string name="filter_date_1day">Последние сутки</string>
+    <string name="filter_date_2day">Последние 2 дня</string>
+    <string name="filter_date_1week">Последнюю неделю</string>
+    <string name="filter_date_1month">Последний месяц</string>
+    <string name="filter_date_1year">Последний год</string>
+    <string name="bandplan_filter">Диап.:</string>
+    <string name="filter_date">Дата:</string>
+    <string name="mnu_local_database_wipe">Очистить БД</string>
+    <string name="error_wiping">Ошибка очистки БД</string>
+    <string name="localdb_wipe_title">Вы ТОЧНО уверены?</string>
+    <string name="localdb_wipe_btn_yes">ага</string>
+    <string name="localdb_wipe_btn_no">ДА НУ НАФИГ!</string>
+    <string name="localdb_wipe_good_choice">Правильный выбор.</string>
+    <string name="localdb_wipe_there_is_no_cd">Обратного отсчёта не будет.</string>
+    <string name="localdb_wipe_done">Ваша база данных уничтожена. Как и ваш трансивер.</string>
+    <string name="localdb_wipe_text">
+        Тут можно удалить все декодированные контакты из базы, сохранив
+        настройки. Это действие нельзя отменить, если вы не сделали бэкап.
+        (ВНИМАНИЕ: импорт БД на данный момент не работает, данные можно только экспортировать)\n
+        Также не удалятся выгруженные сообщения с сайта WSPRnet.
     </string>
 </resources>

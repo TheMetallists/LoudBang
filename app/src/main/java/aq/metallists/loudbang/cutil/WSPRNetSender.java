@@ -89,13 +89,13 @@ public class WSPRNetSender {
                     .appendQueryParameter("tcall", call)
                     .appendQueryParameter("tgrid", grid)
                     .appendQueryParameter("dbm", power)
-                    .appendQueryParameter("version", "libQuietScream 0.40")
+                    .appendQueryParameter("version", "libQuietScream 0.0.4")
                     .appendQueryParameter("mode", "2")
                     .build().toString());
     
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
             huc.setRequestMethod("GET");
-            huc.setRequestProperty("User-Agent", "libQuietScream 0.40");
+            huc.setRequestProperty("User-Agent", "libQuietScream 0.0.4");
             huc.connect();
     
             InputStream is = huc.getInputStream();
