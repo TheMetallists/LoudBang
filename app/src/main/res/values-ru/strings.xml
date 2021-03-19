@@ -42,7 +42,7 @@
     <string name="sets_use_6letter">Передавать 6 значный QTH-локатор</string>
     <string name="sets_use_6letter_sum">Даёт большую точность, требует 2 цикла передачи.</string>
     <string name="sets_use_celltower">Использовать сотовые вышки</string>
-    <string name="sets_use_celltower_summary">для определения координат, если GPS не доступен.</string>
+    <string name="sets_use_celltower_summary">Для определения координат, если GPS не доступен.</string>
     <string name="sets_use_gps">Использовать GPS</string>
     <string name="sets_use_gps_sum">Для обновления вашего QTH-локатора. Требует наличия GPS в вашем устройстве.</string>
     <string name="sets_use_transmit">Разрешить передачу</string>
