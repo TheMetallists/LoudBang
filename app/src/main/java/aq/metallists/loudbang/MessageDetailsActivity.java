@@ -8,9 +8,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +18,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
-import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.DBHelper;
 
 public class MessageDetailsActivity extends AppCompatActivity {
@@ -43,7 +37,9 @@ public class MessageDetailsActivity extends AppCompatActivity {
 
         ListView lv = findViewById(R.id.mdview);
         this.db = new DBHelper(this.getApplicationContext());
-        this.c = db.getReadableDatabase().query("messages", new String[]{"*", "id AS _id"}, null, null, null, null, null);
+        this.c = db.getReadableDatabase().query("messages",
+                new String[]{"*", "id AS _id"}, null,
+                null, null, null, null);
         this.startManagingCursor(this.c);
 
         String[] from = new String[]{"message", "freq"};
@@ -77,7 +73,8 @@ public class MessageDetailsActivity extends AppCompatActivity {
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(bs, new IntentFilter("eme.eva.loudbang.message"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bs,
+                new IntentFilter("eme.eva.loudbang.message"));
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if (!sp.getBoolean("msgdetails_dialog_shown", false)) {
@@ -89,13 +86,11 @@ public class MessageDetailsActivity extends AppCompatActivity {
             ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
                 }
             });
 
             ab.create().show();
         }
-
     }
 
     public void onDestroy() {
@@ -103,5 +98,4 @@ public class MessageDetailsActivity extends AppCompatActivity {
         this.c.close();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bs);
     }
-
 }

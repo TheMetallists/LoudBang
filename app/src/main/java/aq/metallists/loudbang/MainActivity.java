@@ -1,9 +1,9 @@
 package aq.metallists.loudbang;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.WSPRMessage;
@@ -27,6 +27,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         tw.setText(out);
-
     }
 }

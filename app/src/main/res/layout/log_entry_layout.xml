@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="64dp"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:gravity="center_vertical"
-    >
+    android:minHeight="64dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             android:text="@string/test_title"
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/summaryx"
@@ -39,8 +38,8 @@
             android:maxLines="2"
             android:text="@string/test_description"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:layout_constraintTop_toBottomOf="@id/titlex"
-            app:layout_constraintLeft_toLeftOf="@id/titlex"/>
+            app:layout_constraintLeft_toLeftOf="@id/titlex"
+            app:layout_constraintTop_toBottomOf="@id/titlex" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

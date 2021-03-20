@@ -11,39 +11,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
-import android.graphics.BitmapFactory;
 import android.hardware.camera2.CameraManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.app.Service;
-import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
+import android.media.AudioRecord;
 import android.media.AudioTrack;
+import android.media.MediaRecorder;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
+
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.sql.PreparedStatement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,32 +43,37 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.PreferenceManager;
-
 import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.DBHelper;
 import aq.metallists.loudbang.cutil.WSPRMessage;
 import aq.metallists.loudbang.cutil.WSPRNetSender;
 
-public class LBService extends Service implements Runnable, SharedPreferences.OnSharedPreferenceChangeListener, LocationListener {
+public class LBService extends Service implements Runnable,
+        SharedPreferences.OnSharedPreferenceChangeListener, LocationListener {
+    public static final String NSC_ID = "NotAServiceChannel";
+    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+    private static final int SAMPLE_RATE = 12000; // Hz
+    private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+    private static final int CHANNEL_MASK = AudioFormat.CHANNEL_IN_MONO;
+    private static final int BUFFER_SIZE = 2 * AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_MASK, ENCODING);
+    public static String lastKnownState = "";
+    Thread t;
+    boolean quitter = false;
+    boolean setStatusWithNotification = false;
+    SharedPreferences sp;
+    int settings_version = 0;
+    PowerManager.WakeLock wake;
+    private LocationManager glm;
+    private AudioTrack audio = null;
+    private AudioRecord ar = null;
+    private int sessionID = 0;
+    private double dialfreq = 14.0;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-    Thread t;
-    boolean quitter = false;
-    boolean setStatusWithNotification = false;
-    SharedPreferences sp;
-    private LocationManager glm;
-
-    int settings_version = 0;
-
-    PowerManager.WakeLock wake;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -106,17 +103,23 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
         this.glm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (sp.getBoolean("use_gps", false)) {
             try {
-                glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
+                glm.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 10, 0, this);
             } catch (SecurityException sx) {
-                Toast.makeText(this, getString(R.string.error_fine_loca), Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        getString(R.string.error_fine_loca), Toast.LENGTH_LONG)
+                        .show();
             }
         }
 
         if (sp.getBoolean("use_celltowers", false)) {
             try {
-                glm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, this);
+                glm.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER, 10, 0, this);
             } catch (SecurityException sx) {
-                Toast.makeText(this, getString(R.string.error_crap_loca), Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        getString(R.string.error_crap_loca), Toast.LENGTH_LONG)
+                        .show();
             }
         }
 
@@ -129,12 +132,11 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
         return START_NOT_STICKY;
     }
 
-    public static final String NSC_ID = "NotAServiceChannel";
-
     private void createNotificationChannel() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel nc = new NotificationChannel(NSC_ID, "Foreground SC", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationChannel nc = new NotificationChannel(
+                        NSC_ID, "Foreground SC", NotificationManager.IMPORTANCE_DEFAULT);
                 NotificationManager nm = getSystemService(NotificationManager.class);
                 nm.createNotificationChannel(nc);
             }
@@ -190,7 +192,10 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 default:
             }
         } catch (Exception x) {
-            Toast.makeText(getApplicationContext(), getString(R.string.lbl_cannot_disable).concat("\n\n").concat(x.getMessage()), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.lbl_cannot_disable)
+                    .concat("\n\n")
+                    .concat(x.getMessage()), Toast.LENGTH_LONG
+            ).show();
         }
         try {
             if (wake != null)
@@ -199,8 +204,6 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
             x.printStackTrace();
         }
     }
-
-    public static String lastKnownState = "";
 
     private void setStatus(String status) {
         lastKnownState = status;
@@ -231,16 +234,6 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
     }
 
-    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
-    private static final int SAMPLE_RATE = 12000; // Hz
-    private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-    private static final int CHANNEL_MASK = AudioFormat.CHANNEL_IN_MONO;
-
-    private static final int BUFFER_SIZE = 2 * AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_MASK, ENCODING);
-
-    private AudioTrack audio = null;
-    private AudioRecord ar = null;
-
     protected void setFlashbangMode(int flashbangID, boolean doBang) {
         CameraManager cmm = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -249,10 +242,12 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 String cameraID = cmm.getCameraIdList()[flashbangID];
                 cmm.setTorchMode(cameraID, doBang);
             } catch (Exception x) {
-                Toast.makeText(this, getString(R.string.sv_error_flashbang), Toast.LENGTH_LONG);
+                Toast.makeText(this,
+                        getString(R.string.sv_error_flashbang), Toast.LENGTH_LONG);
             }
         } else {
-            Toast.makeText(this, getString(R.string.sv_error_flashbang_oldjunk), Toast.LENGTH_LONG);
+            Toast.makeText(this,
+                    getString(R.string.sv_error_flashbang_oldjunk), Toast.LENGTH_LONG);
         }
 
     }
@@ -309,9 +304,11 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                             String locator = this.sp.getString("gridsq", "LO05io");
                             int power = Integer.parseInt(this.sp.getString("outpower", "0"));
 
-                            txsound = CJarInterface.WSPREncodeToPCM(callsign, locator.substring(0, 4), power, 0, lsb_mode);
+                            txsound = CJarInterface.WSPREncodeToPCM(
+                                    callsign, locator.substring(0, 4), power, 0, lsb_mode);
 
-                            txsound2 = CJarInterface.WSPREncodeToPCM(callsign, locator, power, 0, lsb_mode);
+                            txsound2 = CJarInterface.WSPREncodeToPCM(
+                                    callsign, locator, power, 0, lsb_mode);
                         } else {
                             use_txsound2 = false;
                             next_is_txsound2 = false;
@@ -321,7 +318,8 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                             int power = Integer.parseInt(this.sp.getString("outpower", "0"));
 
 
-                            txsound = CJarInterface.WSPREncodeToPCM(callsign, locator.substring(0, 4), power, 0, lsb_mode);
+                            txsound = CJarInterface.WSPREncodeToPCM(
+                                    callsign, locator.substring(0, 4), power, 0, lsb_mode);
                         }
                     } else {
                         use_txsound2 = true;
@@ -343,12 +341,11 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                         txsound2 = new byte[]{};
                     }
                 }
-
             }
 
             /*final byte[] music;
             music = CJarInterface.WSPREncodeToPCM("RA0TES", "JO56", 30, 0);
-                    setStatus("START 0");
+            setStatus("START 0");
             decodersRun(music);
 
 
@@ -385,7 +382,8 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
             today.setToNow();
 
             if ((today.minute % 2) != 0 || today.second > 0) {
-                setStatus(String.format(Locale.getDefault(), getString(R.string.sv_uneven_minute_msg), today.minute));
+                setStatus(String.format(Locale.getDefault(),
+                        getString(R.string.sv_uneven_minute_msg), today.minute));
                 try {
                     Thread.sleep((59 - today.second) * 1000);
                     if (quitter) {
@@ -461,7 +459,6 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                         output_line = AudioManager.STREAM_VOICE_CALL;
                         break;
                 }
-
 
                 this.audio = new AudioTrack(output_line,
                         SAMPLE_RATE, //sample rate
@@ -614,20 +611,13 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                     }
                 }).start();
             }
-
-
         }
 
         if (wake != null && wake.isHeld())
             wake.release();
 
         stopSelf();
-
-
     }
-
-    private int sessionID = 0;
-    private double dialfreq = 14.0;
 
     private double getBand() {
         String band = sp.getString("band", "band");
@@ -675,7 +665,9 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
                     Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
-                    Toast.makeText(this, "Error parsing message: ".concat(wm.getMSG()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,
+                            "Error parsing message: ".concat(wm.getMSG()),
+                            Toast.LENGTH_LONG).show();
                     continue;
                 }
 
@@ -692,14 +684,17 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 cv2.put("mygrid", sp.getString("gridsq", "LO05io"));
                 long cID = dh.getWritableDatabase().insert("contacts", null, cv2);
 
-                sender.append(cID, parst[0], parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                sender.append(cID, parst[0], parst[1], parst[2],
+                        new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
             } else if (pt2.matcher(wm.getMSG()).matches()) {
                 Log.e("MSGPARSE", "Got lvl2 message: ".concat(wm.getMSG()));
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 2) {
                     Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
-                    Toast.makeText(this, "Error parsing message: ".concat(wm.getMSG()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,
+                            "Error parsing message: ".concat(wm.getMSG()),
+                            Toast.LENGTH_LONG).show();
                     continue;
                 }
 
@@ -716,14 +711,17 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 cv2.put("mygrid", sp.getString("gridsq", "LO05io"));
                 long cID = dh.getWritableDatabase().insert("contacts", null, cv2);
 
-                sender.append(cID, parst[0], "", parst[1], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                sender.append(cID, parst[0], "", parst[1],
+                        new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
             } else if (pt3.matcher(wm.getMSG()).matches()) {
                 Log.e("MSGPARSE", "Got lvl3 message: ".concat(wm.getMSG()));
                 // level 3
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
                     Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
-                    Toast.makeText(this, "Error parsing message: ".concat(wm.getMSG()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,
+                            "Error parsing message: ".concat(wm.getMSG()),
+                            Toast.LENGTH_LONG).show();
                     continue;
                 }
 
@@ -739,20 +737,27 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 } catch (Exception x) {
                     x.printStackTrace();
                     Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
-                    Toast.makeText(this, "Error parsing message: ".concat(wm.getMSG()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,
+                            "Error parsing message: ".concat(wm.getMSG()),
+                            Toast.LENGTH_LONG).show();
                     continue;
                 }
 
 
                 Cursor c = dh.getReadableDatabase().rawQuery(
-                        "SELECT id,grid,message,call FROM contacts WHERE message IN (SELECT id FROM messages WHERE session = CAST(? AS INTEGER)) AND nhash = CAST(? AS INTEGER) ;"
+                        "SELECT id,grid,message,call FROM contacts WHERE message IN" +
+                                "(SELECT id FROM messages WHERE session = CAST(? AS INTEGER))" +
+                                "AND nhash = CAST(? AS INTEGER) ;"
                         , new String[]{String.valueOf(this.sessionID), String.valueOf(nhash)});
 
                 List<Long> toUpdate = new ArrayList<Long>();
 
                 if (c.moveToFirst())
                     do {
-                        sender.append(c.getLong(c.getColumnIndex("id")), "<".concat(c.getString(c.getColumnIndex("call"))).concat(">"), parst[1], parst[2], new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
+                        sender.append(c.getLong(c.getColumnIndex("id")),
+                                "<".concat(c.getString(c.getColumnIndex("call")))
+                                        .concat(">"), parst[1], parst[2],
+                                new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
                         if (c.getString(c.getColumnIndex("grid")).length() < parst[1].length()) {
                             toUpdate.add(c.getLong(c.getColumnIndex("id")));
@@ -761,7 +766,8 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
                 c.close();
 
                 Long[] toupd = toUpdate.toArray(new Long[]{});
-                SQLiteStatement ps = dh.getWritableDatabase().compileStatement("UPDATE contacts SET grid=? WHERE id=CAST(? AS INTEGER) ;");
+                SQLiteStatement ps = dh.getWritableDatabase()
+                        .compileStatement("UPDATE contacts SET grid=? WHERE id=CAST(? AS INTEGER) ;");
 
                 Log.e("MSGPARSE", String.format("Got msg2u: %d", toupd.length));
 
@@ -774,10 +780,11 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
                 ps.close();
 
-
             } else {
                 Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
-                Toast.makeText(this, "Error parsing message: ".concat(wm.getMSG()), Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        "Error parsing message: ".concat(wm.getMSG()),
+                        Toast.LENGTH_LONG).show();
             }
 
 
@@ -806,7 +813,6 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
             stopSelf();
         }
     }
-
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -841,16 +847,13 @@ public class LBService extends Service implements Runnable, SharedPreferences.On
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-
     }
 }

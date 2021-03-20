@@ -6,28 +6,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
 
-
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.material.tabs.TabLayout;
 
 import aq.metallists.loudbang.cutil.DBToXMLConverter;
 import aq.metallists.loudbang.ui.main.SectionsPagerAdapter;
@@ -66,7 +57,8 @@ public class LBMainWindow extends AppCompatActivity {
         Toolbar lb = findViewById(R.id.toolbarx);
         setSupportActionBar(lb);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter
+                = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -85,13 +77,11 @@ public class LBMainWindow extends AppCompatActivity {
             ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
                 }
             });
 
             ab.create().show();
         }
-
     }
 
     @Override
@@ -120,7 +110,9 @@ public class LBMainWindow extends AppCompatActivity {
         db.setNegativeButton(R.string.uploadabort_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(LBMainWindow.this, R.string.spot_upload_aborted, Toast.LENGTH_LONG).show();
+                Toast.makeText(LBMainWindow.this,
+                        R.string.spot_upload_aborted, Toast.LENGTH_LONG)
+                        .show();
             }
         });
 
@@ -152,9 +144,11 @@ public class LBMainWindow extends AppCompatActivity {
             case R.id.mnu_switch_mode_next:
                 sp.edit().putBoolean("switch_mode_next", true).apply();
                 if (sp.getBoolean("use_tx", false)) {
-                    Toast.makeText(getApplicationContext(), R.string.status_lbl_mode_switched_rx, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.status_lbl_mode_switched_rx, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.status_lbl_mode_switched_tx, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.status_lbl_mode_switched_tx, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -171,7 +165,9 @@ public class LBMainWindow extends AppCompatActivity {
                     (new DBToXMLConverter(this.getApplicationContext())).exportToXML();
                 } catch (Exception x) {
                     x.printStackTrace();
-                    Toast.makeText(getApplicationContext(), R.string.error_exporting, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_exporting, Toast.LENGTH_LONG)
+                            .show();
                 }
                 break;
             case R.id.mnu_database_wipe:
@@ -179,7 +175,9 @@ public class LBMainWindow extends AppCompatActivity {
                     (new DBToXMLConverter(this)).wipeOut();
                 } catch (Exception x) {
                     x.printStackTrace();
-                    Toast.makeText(getApplicationContext(), R.string.error_wiping, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_wiping, Toast.LENGTH_LONG)
+                            .show();
                 }
                 break;
             case R.id.mnu_about:
@@ -270,5 +268,4 @@ public class LBMainWindow extends AppCompatActivity {
         }
         return false;
     }
-
 }

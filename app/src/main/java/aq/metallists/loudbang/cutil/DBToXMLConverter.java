@@ -22,10 +22,8 @@ import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -50,7 +48,9 @@ public class DBToXMLConverter {
         ab.setPositiveButton(R.string.localdb_wipe_btn_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(DBToXMLConverter.this.ctx, R.string.localdb_wipe_there_is_no_cd, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DBToXMLConverter.this.ctx,
+                        R.string.localdb_wipe_there_is_no_cd, Toast.LENGTH_SHORT)
+                        .show();
 
                 DBHelper dh = new DBHelper(DBToXMLConverter.this.ctx);
                 dh.getWritableDatabase().execSQL("DELETE FROM messages;");
@@ -58,7 +58,9 @@ public class DBToXMLConverter {
                 dh.getWritableDatabase().execSQL("DELETE FROM contacts;");
                 //dh.getWritableDatabase().execSQL("delete from sqlite_sequence where name='contacts';");
 
-                Toast.makeText(DBToXMLConverter.this.ctx, R.string.localdb_wipe_done, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DBToXMLConverter.this.ctx,
+                        R.string.localdb_wipe_done, Toast.LENGTH_SHORT)
+                        .show();
             }
         });
 
@@ -80,7 +82,9 @@ public class DBToXMLConverter {
 
         File xpf = new File(parrentFolder, "exports.xml");
         if (xpf.exists()) {
-            Toast.makeText(this.ctx, R.string.error_exportfile_exists, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.ctx,
+                    R.string.error_exportfile_exists,
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -132,10 +136,11 @@ public class DBToXMLConverter {
         root.appendChild(pax);
 
         DBHelper dh = new DBHelper(this.ctx);
-        Cursor c = dh.getReadableDatabase().query("messages", new String[]{"*", "id AS _id"}, null, null, null, null, null);
+        Cursor c = dh.getReadableDatabase().query(
+                "messages", new String[]{"*", "id AS _id"}, null,
+                null, null, null, null);
         if (c.moveToFirst())
             do {
-
                 Element p = doc.createElement("Packet");
                 pax.appendChild(p);
 
@@ -151,7 +156,6 @@ public class DBToXMLConverter {
                 p.setTextContent(c.getString(c.getColumnIndex("message")));
 
             } while (c.moveToNext());
-
     }
 
     private void writeContacts(Document doc, Element root) {
@@ -159,10 +163,11 @@ public class DBToXMLConverter {
         root.appendChild(pax);
 
         DBHelper dh = new DBHelper(this.ctx);
-        Cursor c = dh.getReadableDatabase().query("contacts", new String[]{"*"}, null, null, null, null, null);
+        Cursor c = dh.getReadableDatabase().query(
+                "contacts", new String[]{"*"}, null,
+                null, null, null, null);
         if (c.moveToFirst())
             do {
-
                 Element p = doc.createElement("Message");
                 pax.appendChild(p);
 
@@ -181,7 +186,6 @@ public class DBToXMLConverter {
                 p.setTextContent(c.getString(c.getColumnIndex("message")));
 
             } while (c.moveToNext());
-
     }
 
     private void writeSettings(Document doc, Element root) {
@@ -204,5 +208,4 @@ public class DBToXMLConverter {
     public void importFromXML() {
         // TODO
     }
-
 }

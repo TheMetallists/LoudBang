@@ -21,16 +21,16 @@
             android:entries="@array/sets_powerarr_name"
             android:entryValues="@array/sets_powerarr_value"
             android:key="outpower"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/sets_your_power" />
+            android:title="@string/sets_your_power"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="14.0956"
             android:entries="@array/sets_bandarr_name"
             android:entryValues="@array/sets_bandarr_value"
             android:key="band"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/sets_band" />
+            android:title="@string/sets_band"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             android:defaultValue="false"
@@ -40,9 +40,8 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="report_volume"
-            android:title="Show volume"
             android:summary="Looks cool, may freeze."
-            />
+            android:title="Show volume" />
 
     </PreferenceCategory>
 
@@ -76,30 +75,27 @@
 
         <EditTextPreference
             android:defaultValue="25"
-            android:key="tx_probability"
             android:dependency="use_tx"
-            android:title="@string/sets_tx_dutycycle"
             android:inputType="number"
+            android:key="tx_probability"
             android:summary="@string/sets_tx_dutycycle_sum"
-            />
+            android:title="@string/sets_tx_dutycycle" />
         <ListPreference
-            android:key="tx_output"
             android:defaultValue="call"
             android:dependency="use_tx"
             android:entries="@array/sets_sndoutarr_name"
             android:entryValues="@array/sets_sndoutarr_value"
-            app:useSimpleSummaryProvider="true"
+            android:key="tx_output"
             android:title="@string/sets_tx_sndout"
-            />
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:key="ptt_ctl"
             android:defaultValue="none"
             android:dependency="use_tx"
             android:entries="@array/sets_pttctl_name"
             android:entryValues="@array/sets_pttctl_value"
-            app:useSimpleSummaryProvider="true"
+            android:key="ptt_ctl"
             android:title="@string/sets_tx_pttctl"
-            />
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/sets_network_group">
@@ -109,6 +105,5 @@
             android:summary="@string/sets_use_upload_spots_sum"
             android:title="@string/sets_use_upload_spots" />
     </PreferenceCategory>
-
 
 </PreferenceScreen>

@@ -4,62 +4,48 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 import aq.metallists.loudbang.LBService;
-import aq.metallists.loudbang.MainActivity;
 import aq.metallists.loudbang.R;
-import aq.metallists.loudbang.cutil.CJarInterface;
-import aq.metallists.loudbang.cutil.DBHelper;
-import aq.metallists.loudbang.cutil.WSPRMessage;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PlaceholderFragment extends Fragment
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    BroadcastReceiver bs;
     private PageViewModel pageViewModel;
+    private SharedPreferences sp;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -91,10 +77,7 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
             }
         } catch (Exception x) {
         }
-
     }
-
-    BroadcastReceiver bs;
 
     public void onDestroyView() {
         if (this.bs != null) {
@@ -127,7 +110,6 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
 
         pbbm.setMax(32767);
 
-
         this.sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         this.bs = new BroadcastReceiver() {
 
@@ -145,7 +127,6 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
                 } else {
                     pbbm.setProgress(intent.getIntExtra("eme.eva.loudbang.level", 50));
                 }
-
             }
         };
 
@@ -162,18 +143,24 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
             public void onClick(View v) {
                 List<String> permissionsToRequest = new ArrayList<String>();
 
-                if (ContextCompat.checkSelfPermission(root.getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(root.getContext(),
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                ) {
                     permissionsToRequest.add(Manifest.permission.RECORD_AUDIO);
                 }
 
                 if (PlaceholderFragment.this.sp.getBoolean("use_gps", false)) {
-                    if (ContextCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(root.getContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                     }
                 }
 
                 if (PlaceholderFragment.this.sp.getBoolean("use_celltowers", false)) {
-                    if (ContextCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(root.getContext(),
+                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
                     }
                 }
@@ -190,13 +177,14 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
 
 
                 if (!isMyServiceRunning(LBService.class)) {
-                    PlaceholderFragment.this.getActivity().startService(new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
+                    PlaceholderFragment.this.getActivity().startService(
+                            new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
                     ltb.setChecked(true);
                 } else {
-                    PlaceholderFragment.this.getActivity().stopService(new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
+                    PlaceholderFragment.this.getActivity().stopService(
+                            new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
                     ltb.setChecked(false);
                 }
-
             }
         });
 
@@ -280,7 +268,6 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
         return root;
     }
 
-
     private String getBandName(String freq) {
         String[] freqs = this.getActivity().getResources().getStringArray(R.array.sets_bandarr_value);
         String[] bands = this.getActivity().getResources().getStringArray(R.array.sets_bandarr_name);
@@ -297,8 +284,6 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
 
         return freq;
     }
-
-    private SharedPreferences sp;
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         Context ctx = this.getActivity();
@@ -325,7 +310,8 @@ public class PlaceholderFragment extends Fragment implements SharedPreferences.O
                 case "band":
                     TextView bandname = this.getView().findViewById(R.id.lbl_band);
                     if (bandname != null)
-                        bandname.setText(this.getBandName(sp.getString("band", Double.toString(10.1387))));
+                        bandname.setText(this.getBandName(
+                                sp.getString("band", Double.toString(10.1387))));
                     break;
                 case "callsign":
                     TextView callsign = this.getView().findViewById(R.id.lbl_callsign);

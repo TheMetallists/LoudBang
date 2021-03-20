@@ -13,9 +13,8 @@ import androidx.preference.PreferenceManager;
 
 import java.util.regex.Pattern;
 
-import aq.metallists.loudbang.ui.main.PlaceholderFragment;
-
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends AppCompatActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SharedPreferences sp;
 
     @Override
@@ -74,17 +73,15 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         });
 
         ab.create().show();
-
     }
-
-
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case "tx_probability":
                 try {
-                    int txprob = Integer.parseInt(sharedPreferences.getString("tx_probability", "25"));
+                    int txprob = Integer.parseInt(
+                            sharedPreferences.getString("tx_probability", "25"));
                     if (txprob < 0 || txprob > 100) {
                         throw new NumberFormatException("WUT?");
                     }
@@ -101,11 +98,11 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 }
                 break;
             case "gridsq":
-                String grid = sharedPreferences.getString("gridsq","LO05io");
+                String grid = sharedPreferences.getString("gridsq", "LO05io");
 
                 Pattern gpatrn = Pattern.compile("^[A-Z]{2}[0-9]{2}[a-z]{2}$");
 
-                if(!gpatrn.matcher(grid).matches()){
+                if (!gpatrn.matcher(grid).matches()) {
                     sharedPreferences.edit().putString("gridsq", "LO05io").apply();
                     showFuckupDialog(R.string.sets_error_gridsq);
                 }
@@ -113,21 +110,23 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 break;
 
             case "callsign":
-                String callsign = sharedPreferences.getString("callsign","R0TES");
+                String callsign = sharedPreferences.getString("callsign", "R0TES");
 
-                Pattern cspatrn = Pattern.compile("^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
+                Pattern cspatrn = Pattern.compile(
+                        "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
 
-                if(!cspatrn.matcher(callsign).matches()){
+                if (!cspatrn.matcher(callsign).matches()) {
                     sharedPreferences.edit().putString("callsign", "R0TES").apply();
                     showFuckupDialog(R.string.sets_error_callsign);
                 }
                 break;
             case "use_6letter":
-                String callsign2 = sharedPreferences.getString("callsign","R0TES");
+                String callsign2 = sharedPreferences.getString("callsign", "R0TES");
 
-                Pattern cspatrn2 = Pattern.compile("^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
+                Pattern cspatrn2 = Pattern.compile(
+                        "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
 
-                if(cspatrn2.matcher(callsign2).matches() && !sharedPreferences.getBoolean("use_6letter",false)){
+                if (cspatrn2.matcher(callsign2).matches() && !sharedPreferences.getBoolean("use_6letter", false)) {
                     sharedPreferences.edit().putBoolean("use_6letter", true).apply();
                     showFuckupDialog(R.string.sets_error_6letters);
                 }
