@@ -15,8 +15,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class WSPRNetSender {
-    private List<WNetMessage> msgs;
-    private DBHelper dh;
+    private final List<WNetMessage> msgs;
+    private final DBHelper dh;
 
     public WSPRNetSender(DBHelper _dh) {
         this.msgs = new ArrayList<WNetMessage>();

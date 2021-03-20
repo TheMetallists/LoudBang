@@ -57,6 +57,7 @@ public class LBService extends Service implements Runnable,
     private static final int CHANNEL_MASK = AudioFormat.CHANNEL_IN_MONO;
     private static final int BUFFER_SIZE = 2 * AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_MASK, ENCODING);
     public static String lastKnownState = "";
+    private final double dialfreq = 14.0;
     Thread t;
     boolean quitter = false;
     boolean setStatusWithNotification = false;
@@ -67,7 +68,6 @@ public class LBService extends Service implements Runnable,
     private AudioTrack audio = null;
     private AudioRecord ar = null;
     private int sessionID = 0;
-    private double dialfreq = 14.0;
 
     @Nullable
     @Override
@@ -381,7 +381,7 @@ public class LBService extends Service implements Runnable,
             Time today = new Time(Time.getCurrentTimezone());
             today.setToNow();
 
-            if ((today.minute % 2) != 0 || today.second > 0) {
+            if (today.minute % 2 != 0 || today.second > 0) {
                 setStatus(String.format(Locale.getDefault(),
                         getString(R.string.sv_uneven_minute_msg), today.minute));
                 try {
@@ -565,9 +565,9 @@ public class LBService extends Service implements Runnable,
                     //END AMPT CALC
 
 
-                    if (total + read > (12000 * 2 * 114)) {
+                    if (total + read > 12000 * 2 * 114) {
                         // Write as many bytes as we can before hitting the max size
-                        for (int i = 0; i < read && total <= (12000 * 2 * 114); i++, total++) {
+                        for (int i = 0; i < read && total <= 12000 * 2 * 114; i++, total++) {
                             baos.write(buffer[i]);
                         }
                         run = false;

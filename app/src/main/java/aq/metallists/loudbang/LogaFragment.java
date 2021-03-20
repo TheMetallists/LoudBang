@@ -66,7 +66,7 @@ public class LogaFragment extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_loga, container, false);
 
-        final ListView lv = (ListView) root.findViewById(R.id.loggerLV);
+        final ListView lv = root.findViewById(R.id.loggerLV);
 
         this.db = new DBHelper(this.getActivity().getApplicationContext());
         this.c = db.getReadableDatabase().rawQuery(
@@ -181,7 +181,7 @@ public class LogaFragment extends Fragment {
                         double freq = Double.parseDouble(bandarr[band]);
                         if (freq > 0.001) {
                             sql += String.format(Locale.ENGLISH,
-                                    "m.freq > %f AND m.freq < %f AND ", (freq - 0.006), (freq + 0.006));
+                                    "m.freq > %f AND m.freq < %f AND ", freq - 0.006, freq + 0.006);
                         }
                     }
 
@@ -228,8 +228,8 @@ public class LogaFragment extends Fragment {
     }
 
     private void installSelectBoxes(View root) {
-        final Spinner spBandFilter = (Spinner) root.findViewById(R.id.bandFilterSelect);
-        final Spinner spDateFilter = (Spinner) root.findViewById(R.id.dateFilterSelect);
+        final Spinner spBandFilter = root.findViewById(R.id.bandFilterSelect);
+        final Spinner spDateFilter = root.findViewById(R.id.dateFilterSelect);
         spBandFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {

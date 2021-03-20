@@ -162,7 +162,7 @@ public class LBMainWindow extends AppCompatActivity {
 
             case R.id.mnu_database_export:
                 try {
-                    (new DBToXMLConverter(this.getApplicationContext())).exportToXML();
+                    new DBToXMLConverter(this.getApplicationContext()).exportToXML();
                 } catch (Exception x) {
                     x.printStackTrace();
                     Toast.makeText(getApplicationContext(),
@@ -172,7 +172,7 @@ public class LBMainWindow extends AppCompatActivity {
                 break;
             case R.id.mnu_database_wipe:
                 try {
-                    (new DBToXMLConverter(this)).wipeOut();
+                    new DBToXMLConverter(this).wipeOut();
                 } catch (Exception x) {
                     x.printStackTrace();
                     Toast.makeText(getApplicationContext(),

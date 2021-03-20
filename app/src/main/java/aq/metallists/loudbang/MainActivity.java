@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tw = (TextView) findViewById(R.id.helloworld);
+        TextView tw = findViewById(R.id.helloworld);
 
         byte[] test = {0x00, 0x10, 0x20};
         WSPRMessage[] msg = CJarInterface.WSPRDecodeFromPcm(test, 0, false);

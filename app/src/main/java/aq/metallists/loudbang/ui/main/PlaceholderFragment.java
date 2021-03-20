@@ -70,7 +70,7 @@ public class PlaceholderFragment extends Fragment
         super.onResume();
 
         try {
-            final TextView state = (TextView) this.getView().findViewById(R.id.statusLabel1);
+            final TextView state = this.getView().findViewById(R.id.statusLabel1);
 
             if (LBService.lastKnownState.length() > 0) {
                 state.setText(LBService.lastKnownState);
@@ -101,8 +101,8 @@ public class PlaceholderFragment extends Fragment
         final View root = inflater.inflate(R.layout.fragment_status, container, false);
 
         final ProgressBar pbbm = root.findViewById(R.id.progressBar);
-        final TextView state = (TextView) root.findViewById(R.id.statusLabel1);
-        final ToggleButton ltb = (ToggleButton) root.findViewById(R.id.launch_toggle_btn);
+        final TextView state = root.findViewById(R.id.statusLabel1);
+        final ToggleButton ltb = root.findViewById(R.id.launch_toggle_btn);
 
         if (LBService.lastKnownState.length() > 0) {
             state.setText(LBService.lastKnownState);
@@ -117,11 +117,7 @@ public class PlaceholderFragment extends Fragment
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().contains("eme.eva.loudbang.state")) {
                     boolean isRunnin = isMyServiceRunning(LBService.class);
-                    if (isRunnin) {
-                        ltb.setChecked(true);
-                    } else {
-                        ltb.setChecked(false);
-                    }
+                    ltb.setChecked(isRunnin);
 
                     state.setText(intent.getStringExtra("eme.eva.loudbang.state"));
                 } else {
@@ -253,11 +249,7 @@ public class PlaceholderFragment extends Fragment
                     public void run() {
                         lblCurrentTime.setText(out);
 
-                        if (isMyServiceRunning(LBService.class)) {
-                            ltb.setChecked(true);
-                        } else {
-                            ltb.setChecked(false);
-                        }
+                        ltb.setChecked(isMyServiceRunning(LBService.class));
                     }
                 });
             }

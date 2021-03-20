@@ -31,7 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 import aq.metallists.loudbang.R;
 
 public class DBToXMLConverter {
-    private Context ctx;
+    private final Context ctx;
 
     public DBToXMLConverter(Context _ctx) {
         if (_ctx == null) {
@@ -97,7 +97,7 @@ public class DBToXMLConverter {
 
         Element date = doc.createElement("CreatedAt");
         root.appendChild(date);
-        date.setAttribute("unix", String.valueOf((new Date()).getTime()));
+        date.setAttribute("unix", String.valueOf(new Date().getTime()));
         date.setTextContent(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date()));
 
         this.writeSettings(doc, root);
@@ -179,7 +179,7 @@ public class DBToXMLConverter {
                 p.setAttribute("power", String.valueOf(c.getInt(c.getColumnIndex("power"))));
                 p.setAttribute("mygrid", c.getString(c.getColumnIndex("mygrid")));
                 p.setAttribute("uploaded", String.valueOf(
-                        (c.getInt(c.getColumnIndex("uploaded")) > 0)
+                        c.getInt(c.getColumnIndex("uploaded")) > 0
                 ));
                 //p.setAttribute("proto", "2");
 
