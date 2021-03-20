@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LBMainWindow">
     <item
-        android:id="@+id/mnu_go_settings"
+        android:id="@+id/mnu_settings"
         android:title="@string/mnu_lbl_settings" />
 
     <item
-        android:id="@+id/mnu_go_band"
         android:title="@string/mnu_lbl_bands">
         <menu>
             <item
@@ -85,11 +84,10 @@
         android:title="@string/mnu_switch_next_mode" />
 
     <item
-        android:id="@+id/mnu_database_options"
         android:title="@string/mnu_local_database">
         <menu>
             <item
-                android:id="@+id/mnu_upload_remaining_items"
+                android:id="@+id/mnu_database_upload_remaining_items"
                 android:title="@string/lbl_upload_remaining" />
             <item
                 android:id="@+id/mnu_database_export"

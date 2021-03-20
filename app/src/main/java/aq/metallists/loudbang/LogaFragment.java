@@ -81,14 +81,14 @@ public class LogaFragment extends Fragment {
                 "call", "grid", "power", "snr", "freq", "date", "uploaded"
         };
         int[] to = new int[]{
-                R.id.lt_message, R.id.log_distance, R.id.log_power, R.id.log_snr,
-                R.id.log_frequency, R.id.log_date, R.id.log_uploaded
+                R.id.msglog_message, R.id.msglog_log_distance, R.id.msglog_power, R.id.msglog_log_snr,
+                R.id.msglog_frequency, R.id.msglog_log_date, R.id.msglog_uploaded
         };
         sca = new SimpleCursorAdapter(this.getActivity(), R.layout.msglog_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
                 switch (v.getId()) {
-                    case R.id.lt_message:
+                    case R.id.msglog_message:
                         text = String.format(Locale.GERMAN,
                                 "%s %s %d",
                                 this.getCursor().getString(this.getCursor().getColumnIndex("call")),
@@ -96,13 +96,13 @@ public class LogaFragment extends Fragment {
                                 this.getCursor().getInt(this.getCursor().getColumnIndex("power"))
                         );
                         break;
-                    case R.id.log_distance:
+                    case R.id.msglog_log_distance:
                         text = Integer.toString((int) CJarInterface.WSPRGetDistanceBetweenLocators(
                                 this.getCursor().getString(this.getCursor().getColumnIndex("grid")),
                                 this.getCursor().getString(this.getCursor().getColumnIndex("mygrid"))
                         ));
                         break;
-                    case R.id.log_power:
+                    case R.id.msglog_power:
                         int wattage = this.getCursor().getInt(this.getCursor().getColumnIndex("power"));
                         String wtg = Integer.toString(wattage);
 
@@ -125,17 +125,17 @@ public class LogaFragment extends Fragment {
                         }
 
                         break;
-                    case R.id.log_snr:
+                    case R.id.msglog_log_snr:
                         text = String.format(Locale.GERMAN, "%.2f",
                                 this.getCursor().getFloat(
                                         this.getCursor().getColumnIndex("snr")));
                         break;
-                    case R.id.log_frequency:
+                    case R.id.msglog_frequency:
                         text = String.format(Locale.GERMAN, "%.6f",
                                 this.getCursor().getFloat(
                                         this.getCursor().getColumnIndex("freq")));
                         break;
-                    case R.id.log_date:
+                    case R.id.msglog_log_date:
                         String date = this.getCursor().getString(
                                 this.getCursor().getColumnIndex("date"));
                         try {
@@ -146,7 +146,7 @@ public class LogaFragment extends Fragment {
                             text = "ERROR";
                         }
                         break;
-                    case R.id.log_uploaded:
+                    case R.id.msglog_uploaded:
                         if (this.getCursor().getInt(
                                 this.getCursor().getColumnIndex("uploaded")) > 0) {
                             text = getString(R.string.lbl_log_uploaded_yes);

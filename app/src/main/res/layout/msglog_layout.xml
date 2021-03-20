@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/lt_message"
+            android:id="@+id/msglog_message"
             android:layout_width="447dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lt_lbl_distance"
+            android:id="@+id/msglog_lbl_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
@@ -35,105 +35,103 @@
             android:maxLines="1"
             android:text="@string/log_lbl_dst"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:layout_constraintLeft_toLeftOf="@id/lt_message"
-            app:layout_constraintTop_toBottomOf="@id/lt_message" />
+            app:layout_constraintLeft_toLeftOf="@id/msglog_message"
+            app:layout_constraintTop_toBottomOf="@id/msglog_message" />
 
         <TextView
-            android:id="@+id/log_distance"
+            android:id="@+id/msglog_log_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:text="@string/log_lbl_dst_tst"
-            app:layout_constraintStart_toEndOf="@+id/lt_lbl_distance"
-            app:layout_constraintTop_toTopOf="@+id/lt_lbl_distance" />
+            app:layout_constraintStart_toEndOf="@+id/msglog_lbl_distance"
+            app:layout_constraintTop_toTopOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_power"
+            android:id="@+id/msglog_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/log_lbl_pwr_tst"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/lt_lbl_distance" />
+            app:layout_constraintTop_toTopOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_lbl_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:text="@string/log_lbl_pwr"
-            app:layout_constraintEnd_toStartOf="@+id/log_power"
+            app:layout_constraintEnd_toStartOf="@+id/msglog_power"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/log_distance"
-            app:layout_constraintTop_toTopOf="@+id/lt_lbl_distance" />
+            app:layout_constraintStart_toEndOf="@+id/msglog_log_distance"
+            app:layout_constraintTop_toTopOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_lbl_snr"
+            android:id="@+id/msglog_lbl_snr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_lbl_snr"
-            app:layout_constraintStart_toStartOf="@+id/lt_lbl_distance"
-            app:layout_constraintTop_toBottomOf="@+id/lt_lbl_distance" />
+            app:layout_constraintStart_toStartOf="@+id/msglog_lbl_distance"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_snr"
+            android:id="@+id/msglog_log_snr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:text="@string/log_lbl_snr_tst"
-            app:layout_constraintStart_toEndOf="@+id/log_lbl_snr"
-            app:layout_constraintTop_toBottomOf="@+id/lt_lbl_distance" />
+            app:layout_constraintStart_toEndOf="@+id/msglog_lbl_snr"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_frequency"
+            android:id="@+id/msglog_frequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_lbl_freq_tst"
-            app:layout_constraintEnd_toEndOf="@+id/log_power"
-            app:layout_constraintTop_toBottomOf="@+id/lt_lbl_distance" />
+            app:layout_constraintEnd_toEndOf="@+id/msglog_power"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_lbl_frequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/log_lbl_freq"
-            app:layout_constraintEnd_toStartOf="@+id/log_frequency"
+            app:layout_constraintEnd_toStartOf="@+id/msglog_frequency"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/log_snr"
-            app:layout_constraintTop_toBottomOf="@+id/lt_lbl_distance" />
+            app:layout_constraintStart_toEndOf="@+id/msglog_log_snr"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_distance" />
 
         <TextView
-            android:id="@+id/log_date"
+            android:id="@+id/msglog_log_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_lbl_date_tst"
-            app:layout_constraintEnd_toStartOf="@+id/log_uploaded"
+            app:layout_constraintEnd_toStartOf="@+id/msglog_uploaded"
             app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toEndOf="@+id/log_lbl_date"
-            app:layout_constraintTop_toBottomOf="@+id/log_lbl_snr" />
+            app:layout_constraintStart_toEndOf="@+id/msglog_lbl_date"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_snr" />
 
         <TextView
-            android:id="@+id/log_lbl_date"
+            android:id="@+id/msglog_lbl_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_lbl_date"
-            app:layout_constraintStart_toStartOf="@+id/log_lbl_snr"
-            app:layout_constraintTop_toBottomOf="@+id/log_lbl_snr" />
+            app:layout_constraintStart_toStartOf="@+id/msglog_lbl_snr"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_lbl_snr" />
 
         <TextView
-            android:id="@+id/log_uploaded"
+            android:id="@+id/msglog_uploaded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="@string/lbl_log_uploaded_no"
-            app:layout_constraintEnd_toEndOf="@+id/log_power"
-            app:layout_constraintTop_toBottomOf="@+id/log_frequency" />
+            app:layout_constraintEnd_toEndOf="@+id/msglog_power"
+            app:layout_constraintTop_toBottomOf="@+id/msglog_frequency" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

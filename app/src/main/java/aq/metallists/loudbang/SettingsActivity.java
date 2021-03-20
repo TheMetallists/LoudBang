@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.settings_activity);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment())
+                .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
 
         ActionBar actionBar = getSupportActionBar();

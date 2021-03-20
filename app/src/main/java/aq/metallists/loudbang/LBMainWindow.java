@@ -54,14 +54,14 @@ public class LBMainWindow extends AppCompatActivity {
 
         setContentView(R.layout.activity_lbmain_window);
 
-        Toolbar lb = findViewById(R.id.toolbarx);
+        Toolbar lb = findViewById(R.id.lbmain_toolbar);
         setSupportActionBar(lb);
 
         SectionsPagerAdapter sectionsPagerAdapter
                 = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.lbmain_viewpager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
+        TabLayout tabs = findViewById(R.id.lbmain_tablayout);
         tabs.setupWithViewPager(viewPager);
 
         this.sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -127,7 +127,7 @@ public class LBMainWindow extends AppCompatActivity {
             return true;
 
         switch (item.getItemId()) {
-            case R.id.mnu_go_settings:
+            case R.id.mnu_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
                 break;
@@ -152,7 +152,7 @@ public class LBMainWindow extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.mnu_upload_remaining_items:
+            case R.id.mnu_database_upload_remaining_items:
                 if (!this.isMyServiceRunning(LBSpotUploadService.class)) {
                     startService(new Intent(this, LBSpotUploadService.class));
                 } else {

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/titlex"
+            android:id="@+id/log_entry_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/summaryx"
+            android:id="@+id/log_entry_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
@@ -38,8 +38,8 @@
             android:maxLines="2"
             android:text="@string/test_description"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            app:layout_constraintLeft_toLeftOf="@id/titlex"
-            app:layout_constraintTop_toBottomOf="@id/titlex" />
+            app:layout_constraintLeft_toLeftOf="@id/log_entry_title"
+            app:layout_constraintTop_toBottomOf="@id/log_entry_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

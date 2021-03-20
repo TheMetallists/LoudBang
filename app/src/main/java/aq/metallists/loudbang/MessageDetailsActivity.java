@@ -30,12 +30,12 @@ public class MessageDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_details);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.message_details_toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView lv = findViewById(R.id.mdview);
+        ListView lv = findViewById(R.id.message_details_view);
         this.db = new DBHelper(this.getApplicationContext());
         this.c = db.getReadableDatabase().query("messages",
                 new String[]{"*", "id AS _id"}, null,
@@ -43,12 +43,12 @@ public class MessageDetailsActivity extends AppCompatActivity {
         this.startManagingCursor(this.c);
 
         String[] from = new String[]{"message", "freq"};
-        int[] to = new int[]{R.id.titlex, R.id.summaryx};
+        int[] to = new int[]{R.id.log_entry_title, R.id.log_entry_summary};
         sca = new SimpleCursorAdapter(this, R.layout.log_entry_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
                 switch (v.getId()) {
-                    case R.id.summaryx:
+                    case R.id.log_entry_summary:
                         text = String.format(
                                 "SNR: %f Freq: %f Date: %s",
                                 this.getCursor().getDouble(this.getCursor().getColumnIndex("snr")),
