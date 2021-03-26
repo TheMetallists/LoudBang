@@ -193,8 +193,7 @@ public class LBService extends Service implements Runnable,
             }
         } catch (Exception x) {
             Toast.makeText(getApplicationContext(), getString(R.string.lbl_cannot_disable)
-                    .concat("\n\n")
-                    .concat(x.getMessage()), Toast.LENGTH_LONG
+                    + "\n\n" + x.getMessage(), Toast.LENGTH_LONG
             ).show();
         }
         try {
@@ -243,11 +242,13 @@ public class LBService extends Service implements Runnable,
                 cmm.setTorchMode(cameraID, doBang);
             } catch (Exception x) {
                 Toast.makeText(this,
-                        getString(R.string.sv_error_flashbang), Toast.LENGTH_LONG);
+                        getString(R.string.sv_error_flashbang),
+                        Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(this,
-                    getString(R.string.sv_error_flashbang_oldjunk), Toast.LENGTH_LONG);
+                    getString(R.string.sv_error_flashbang_oldjunk),
+                    Toast.LENGTH_LONG).show();
         }
 
     }
@@ -443,9 +444,6 @@ public class LBService extends Service implements Runnable,
                 int output_line = AudioManager.STREAM_VOICE_CALL;
 
                 switch (this.sp.getString("tx_output", "call")) {
-                    case "call":
-                        output_line = AudioManager.STREAM_VOICE_CALL;
-                        break;
                     case "ring":
                         output_line = AudioManager.STREAM_RING;
                         break;
@@ -455,6 +453,7 @@ public class LBService extends Service implements Runnable,
                     case "alarm":
                         output_line = AudioManager.STREAM_ALARM;
                         break;
+                    case "call":
                     default:
                         output_line = AudioManager.STREAM_VOICE_CALL;
                         break;
@@ -604,12 +603,7 @@ public class LBService extends Service implements Runnable,
                 }
                 baos = null;
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        decodersRun(record, recordTimestamp);
-                    }
-                }).start();
+                new Thread(() -> decodersRun(record, recordTimestamp)).start();
             }
         }
 
@@ -660,13 +654,13 @@ public class LBService extends Service implements Runnable,
             Pattern pt3 = Pattern.compile("^#[0-9]{1,6} [A-Z0-9]{6} \\d+$");
 
             if (pt1.matcher(wm.getMSG()).matches()) {
-                Log.e("MSGPARSE", "Got lvl1 message: ".concat(wm.getMSG()));
+                Log.e("MSGPARSE", "Got lvl1 message: " + wm.getMSG());
                 // level 1
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
-                    Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
+                    Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
                     Toast.makeText(this,
-                            "Error parsing message: ".concat(wm.getMSG()),
+                            "Error parsing message: " + wm.getMSG(),
                             Toast.LENGTH_LONG).show();
                     continue;
                 }
@@ -688,12 +682,12 @@ public class LBService extends Service implements Runnable,
                         new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
             } else if (pt2.matcher(wm.getMSG()).matches()) {
-                Log.e("MSGPARSE", "Got lvl2 message: ".concat(wm.getMSG()));
+                Log.e("MSGPARSE", "Got lvl2 message: " + wm.getMSG());
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 2) {
-                    Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
+                    Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
                     Toast.makeText(this,
-                            "Error parsing message: ".concat(wm.getMSG()),
+                            "Error parsing message: " + wm.getMSG(),
                             Toast.LENGTH_LONG).show();
                     continue;
                 }
@@ -714,13 +708,13 @@ public class LBService extends Service implements Runnable,
                 sender.append(cID, parst[0], "", parst[1],
                         new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
             } else if (pt3.matcher(wm.getMSG()).matches()) {
-                Log.e("MSGPARSE", "Got lvl3 message: ".concat(wm.getMSG()));
+                Log.e("MSGPARSE", "Got lvl3 message: " + wm.getMSG());
                 // level 3
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
-                    Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
+                    Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
                     Toast.makeText(this,
-                            "Error parsing message: ".concat(wm.getMSG()),
+                            "Error parsing message: " + wm.getMSG(),
                             Toast.LENGTH_LONG).show();
                     continue;
                 }
@@ -736,9 +730,9 @@ public class LBService extends Service implements Runnable,
                     nhash = Long.parseLong(nhParts[1]);
                 } catch (Exception x) {
                     x.printStackTrace();
-                    Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
+                    Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
                     Toast.makeText(this,
-                            "Error parsing message: ".concat(wm.getMSG()),
+                            "Error parsing message: " + wm.getMSG(),
                             Toast.LENGTH_LONG).show();
                     continue;
                 }
@@ -750,13 +744,13 @@ public class LBService extends Service implements Runnable,
                                 "AND nhash = CAST(? AS INTEGER) ;"
                         , new String[]{String.valueOf(this.sessionID), String.valueOf(nhash)});
 
-                List<Long> toUpdate = new ArrayList<Long>();
+                List<Long> toUpdate = new ArrayList<>();
 
                 if (c.moveToFirst())
                     do {
                         sender.append(c.getLong(c.getColumnIndex("id")),
-                                "<".concat(c.getString(c.getColumnIndex("call")))
-                                        .concat(">"), parst[1], parst[2],
+                                "<" + c.getString(c.getColumnIndex("call"))
+                                        + ">", parst[1], parst[2],
                                 new Date(), wm.getFREQ(), wm.getSNR(), wm.getDT(), wm.getDRIFT());
 
                         if (c.getString(c.getColumnIndex("grid")).length() < parst[1].length()) {
@@ -781,9 +775,9 @@ public class LBService extends Service implements Runnable,
                 ps.close();
 
             } else {
-                Log.e("MSGPARSE", "Error parsing message: ".concat(wm.getMSG()));
+                Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
                 Toast.makeText(this,
-                        "Error parsing message: ".concat(wm.getMSG()),
+                        "Error parsing message: " + wm.getMSG(),
                         Toast.LENGTH_LONG).show();
             }
 

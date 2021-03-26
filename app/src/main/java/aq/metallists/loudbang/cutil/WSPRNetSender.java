@@ -19,7 +19,7 @@ public class WSPRNetSender {
     private final DBHelper dh;
 
     public WSPRNetSender(DBHelper _dh) {
-        this.msgs = new ArrayList<WNetMessage>();
+        this.msgs = new ArrayList<>();
         this.dh = _dh;
     }
 

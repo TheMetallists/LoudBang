@@ -1,7 +1,6 @@
 package aq.metallists.loudbang.cutil;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.widget.Toast;
@@ -41,35 +40,29 @@ public class DBToXMLConverter {
     }
 
     public void wipeOut() throws Exception {
-        AlertDialog.Builder ab = new AlertDialog.Builder(this.ctx);
+        AlertDialog.Builder ab = new AlertDialog.Builder(ctx);
         ab.setTitle(R.string.localdb_wipe_title);
         ab.setMessage(R.string.localdb_wipe_text);
 
-        ab.setPositiveButton(R.string.localdb_wipe_btn_yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(DBToXMLConverter.this.ctx,
-                        R.string.localdb_wipe_there_is_no_cd, Toast.LENGTH_SHORT)
-                        .show();
+        ab.setPositiveButton(R.string.localdb_wipe_btn_yes, (dialog, which) -> {
+            Toast.makeText(DBToXMLConverter.this.ctx,
+                    R.string.localdb_wipe_there_is_no_cd, Toast.LENGTH_SHORT)
+                    .show();
 
-                DBHelper dh = new DBHelper(DBToXMLConverter.this.ctx);
-                dh.getWritableDatabase().execSQL("DELETE FROM messages;");
-                //dh.getWritableDatabase().execSQL("delete from sqlite_sequence where name='messages';");
-                dh.getWritableDatabase().execSQL("DELETE FROM contacts;");
-                //dh.getWritableDatabase().execSQL("delete from sqlite_sequence where name='contacts';");
+            DBHelper dh = new DBHelper(DBToXMLConverter.this.ctx);
+            dh.getWritableDatabase().execSQL("DELETE FROM messages;");
+            //dh.getWritableDatabase().execSQL("delete from sqlite_sequence where name='messages';");
+            dh.getWritableDatabase().execSQL("DELETE FROM contacts;");
+            //dh.getWritableDatabase().execSQL("delete from sqlite_sequence where name='contacts';");
 
-                Toast.makeText(DBToXMLConverter.this.ctx,
-                        R.string.localdb_wipe_done, Toast.LENGTH_SHORT)
-                        .show();
-            }
+            Toast.makeText(DBToXMLConverter.this.ctx,
+                    R.string.localdb_wipe_done, Toast.LENGTH_SHORT)
+                    .show();
         });
 
-        ab.setNegativeButton(R.string.localdb_wipe_btn_no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(DBToXMLConverter.this.ctx, R.string.localdb_wipe_good_choice, Toast.LENGTH_SHORT).show();
-            }
-        });
+        ab.setNegativeButton(R.string.localdb_wipe_btn_no, (dialog, which) ->
+                Toast.makeText(DBToXMLConverter.this.ctx,
+                        R.string.localdb_wipe_good_choice, Toast.LENGTH_SHORT).show());
 
         ab.create().show();
     }

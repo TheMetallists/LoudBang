@@ -206,7 +206,7 @@ public class LBSpotUploadService extends Service implements Runnable {
             return "1296.500";
         }
         Toast.makeText(this.getApplicationContext(),
-                "FRQ. does not belongs to any known band.\n".concat(sfreq),
+                "FRQ. does not belongs to any known band.\n" + sfreq,
                 Toast.LENGTH_LONG).show();
         throw new IllegalArgumentException("Frequency dows not belong to any known band.");
     }
@@ -219,8 +219,7 @@ public class LBSpotUploadService extends Service implements Runnable {
             x.printStackTrace();
             Toast.makeText(getApplicationContext(),
                     getString(R.string.error_uploading_spots)
-                            .concat("\n")
-                            .concat(x.getMessage())
+                            + "\n" + x.getMessage()
                     , Toast.LENGTH_LONG).show();
         }
         stopSelf();

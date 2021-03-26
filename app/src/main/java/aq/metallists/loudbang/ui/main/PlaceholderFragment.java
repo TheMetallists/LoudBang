@@ -134,53 +134,50 @@ public class PlaceholderFragment extends Fragment
         LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bs, intentActionFilter);
 
 
-        ltb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<String> permissionsToRequest = new ArrayList<String>();
+        ltb.setOnClickListener(v -> {
+            List<String> permissionsToRequest = new ArrayList<>();
 
+            if (ContextCompat.checkSelfPermission(root.getContext(),
+                    Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissionsToRequest.add(Manifest.permission.RECORD_AUDIO);
+            }
+
+            if (PlaceholderFragment.this.sp.getBoolean("use_gps", false)) {
                 if (ContextCompat.checkSelfPermission(root.getContext(),
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    permissionsToRequest.add(Manifest.permission.RECORD_AUDIO);
+                    permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                 }
+            }
 
-                if (PlaceholderFragment.this.sp.getBoolean("use_gps", false)) {
-                    if (ContextCompat.checkSelfPermission(root.getContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                    }
+            if (PlaceholderFragment.this.sp.getBoolean("use_celltowers", false)) {
+                if (ContextCompat.checkSelfPermission(root.getContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
                 }
-
-                if (PlaceholderFragment.this.sp.getBoolean("use_celltowers", false)) {
-                    if (ContextCompat.checkSelfPermission(root.getContext(),
-                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-                    }
-                }
+            }
 
 
-                if (permissionsToRequest.size() > 0) {
-                    ActivityCompat.requestPermissions(PlaceholderFragment.this.getActivity(),
-                            permissionsToRequest.toArray(new String[]{}),
-                            0);
+            if (permissionsToRequest.size() > 0) {
+                ActivityCompat.requestPermissions(PlaceholderFragment.this.getActivity(),
+                        permissionsToRequest.toArray(new String[]{}),
+                        0);
 
-                    ltb.setChecked(false);
-                    return;
-                }
+                ltb.setChecked(false);
+                return;
+            }
 
 
-                if (!isMyServiceRunning(LBService.class)) {
-                    PlaceholderFragment.this.getActivity().startService(
-                            new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
-                    ltb.setChecked(true);
-                } else {
-                    PlaceholderFragment.this.getActivity().stopService(
-                            new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
-                    ltb.setChecked(false);
-                }
+            if (!isMyServiceRunning(LBService.class)) {
+                PlaceholderFragment.this.getActivity().startService(
+                        new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
+                ltb.setChecked(true);
+            } else {
+                PlaceholderFragment.this.getActivity().stopService(
+                        new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
+                ltb.setChecked(false);
             }
         });
 
@@ -207,16 +204,16 @@ public class PlaceholderFragment extends Fragment
 
         switch (this.sp.getString("ptt_ctl", "none")) {
             case "none":
-                rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_noptt));
+                rxtx_state = rxtx_state + getString(R.string.tbt_txptt_noptt);
                 break;
             case "fbang_2":
-                rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_fc));
+                rxtx_state = rxtx_state + getString(R.string.tbt_txptt_fc);
                 break;
             case "fbang_1":
-                rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_rc));
+                rxtx_state = rxtx_state + getString(R.string.tbt_txptt_rc);
                 break;
             default:
-                rxtx_state = rxtx_state.concat(", <ERR>");
+                rxtx_state = rxtx_state + ", <ERR>";
         }
 
         rxtx_state = String.format(Locale.GERMAN, "%s, %d%%", rxtx_state,
@@ -244,13 +241,10 @@ public class PlaceholderFragment extends Fragment
                     return;
                 }
 
-                thisAct.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        lblCurrentTime.setText(out);
+                thisAct.runOnUiThread(() -> {
+                    lblCurrentTime.setText(out);
 
-                        ltb.setChecked(isMyServiceRunning(LBService.class));
-                    }
+                    ltb.setChecked(isMyServiceRunning(LBService.class));
                 });
             }
         }, 1000, 1000);
@@ -330,16 +324,16 @@ public class PlaceholderFragment extends Fragment
 
                     switch (this.sp.getString("ptt_ctl", "none")) {
                         case "none":
-                            rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_noptt));
+                            rxtx_state = rxtx_state + getString(R.string.tbt_txptt_noptt);
                             break;
                         case "fbang_2":
-                            rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_fc));
+                            rxtx_state = rxtx_state + getString(R.string.tbt_txptt_fc);
                             break;
                         case "fbang_1":
-                            rxtx_state = rxtx_state.concat(getString(R.string.tbt_txptt_rc));
+                            rxtx_state = rxtx_state + getString(R.string.tbt_txptt_rc);
                             break;
                         default:
-                            rxtx_state = rxtx_state.concat(", <ERR>");
+                            rxtx_state = rxtx_state + ", <ERR>";
                     }
 
                     rxtx_state = String.format(Locale.GERMAN, "%s, %d%%", rxtx_state,

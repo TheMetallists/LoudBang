@@ -1,6 +1,5 @@
 package aq.metallists.loudbang;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -54,22 +53,16 @@ public class SettingsActivity extends AppCompatActivity
         ab.setTitle(R.string.sets_error_title);
         ab.setMessage(text);
 
-        ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent it = getIntent();
-                finish();
-                startActivity(it);
-            }
+        ab.setPositiveButton(R.string.welcomdlg_button, (dialog, which) -> {
+            Intent it = getIntent();
+            finish();
+            startActivity(it);
         });
         ab.setCancelable(false);
-        ab.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Intent it = getIntent();
-                finish();
-                startActivity(it);
-            }
+        ab.setOnDismissListener(dialog -> {
+            Intent it = getIntent();
+            finish();
+            startActivity(it);
         });
 
         ab.create().show();

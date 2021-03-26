@@ -2,7 +2,6 @@ package aq.metallists.loudbang;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -47,16 +46,13 @@ public class MessageDetailsActivity extends AppCompatActivity {
         sca = new SimpleCursorAdapter(this, R.layout.log_entry_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
-                switch (v.getId()) {
-                    case R.id.log_entry_summary:
-                        text = String.format(
-                                "SNR: %f Freq: %f Date: %s",
-                                this.getCursor().getDouble(this.getCursor().getColumnIndex("snr")),
-                                this.getCursor().getDouble(this.getCursor().getColumnIndex("freq")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("date"))
-                        );
-                        break;
-                    default:
+                if (v.getId() == R.id.log_entry_summary) {
+                    text = String.format(
+                            "SNR: %f Freq: %f Date: %s",
+                            this.getCursor().getDouble(this.getCursor().getColumnIndex("snr")),
+                            this.getCursor().getDouble(this.getCursor().getColumnIndex("freq")),
+                            this.getCursor().getString(this.getCursor().getColumnIndex("date"))
+                    );
                 }
                 super.setViewText(v, text);
             }
@@ -83,11 +79,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
             ab.setTitle(R.string.detailmsg_title);
             ab.setMessage(R.string.detailmsg_text);
 
-            ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            ab.setPositiveButton(R.string.welcomdlg_button, null);
 
             ab.create().show();
         }

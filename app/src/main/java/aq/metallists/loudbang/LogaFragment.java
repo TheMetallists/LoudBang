@@ -10,16 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -115,7 +112,7 @@ public class LogaFragment extends Fragment {
                             break;
                         }
 
-                        text = wtg.concat(" dBm");
+                        text = wtg + " dBm";
 
                         for (int i = 0; i < powervals.length; i++) {
                             if (powervals[i].equals(wtg)) {
@@ -162,45 +159,42 @@ public class LogaFragment extends Fragment {
 
         this.installSelectBoxes(root);
 
-        sca.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence charSequence) {
-                String sql = "SELECT " +
-                        "c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded " +
-                        "FROM contacts AS c " +
-                        "INNER JOIN messages AS m " +
-                        "ON c.message = m.id";
-                sql = sql.concat(" WHERE ");
-                String[] filters = charSequence.toString().split("/");
+        sca.setFilterQueryProvider(charSequence -> {
+            String sql = "SELECT " +
+                    "c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded " +
+                    "FROM contacts AS c " +
+                    "INNER JOIN messages AS m " +
+                    "ON c.message = m.id";
+            sql = sql + " WHERE ";
+            String[] filters = charSequence.toString().split("/");
 
-                if (filters.length == 2) {
-                    int band = Integer.parseInt(filters[0]);
-                    if (band > 0) {
-                        String[] bandarr = getActivity().getApplicationContext()
-                                .getResources().getStringArray(R.array.filter_bandarr_value);
-                        double freq = Double.parseDouble(bandarr[band]);
-                        if (freq > 0.001) {
-                            sql += String.format(Locale.ENGLISH,
-                                    "m.freq > %f AND m.freq < %f AND ", freq - 0.006, freq + 0.006);
-                        }
-                    }
-
-                    int date = Integer.parseInt(filters[1]);
-                    if (date > 0) {
-                        String[] datearr = getActivity().getApplicationContext()
-                                .getResources().getStringArray(R.array.filter_datearr_value);
-                        date = Integer.parseInt(datearr[date]);
-                        if (date > 0)
-                            sql += String.format(Locale.GERMANY,
-                                    "m.date > date('now','-%d seconds') AND ", date);
+            if (filters.length == 2) {
+                int band = Integer.parseInt(filters[0]);
+                if (band > 0) {
+                    String[] bandarr = getActivity().getApplicationContext()
+                            .getResources().getStringArray(R.array.filter_bandarr_value);
+                    double freq = Double.parseDouble(bandarr[band]);
+                    if (freq > 0.001) {
+                        sql += String.format(Locale.ENGLISH,
+                                "m.freq > %f AND m.freq < %f AND ", freq - 0.006, freq + 0.006);
                     }
                 }
 
-                sql = sql.concat(" 1=1 ;");
-                //Toast.makeText(LogaFragment.this.getContext(), sql, Toast.LENGTH_SHORT).show();
-
-                return db.getReadableDatabase().rawQuery(sql, null);
+                int date = Integer.parseInt(filters[1]);
+                if (date > 0) {
+                    String[] datearr = getActivity().getApplicationContext()
+                            .getResources().getStringArray(R.array.filter_datearr_value);
+                    date = Integer.parseInt(datearr[date]);
+                    if (date > 0)
+                        sql += String.format(Locale.GERMANY,
+                                "m.date > date('now','-%d seconds') AND ", date);
+                }
             }
+
+            sql = sql + " 1=1 ;";
+            //Toast.makeText(LogaFragment.this.getContext(), sql, Toast.LENGTH_SHORT).show();
+
+            return db.getReadableDatabase().rawQuery(sql, null);
         });
 
         lv.setAdapter(sca);
@@ -219,10 +213,7 @@ public class LogaFragment extends Fragment {
                     new IntentFilter("eme.eva.loudbang.message"));
 
 
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
+        pageViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });
         return root;
     }

@@ -2,7 +2,6 @@ package aq.metallists.loudbang;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -74,11 +73,7 @@ public class LBMainWindow extends AppCompatActivity {
             ab.setTitle(R.string.welcomdlg_title);
             ab.setMessage(R.string.welcomdlg_text);
 
-            ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            ab.setPositiveButton(R.string.welcomdlg_button, null);
 
             ab.create().show();
         }
@@ -100,21 +95,13 @@ public class LBMainWindow extends AppCompatActivity {
         db.setCancelable(true);
         db.setTitle(R.string.uploadabort_title);
         db.setMessage(R.string.uploadabort_text);
-        db.setPositiveButton(R.string.uploadabort_yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                stopService(new Intent(LBMainWindow.this, LBSpotUploadService.class));
-            }
-        });
+        db.setPositiveButton(R.string.uploadabort_yes, (dialogInterface, i) ->
+                stopService(new Intent(LBMainWindow.this, LBSpotUploadService.class)));
 
-        db.setNegativeButton(R.string.uploadabort_no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        db.setNegativeButton(R.string.uploadabort_no, (dialogInterface, i) ->
                 Toast.makeText(LBMainWindow.this,
                         R.string.spot_upload_aborted, Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+                        .show());
 
         db.create().show();
     }
