@@ -137,26 +137,17 @@ public class PlaceholderFragment extends Fragment
         ltb.setOnClickListener(v -> {
             List<String> permissionsToRequest = new ArrayList<>();
 
-            if (ContextCompat.checkSelfPermission(root.getContext(),
-                    Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-            ) {
-                permissionsToRequest.add(Manifest.permission.RECORD_AUDIO);
+            addPermissionToRequest(root,
+                    permissionsToRequest, Manifest.permission.RECORD_AUDIO);
+
+            if (sp.getBoolean("use_gps", false)) {
+                addPermissionToRequest(root,
+                        permissionsToRequest, Manifest.permission.ACCESS_FINE_LOCATION);
             }
 
-            if (PlaceholderFragment.this.sp.getBoolean("use_gps", false)) {
-                if (ContextCompat.checkSelfPermission(root.getContext(),
-                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                }
-            }
-
-            if (PlaceholderFragment.this.sp.getBoolean("use_celltowers", false)) {
-                if (ContextCompat.checkSelfPermission(root.getContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-                }
+            if (sp.getBoolean("use_celltowers", false)) {
+                addPermissionToRequest(root,
+                        permissionsToRequest, Manifest.permission.ACCESS_COARSE_LOCATION);
             }
 
 
@@ -252,6 +243,14 @@ public class PlaceholderFragment extends Fragment
 
         sp.registerOnSharedPreferenceChangeListener(this);
         return root;
+    }
+
+    private void addPermissionToRequest(final View view, final List<String> permissionsToRequest,
+                                        final String permission) {
+        if (ContextCompat.checkSelfPermission(view.getContext(), permission)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsToRequest.add(permission);
+        }
     }
 
     private String getBandName(String freq) {

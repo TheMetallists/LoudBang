@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -28,13 +29,14 @@ public class LBMainWindow extends AppCompatActivity {
     private MenuItem awakeItem = null;
 
     private void checkTheWakelock() {
+        final Window window = getWindow();
         if (isAwake) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             if (awakeItem != null) {
                 awakeItem.setChecked(true);
             }
         } else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             if (awakeItem != null) {
                 awakeItem.setChecked(false);
             }

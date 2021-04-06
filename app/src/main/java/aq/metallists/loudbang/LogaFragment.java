@@ -84,23 +84,24 @@ public class LogaFragment extends Fragment {
         sca = new SimpleCursorAdapter(this.getActivity(), R.layout.msglog_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
+                final Cursor cursor = this.getCursor();
                 switch (v.getId()) {
                     case R.id.msglog_message:
                         text = String.format(Locale.GERMAN,
                                 "%s %s %d",
-                                this.getCursor().getString(this.getCursor().getColumnIndex("call")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("grid")),
-                                this.getCursor().getInt(this.getCursor().getColumnIndex("power"))
+                                cursor.getString(cursor.getColumnIndex("call")),
+                                cursor.getString(cursor.getColumnIndex("grid")),
+                                cursor.getInt(cursor.getColumnIndex("power"))
                         );
                         break;
                     case R.id.msglog_log_distance:
                         text = Integer.toString((int) CJarInterface.WSPRGetDistanceBetweenLocators(
-                                this.getCursor().getString(this.getCursor().getColumnIndex("grid")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("mygrid"))
+                                cursor.getString(cursor.getColumnIndex("grid")),
+                                cursor.getString(cursor.getColumnIndex("mygrid"))
                         ));
                         break;
                     case R.id.msglog_power:
-                        int wattage = this.getCursor().getInt(this.getCursor().getColumnIndex("power"));
+                        int wattage = cursor.getInt(cursor.getColumnIndex("power"));
                         String wtg = Integer.toString(wattage);
 
                         String[] powervals = LogaFragment.this.getActivity()
@@ -124,17 +125,17 @@ public class LogaFragment extends Fragment {
                         break;
                     case R.id.msglog_log_snr:
                         text = String.format(Locale.GERMAN, "%.2f",
-                                this.getCursor().getFloat(
-                                        this.getCursor().getColumnIndex("snr")));
+                                cursor.getFloat(
+                                        cursor.getColumnIndex("snr")));
                         break;
                     case R.id.msglog_frequency:
                         text = String.format(Locale.GERMAN, "%.6f",
-                                this.getCursor().getFloat(
-                                        this.getCursor().getColumnIndex("freq")));
+                                cursor.getFloat(
+                                        cursor.getColumnIndex("freq")));
                         break;
                     case R.id.msglog_log_date:
-                        String date = this.getCursor().getString(
-                                this.getCursor().getColumnIndex("date"));
+                        String date = cursor.getString(
+                                cursor.getColumnIndex("date"));
                         try {
                             DateFormat dfOld = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -144,8 +145,8 @@ public class LogaFragment extends Fragment {
                         }
                         break;
                     case R.id.msglog_uploaded:
-                        if (this.getCursor().getInt(
-                                this.getCursor().getColumnIndex("uploaded")) > 0) {
+                        if (cursor.getInt(
+                                cursor.getColumnIndex("uploaded")) > 0) {
                             text = getString(R.string.lbl_log_uploaded_yes);
                         } else {
                             text = getString(R.string.lbl_log_uploaded_no);
@@ -200,11 +201,11 @@ public class LogaFragment extends Fragment {
         lv.setAdapter(sca);
 
         this.bs = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (!LogaFragment.this.sca.getCursor().isClosed())
-                    LogaFragment.this.sca.getCursor().requery();
+                final Cursor cursor = sca.getCursor();
+                if (!cursor.isClosed())
+                    cursor.requery();
             }
         };
 
@@ -221,32 +222,24 @@ public class LogaFragment extends Fragment {
     private void installSelectBoxes(View root) {
         final Spinner spBandFilter = root.findViewById(R.id.bandFilterSelect);
         final Spinner spDateFilter = root.findViewById(R.id.dateFilterSelect);
-        spBandFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                sca.getFilter().filter(
-                        String.format("%d/%d",
-                                spBandFilter.getSelectedItemPosition(),
-                                spDateFilter.getSelectedItemPosition()));
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-        spDateFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                sca.getFilter().filter(
-                        String.format("%d/%d",
-                                spBandFilter.getSelectedItemPosition(),
-                                spDateFilter.getSelectedItemPosition()));
-            }
+        final AdapterView.OnItemSelectedListener itemSelectedListener =
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view,
+                                               int position, long l) {
+                        sca.getFilter().filter(
+                                String.format("%d/%d",
+                                        spBandFilter.getSelectedItemPosition(),
+                                        spDateFilter.getSelectedItemPosition()));
+                    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                };
+        spBandFilter.setOnItemSelectedListener(itemSelectedListener);
+        spDateFilter.setOnItemSelectedListener(itemSelectedListener);
     }
 
     public void onDestroy() {
