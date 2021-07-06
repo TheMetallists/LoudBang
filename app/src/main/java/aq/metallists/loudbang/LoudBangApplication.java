@@ -3,8 +3,9 @@ package aq.metallists.loudbang;
 import android.app.Application;
 import android.content.Context;
 
-import org.acra.*;
-import org.acra.annotation.*;
+import org.acra.ACRA;
+import org.acra.BuildConfig;
+import org.acra.annotation.AcraCore;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.MailSenderConfigurationBuilder;
@@ -12,13 +13,6 @@ import org.acra.data.StringFormat;
 
 @AcraCore(buildConfigClass = BuildConfig.class)
 public class LoudBangApplication extends Application {
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-
-        ACRA.init(this, LoudBangApplication.getAcraBuilder(this));
-    }
 
     public static CoreConfigurationBuilder getAcraBuilder(Context ctx) {
         CoreConfigurationBuilder builder = new CoreConfigurationBuilder(ctx);
@@ -35,4 +29,10 @@ public class LoudBangApplication extends Application {
         return builder;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        ACRA.init(this, LoudBangApplication.getAcraBuilder(this));
+    }
 }

@@ -2,15 +2,14 @@ package aq.metallists.loudbang;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
-import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.DBHelper;
 
 public class MessageDetailsActivity extends AppCompatActivity {
@@ -36,31 +29,30 @@ public class MessageDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_details);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.message_details_toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView lv = findViewById(R.id.mdview);
+        ListView lv = findViewById(R.id.message_details_view);
         this.db = new DBHelper(this.getApplicationContext());
-        this.c = db.getReadableDatabase().query("messages", new String[]{"*", "id AS _id"}, null, null, null, null, null);
+        this.c = db.getReadableDatabase().query("messages",
+                new String[]{"*", "id AS _id"}, null,
+                null, null, null, null);
         this.startManagingCursor(this.c);
 
         String[] from = new String[]{"message", "freq"};
-        int[] to = new int[]{R.id.titlex, R.id.summaryx};
+        int[] to = new int[]{R.id.log_entry_title, R.id.log_entry_summary};
         sca = new SimpleCursorAdapter(this, R.layout.log_entry_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
-                switch (v.getId()) {
-                    case R.id.summaryx:
-                        text = String.format(
-                                "SNR: %f Freq: %f Date: %s",
-                                this.getCursor().getDouble(this.getCursor().getColumnIndex("snr")),
-                                this.getCursor().getDouble(this.getCursor().getColumnIndex("freq")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("date"))
-                        );
-                        break;
-                    default:
+                if (v.getId() == R.id.log_entry_summary) {
+                    text = String.format(
+                            "SNR: %f Freq: %f Date: %s",
+                            this.getCursor().getDouble(this.getCursor().getColumnIndex("snr")),
+                            this.getCursor().getDouble(this.getCursor().getColumnIndex("freq")),
+                            this.getCursor().getString(this.getCursor().getColumnIndex("date"))
+                    );
                 }
                 super.setViewText(v, text);
             }
@@ -77,7 +69,8 @@ public class MessageDetailsActivity extends AppCompatActivity {
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(bs, new IntentFilter("eme.eva.loudbang.message"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(bs,
+                new IntentFilter("eme.eva.loudbang.message"));
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if (!sp.getBoolean("msgdetails_dialog_shown", false)) {
@@ -86,16 +79,10 @@ public class MessageDetailsActivity extends AppCompatActivity {
             ab.setTitle(R.string.detailmsg_title);
             ab.setMessage(R.string.detailmsg_text);
 
-            ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            ab.setPositiveButton(R.string.welcomdlg_button, null);
 
             ab.create().show();
         }
-
     }
 
     public void onDestroy() {
@@ -103,5 +90,4 @@ public class MessageDetailsActivity extends AppCompatActivity {
         this.c.close();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(bs);
     }
-
 }

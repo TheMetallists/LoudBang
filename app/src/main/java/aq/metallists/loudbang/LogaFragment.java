@@ -6,48 +6,37 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FilterQueryProvider;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.DBHelper;
 import aq.metallists.loudbang.ui.main.PageViewModel;
-
 
 public class LogaFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+    private BroadcastReceiver bs;
+    private SimpleCursorAdapter sca;
+    private Cursor c;
+    private DBHelper db;
 
     public static LogaFragment newInstance(int index) {
         LogaFragment fragment = new LogaFragment();
@@ -60,7 +49,7 @@ public class LogaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
+        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -68,22 +57,20 @@ public class LogaFragment extends Fragment {
         pageViewModel.setIndex(index);
     }
 
-    private BroadcastReceiver bs;
-    private SimpleCursorAdapter sca;
-    private Cursor c;
-    private DBHelper db;
-
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_loga, container, false);
 
-        final ListView lv = (ListView) root.findViewById(R.id.loggerLV);
+        final ListView lv = root.findViewById(R.id.loggerLV);
 
         this.db = new DBHelper(this.getActivity().getApplicationContext());
         this.c = db.getReadableDatabase().rawQuery(
-                "SELECT c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded FROM contacts AS c INNER JOIN messages AS m ON c.message = m.id;"
+                "SELECT c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded " +
+                        "FROM contacts AS c " +
+                        "INNER JOIN messages AS m " +
+                        "ON c.message = m.id;"
                 , null);
         //this.getActivity().startManagingCursor(this.c);
 
@@ -91,39 +78,42 @@ public class LogaFragment extends Fragment {
                 "call", "grid", "power", "snr", "freq", "date", "uploaded"
         };
         int[] to = new int[]{
-                R.id.lt_message, R.id.log_distance, R.id.log_power, R.id.log_snr,
-                R.id.log_frequency, R.id.log_date, R.id.log_uploaded
+                R.id.msglog_message, R.id.msglog_log_distance, R.id.msglog_power, R.id.msglog_log_snr,
+                R.id.msglog_frequency, R.id.msglog_log_date, R.id.msglog_uploaded
         };
         sca = new SimpleCursorAdapter(this.getActivity(), R.layout.msglog_layout, this.c, from, to) {
             @Override
             public void setViewText(TextView v, String text) {
+                final Cursor cursor = this.getCursor();
                 switch (v.getId()) {
-                    case R.id.lt_message:
+                    case R.id.msglog_message:
                         text = String.format(Locale.GERMAN,
                                 "%s %s %d",
-                                this.getCursor().getString(this.getCursor().getColumnIndex("call")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("grid")),
-                                this.getCursor().getInt(this.getCursor().getColumnIndex("power"))
+                                cursor.getString(cursor.getColumnIndex("call")),
+                                cursor.getString(cursor.getColumnIndex("grid")),
+                                cursor.getInt(cursor.getColumnIndex("power"))
                         );
                         break;
-                    case R.id.log_distance:
+                    case R.id.msglog_log_distance:
                         text = Integer.toString((int) CJarInterface.WSPRGetDistanceBetweenLocators(
-                                this.getCursor().getString(this.getCursor().getColumnIndex("grid")),
-                                this.getCursor().getString(this.getCursor().getColumnIndex("mygrid"))
+                                cursor.getString(cursor.getColumnIndex("grid")),
+                                cursor.getString(cursor.getColumnIndex("mygrid"))
                         ));
                         break;
-                    case R.id.log_power:
-                        int wattage = this.getCursor().getInt(this.getCursor().getColumnIndex("power"));
+                    case R.id.msglog_power:
+                        int wattage = cursor.getInt(cursor.getColumnIndex("power"));
                         String wtg = Integer.toString(wattage);
 
-                        String[] powervals = LogaFragment.this.getActivity().getResources().getStringArray(R.array.sets_powerarr_value);
-                        String[] wattages = LogaFragment.this.getActivity().getResources().getStringArray(R.array.sets_wattages);
+                        String[] powervals = LogaFragment.this.getActivity()
+                                .getResources().getStringArray(R.array.sets_powerarr_value);
+                        String[] wattages = LogaFragment.this.getActivity()
+                                .getResources().getStringArray(R.array.sets_wattages);
                         if (powervals.length != wattages.length) {
                             text = "ERROR!";
                             break;
                         }
 
-                        text = wtg.concat(" dBm");
+                        text = wtg + " dBm";
 
                         for (int i = 0; i < powervals.length; i++) {
                             if (powervals[i].equals(wtg)) {
@@ -133,14 +123,19 @@ public class LogaFragment extends Fragment {
                         }
 
                         break;
-                    case R.id.log_snr:
-                        text = String.format(Locale.GERMAN, "%.2f", this.getCursor().getFloat(this.getCursor().getColumnIndex("snr")));
+                    case R.id.msglog_log_snr:
+                        text = String.format(Locale.GERMAN, "%.2f",
+                                cursor.getFloat(
+                                        cursor.getColumnIndex("snr")));
                         break;
-                    case R.id.log_frequency:
-                        text = String.format(Locale.GERMAN, "%.6f", this.getCursor().getFloat(this.getCursor().getColumnIndex("freq")));
+                    case R.id.msglog_frequency:
+                        text = String.format(Locale.GERMAN, "%.6f",
+                                cursor.getFloat(
+                                        cursor.getColumnIndex("freq")));
                         break;
-                    case R.id.log_date:
-                        String date = this.getCursor().getString(this.getCursor().getColumnIndex("date"));
+                    case R.id.msglog_log_date:
+                        String date = cursor.getString(
+                                cursor.getColumnIndex("date"));
                         try {
                             DateFormat dfOld = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -149,8 +144,9 @@ public class LogaFragment extends Fragment {
                             text = "ERROR";
                         }
                         break;
-                    case R.id.log_uploaded:
-                        if (this.getCursor().getInt(this.getCursor().getColumnIndex("uploaded")) > 0) {
+                    case R.id.msglog_uploaded:
+                        if (cursor.getInt(
+                                cursor.getColumnIndex("uploaded")) > 0) {
                             text = getString(R.string.lbl_log_uploaded_yes);
                         } else {
                             text = getString(R.string.lbl_log_uploaded_no);
@@ -164,96 +160,86 @@ public class LogaFragment extends Fragment {
 
         this.installSelectBoxes(root);
 
-        sca.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence charSequence) {
-                String sql = "SELECT " +
-                        "c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded " +
-                        "FROM contacts AS c " +
-                        "INNER JOIN messages AS m " +
-                        "ON c.message = m.id";
-                sql = sql.concat(" WHERE ");
-                String[] filters = charSequence.toString().split("/");
+        sca.setFilterQueryProvider(charSequence -> {
+            String sql = "SELECT " +
+                    "c.id AS _id,c.call,c.grid,c.power,c.mygrid,m.freq,m.date,m.snr,c.uploaded " +
+                    "FROM contacts AS c " +
+                    "INNER JOIN messages AS m " +
+                    "ON c.message = m.id";
+            sql = sql + " WHERE ";
+            String[] filters = charSequence.toString().split("/");
 
-                if (filters.length == 2) {
-                    int band = Integer.parseInt(filters[0]);
-                    if (band > 0) {
-                        String[] bandarr = getActivity().getApplicationContext().getResources().getStringArray(R.array.filter_bandarr_value);
-                        double freq = Double.parseDouble(bandarr[band]);
-                        if (freq > 0.001) {
-                            sql += String.format(Locale.ENGLISH, "m.freq > %f AND m.freq < %f AND ", (freq - 0.006), (freq + 0.006));
-                        }
-                    }
-
-                    int date = Integer.parseInt(filters[1]);
-                    if (date > 0) {
-                        String[] datearr = getActivity().getApplicationContext().getResources().getStringArray(R.array.filter_datearr_value);
-                        date = Integer.parseInt(datearr[date]);
-                        if (date > 0)
-                            sql += String.format(Locale.GERMANY, "m.date > date('now','-%d seconds') AND ", date);
+            if (filters.length == 2) {
+                int band = Integer.parseInt(filters[0]);
+                if (band > 0) {
+                    String[] bandarr = getActivity().getApplicationContext()
+                            .getResources().getStringArray(R.array.filter_bandarr_value);
+                    double freq = Double.parseDouble(bandarr[band]);
+                    if (freq > 0.001) {
+                        sql += String.format(Locale.ENGLISH,
+                                "m.freq > %f AND m.freq < %f AND ", freq - 0.006, freq + 0.006);
                     }
                 }
 
-
-                sql = sql.concat(" 1=1 ;");
-                //Toast.makeText(LogaFragment.this.getContext(), sql, Toast.LENGTH_SHORT).show();
-
-                return db.getReadableDatabase().rawQuery(
-                        sql
-                        , null);
+                int date = Integer.parseInt(filters[1]);
+                if (date > 0) {
+                    String[] datearr = getActivity().getApplicationContext()
+                            .getResources().getStringArray(R.array.filter_datearr_value);
+                    date = Integer.parseInt(datearr[date]);
+                    if (date > 0)
+                        sql += String.format(Locale.GERMANY,
+                                "m.date > date('now','-%d seconds') AND ", date);
+                }
             }
+
+            sql = sql + " 1=1 ;";
+            //Toast.makeText(LogaFragment.this.getContext(), sql, Toast.LENGTH_SHORT).show();
+
+            return db.getReadableDatabase().rawQuery(sql, null);
         });
 
         lv.setAdapter(sca);
 
-
         this.bs = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (!LogaFragment.this.sca.getCursor().isClosed())
-                    LogaFragment.this.sca.getCursor().requery();
+                final Cursor cursor = sca.getCursor();
+                if (!cursor.isClosed())
+                    cursor.requery();
             }
         };
 
         if (this.getActivity() != null)
-            LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bs, new IntentFilter("eme.eva.loudbang.message"));
+            LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bs,
+                    new IntentFilter("eme.eva.loudbang.message"));
 
 
-        pageViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
+        pageViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });
         return root;
     }
 
     private void installSelectBoxes(View root) {
-        final Spinner spBandFilter = (Spinner) root.findViewById(R.id.bandFilterSelect);
-        final Spinner spDateFilter = (Spinner) root.findViewById(R.id.dateFilterSelect);
-        spBandFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                sca.getFilter().filter(String.format("%d/%d", spBandFilter.getSelectedItemPosition(), spDateFilter.getSelectedItemPosition()));
-            }
+        final Spinner spBandFilter = root.findViewById(R.id.bandFilterSelect);
+        final Spinner spDateFilter = root.findViewById(R.id.dateFilterSelect);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+        final AdapterView.OnItemSelectedListener itemSelectedListener =
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view,
+                                               int position, long l) {
+                        sca.getFilter().filter(
+                                String.format("%d/%d",
+                                        spBandFilter.getSelectedItemPosition(),
+                                        spDateFilter.getSelectedItemPosition()));
+                    }
 
-            }
-        });
-        spDateFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                sca.getFilter().filter(String.format("%d/%d", spBandFilter.getSelectedItemPosition(), spDateFilter.getSelectedItemPosition()));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                };
+        spBandFilter.setOnItemSelectedListener(itemSelectedListener);
+        spDateFilter.setOnItemSelectedListener(itemSelectedListener);
     }
 
     public void onDestroy() {
@@ -262,6 +248,4 @@ public class LogaFragment extends Fragment {
         if (this.getActivity() != null)
             LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(bs);
     }
-
-
 }

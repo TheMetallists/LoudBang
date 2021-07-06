@@ -15,25 +15,28 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class WSPRNetSender {
-    private List<WNetMessage> msgs;
-    private DBHelper dh;
-    public WSPRNetSender(DBHelper _dh){
-        this.msgs = new ArrayList<WNetMessage>();
+    private final List<WNetMessage> msgs;
+    private final DBHelper dh;
+
+    public WSPRNetSender(DBHelper _dh) {
+        this.msgs = new ArrayList<>();
         this.dh = _dh;
     }
 
-    public void append(long contactID,String call, String grid, String power, Date date, double frequency, float snr, float dt, float drift){
-        this.msgs.add(new WNetMessage(contactID,call, grid, power, date, frequency, snr, dt, drift));
+    public void append(long contactID, String call, String grid, String power, Date date,
+                       double frequency, float snr, float dt, float drift) {
+        this.msgs.add(new WNetMessage(contactID, call, grid, power, date, frequency, snr, dt, drift));
     }
 
-    public void send(String rxgrid,String callsign,String band){
-        SQLiteStatement ps = dh.getWritableDatabase().compileStatement("UPDATE contacts SET uploaded=1 WHERE id=?;");
-        for(WNetMessage msg : this.msgs){
-            try{
-                msg.send(rxgrid,callsign,band);
-                ps.bindLong(1,msg.getDbID());
+    public void send(String rxgrid, String callsign, String band) {
+        SQLiteStatement ps = dh.getWritableDatabase().compileStatement(
+                "UPDATE contacts SET uploaded=1 WHERE id=?;");
+        for (WNetMessage msg : this.msgs) {
+            try {
+                msg.send(rxgrid, callsign, band);
+                ps.bindLong(1, msg.getDbID());
                 ps.executeUpdateDelete();
-            }catch (Exception x){
+            } catch (Exception x) {
                 x.printStackTrace();
             }
         }
@@ -51,7 +54,9 @@ public class WSPRNetSender {
         float dt;
         float drift;
         long dbID;
-        public WNetMessage(long dbID,String call, String grid, String power, Date date, double frequency, float snr, float dt, float drift){
+
+        public WNetMessage(long dbID, String call, String grid, String power, Date date,
+                           double frequency, float snr, float dt, float drift) {
             this.call = call;
             this.grid = grid;
             this.power = power;
@@ -63,13 +68,12 @@ public class WSPRNetSender {
             this.dbID = dbID;
         }
 
-        public void send(String rxgrid,String callsign,String band) throws Exception{
+        public void send(String rxgrid, String callsign, String band) throws Exception {
             DateFormat df = new SimpleDateFormat("yyMMdd");
             DateFormat df2 = new SimpleDateFormat("HHmm");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             df2.setTimeZone(TimeZone.getTimeZone("UTC"));
-    
-    
+
             Uri.Builder ub = new Uri.Builder();
             URL url = new URL(ub.scheme("https")
                     .authority("wsprnet.org")
@@ -81,10 +85,10 @@ public class WSPRNetSender {
                     .appendQueryParameter("date", df.format(date))
                     .appendQueryParameter("time", df2.format(date))
                     .appendQueryParameter("sig", Float.toString(Math.round(snr)))
-            
+
                     .appendQueryParameter("dt", Float.toString(dt))
                     .appendQueryParameter("drift", Float.toString(drift))
-            
+
                     .appendQueryParameter("tqrg", String.format(Locale.ROOT, "%.05f", frequency)) //?
                     .appendQueryParameter("tcall", call)
                     .appendQueryParameter("tgrid", grid)
@@ -92,21 +96,21 @@ public class WSPRNetSender {
                     .appendQueryParameter("version", "libQuietScream 0.0.4")
                     .appendQueryParameter("mode", "2")
                     .build().toString());
-    
+
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
             huc.setRequestMethod("GET");
             huc.setRequestProperty("User-Agent", "libQuietScream 0.0.4");
             huc.connect();
-    
+
             InputStream is = huc.getInputStream();
-    
+
             while (is.available() > 0) {
                 is.read();
             }
             is.close();
         }
-        
-        public long getDbID(){
+
+        public long getDbID() {
             return this.dbID;
         }
     }

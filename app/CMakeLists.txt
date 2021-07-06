@@ -2,7 +2,7 @@
 # This ensures that a certain set of CMake features is available to
 # your build.
 
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.10.2)
 
 # Specifies a library name, specifies whether the library is STATIC or
 # SHARED, and provides relative paths to the source code. You can
@@ -19,7 +19,7 @@ add_subdirectory( # Specifies the directory of the CMakeLists.txt file.
         ./src/main/cppfft/fftw-3.3.8/
         )
 
-set (wsprd_CSRCS
+set(wsprd_CSRCS
         src/main/jni/wsprd/wsprd.c
         src/main/jni/wsprd/wsprsim_utils.c
         src/main/jni/wsprd/wsprd_utils.c
@@ -31,25 +31,25 @@ set (wsprd_CSRCS
         )
 
 set(wenc_CSRCS
-	src/main/jni/lbenc2/wenc.c
-	src/main/jni/lbenc2/coder.c
+        src/main/jni/lbenc2/wenc.c
+        src/main/jni/lbenc2/coder.c
         )
 
 add_library( # Specifies the name of the library.
-             native-lib
+        native-lib
 
-             # Sets the library as a shared library.
-             SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-             # Provides a relative path to your source file(s).
-             src/main/jni/libloud.cpp
-             src/main/jni/locator_position_interface.cpp
+        # Provides a relative path to your source file(s).
+        src/main/jni/libloud.cpp
+        src/main/jni/locator_position_interface.cpp
         ${wsprd_CSRCS}
         ${wenc_CSRCS}
         )
 
-target_include_directories (native-lib PRIVATE ./src/main/cppfft/fftw-3.3.8/api/)
-target_link_libraries (native-lib
+target_include_directories(native-lib PRIVATE ./src/main/cppfft/fftw-3.3.8/api/)
+target_link_libraries(native-lib
         fftw3f
         m
         log

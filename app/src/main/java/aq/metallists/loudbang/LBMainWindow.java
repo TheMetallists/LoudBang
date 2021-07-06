@@ -2,32 +2,23 @@ package aq.metallists.loudbang;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
 
-
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.material.tabs.TabLayout;
 
 import aq.metallists.loudbang.cutil.DBToXMLConverter;
 import aq.metallists.loudbang.ui.main.SectionsPagerAdapter;
@@ -38,13 +29,14 @@ public class LBMainWindow extends AppCompatActivity {
     private MenuItem awakeItem = null;
 
     private void checkTheWakelock() {
+        final Window window = getWindow();
         if (isAwake) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             if (awakeItem != null) {
                 awakeItem.setChecked(true);
             }
         } else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             if (awakeItem != null) {
                 awakeItem.setChecked(false);
             }
@@ -63,13 +55,14 @@ public class LBMainWindow extends AppCompatActivity {
 
         setContentView(R.layout.activity_lbmain_window);
 
-        Toolbar lb = findViewById(R.id.toolbarx);
+        Toolbar lb = findViewById(R.id.lbmain_toolbar);
         setSupportActionBar(lb);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter
+                = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.lbmain_viewpager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
+        TabLayout tabs = findViewById(R.id.lbmain_tablayout);
         tabs.setupWithViewPager(viewPager);
 
         this.sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,16 +75,10 @@ public class LBMainWindow extends AppCompatActivity {
             ab.setTitle(R.string.welcomdlg_title);
             ab.setMessage(R.string.welcomdlg_text);
 
-            ab.setPositiveButton(R.string.welcomdlg_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            ab.setPositiveButton(R.string.welcomdlg_button, null);
 
             ab.create().show();
         }
-
     }
 
     @Override
@@ -110,19 +97,13 @@ public class LBMainWindow extends AppCompatActivity {
         db.setCancelable(true);
         db.setTitle(R.string.uploadabort_title);
         db.setMessage(R.string.uploadabort_text);
-        db.setPositiveButton(R.string.uploadabort_yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                stopService(new Intent(LBMainWindow.this, LBSpotUploadService.class));
-            }
-        });
+        db.setPositiveButton(R.string.uploadabort_yes, (dialogInterface, i) ->
+                stopService(new Intent(LBMainWindow.this, LBSpotUploadService.class)));
 
-        db.setNegativeButton(R.string.uploadabort_no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(LBMainWindow.this, R.string.spot_upload_aborted, Toast.LENGTH_LONG).show();
-            }
-        });
+        db.setNegativeButton(R.string.uploadabort_no, (dialogInterface, i) ->
+                Toast.makeText(LBMainWindow.this,
+                        R.string.spot_upload_aborted, Toast.LENGTH_LONG)
+                        .show());
 
         db.create().show();
     }
@@ -135,7 +116,7 @@ public class LBMainWindow extends AppCompatActivity {
             return true;
 
         switch (item.getItemId()) {
-            case R.id.mnu_go_settings:
+            case R.id.mnu_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
                 break;
@@ -152,13 +133,15 @@ public class LBMainWindow extends AppCompatActivity {
             case R.id.mnu_switch_mode_next:
                 sp.edit().putBoolean("switch_mode_next", true).apply();
                 if (sp.getBoolean("use_tx", false)) {
-                    Toast.makeText(getApplicationContext(), R.string.status_lbl_mode_switched_rx, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.status_lbl_mode_switched_rx, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.status_lbl_mode_switched_tx, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.status_lbl_mode_switched_tx, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
-            case R.id.mnu_upload_remaining_items:
+            case R.id.mnu_database_upload_remaining_items:
                 if (!this.isMyServiceRunning(LBSpotUploadService.class)) {
                     startService(new Intent(this, LBSpotUploadService.class));
                 } else {
@@ -168,18 +151,22 @@ public class LBMainWindow extends AppCompatActivity {
 
             case R.id.mnu_database_export:
                 try {
-                    (new DBToXMLConverter(this.getApplicationContext())).exportToXML();
+                    new DBToXMLConverter(this.getApplicationContext()).exportToXML();
                 } catch (Exception x) {
                     x.printStackTrace();
-                    Toast.makeText(getApplicationContext(), R.string.error_exporting, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_exporting, Toast.LENGTH_LONG)
+                            .show();
                 }
                 break;
             case R.id.mnu_database_wipe:
                 try {
-                    (new DBToXMLConverter(this)).wipeOut();
+                    new DBToXMLConverter(this).wipeOut();
                 } catch (Exception x) {
                     x.printStackTrace();
-                    Toast.makeText(getApplicationContext(), R.string.error_wiping, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_wiping, Toast.LENGTH_LONG)
+                            .show();
                 }
                 break;
             case R.id.mnu_about:
@@ -270,5 +257,4 @@ public class LBMainWindow extends AppCompatActivity {
         }
         return false;
     }
-
 }

@@ -1,51 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LBMainWindow">
-    <item android:id="@+id/mnu_go_settings"
-        android:title="@string/mnu_lbl_settings"/>
+    <item
+        android:id="@+id/mnu_settings"
+        android:title="@string/mnu_lbl_settings" />
 
-    <item android:id="@+id/mnu_go_band"
+    <item
         android:title="@string/mnu_lbl_bands">
         <menu>
-            <item android:id="@+id/mnu_setband_b33400m" android:title="@string/bandplan_b33400m" />
-            <item android:id="@+id/mnu_setband_b2200m" android:title="@string/bandplan_b2200m" />
-            <item android:id="@+id/mnu_setband_b600m" android:title="@string/bandplan_b600m" />
-            <item android:id="@+id/mnu_setband_b160m" android:title="@string/bandplan_b160m" />
-            <item android:id="@+id/mnu_setband_b80m" android:title="@string/bandplan_b80m" />
-            <item android:id="@+id/mnu_setband_b80m_jp" android:title="@string/bandplan_b80m_jp" />
-            <item android:id="@+id/mnu_setband_b60m" android:title="@string/bandplan_b60m" />
-            <item android:id="@+id/mnu_setband_b60m_eu" android:title="@string/bandplan_b60m_eu" />
-            <item android:id="@+id/mnu_setband_b40m" android:title="@string/bandplan_b40m" />
-            <item android:id="@+id/mnu_setband_b30m" android:title="@string/bandplan_b30m" />
-            <item android:id="@+id/mnu_setband_b20m" android:title="@string/bandplan_b20m" />
-            <item android:id="@+id/mnu_setband_b17m" android:title="@string/bandplan_b17m" />
-            <item android:id="@+id/mnu_setband_b15m" android:title="@string/bandplan_b15m" />
-            <item android:id="@+id/mnu_setband_b12m" android:title="@string/bandplan_b12m" />
-            <item android:id="@+id/mnu_setband_b10m" android:title="@string/bandplan_b10m" />
-            <item android:id="@+id/mnu_setband_b6m" android:title="@string/bandplan_b6m" />
-            <item android:id="@+id/mnu_setband_b4m" android:title="@string/bandplan_b4m" />
-            <item android:id="@+id/mnu_setband_b2m" android:title="@string/bandplan_b2m" />
-            <item android:id="@+id/mnu_setband_b70cm" android:title="@string/bandplan_b70cm" />
-            <item android:id="@+id/mnu_setband_b23cm" android:title="@string/bandplan_b23cm" />
+            <item
+                android:id="@+id/mnu_setband_b33400m"
+                android:title="@string/bandplan_b33400m" />
+            <item
+                android:id="@+id/mnu_setband_b2200m"
+                android:title="@string/bandplan_b2200m" />
+            <item
+                android:id="@+id/mnu_setband_b600m"
+                android:title="@string/bandplan_b600m" />
+            <item
+                android:id="@+id/mnu_setband_b160m"
+                android:title="@string/bandplan_b160m" />
+            <item
+                android:id="@+id/mnu_setband_b80m"
+                android:title="@string/bandplan_b80m" />
+            <item
+                android:id="@+id/mnu_setband_b80m_jp"
+                android:title="@string/bandplan_b80m_jp" />
+            <item
+                android:id="@+id/mnu_setband_b60m"
+                android:title="@string/bandplan_b60m" />
+            <item
+                android:id="@+id/mnu_setband_b60m_eu"
+                android:title="@string/bandplan_b60m_eu" />
+            <item
+                android:id="@+id/mnu_setband_b40m"
+                android:title="@string/bandplan_b40m" />
+            <item
+                android:id="@+id/mnu_setband_b30m"
+                android:title="@string/bandplan_b30m" />
+            <item
+                android:id="@+id/mnu_setband_b20m"
+                android:title="@string/bandplan_b20m" />
+            <item
+                android:id="@+id/mnu_setband_b17m"
+                android:title="@string/bandplan_b17m" />
+            <item
+                android:id="@+id/mnu_setband_b15m"
+                android:title="@string/bandplan_b15m" />
+            <item
+                android:id="@+id/mnu_setband_b12m"
+                android:title="@string/bandplan_b12m" />
+            <item
+                android:id="@+id/mnu_setband_b10m"
+                android:title="@string/bandplan_b10m" />
+            <item
+                android:id="@+id/mnu_setband_b6m"
+                android:title="@string/bandplan_b6m" />
+            <item
+                android:id="@+id/mnu_setband_b4m"
+                android:title="@string/bandplan_b4m" />
+            <item
+                android:id="@+id/mnu_setband_b2m"
+                android:title="@string/bandplan_b2m" />
+            <item
+                android:id="@+id/mnu_setband_b70cm"
+                android:title="@string/bandplan_b70cm" />
+            <item
+                android:id="@+id/mnu_setband_b23cm"
+                android:title="@string/bandplan_b23cm" />
         </menu>
     </item>
 
-    <item android:id="@+id/mnu_wake_lock" android:title="@string/mnu_lbl_wakelock" android:checkable="true" />
-    <item android:id="@+id/mnu_go_msgdetails" android:title="@string/mnu_lbl_msgdetails" />
-    <item android:id="@+id/mnu_switch_mode_next" android:title="@string/mnu_switch_next_mode" />
+    <item
+        android:id="@+id/mnu_wake_lock"
+        android:checkable="true"
+        android:title="@string/mnu_lbl_wakelock" />
+    <item
+        android:id="@+id/mnu_go_msgdetails"
+        android:title="@string/mnu_lbl_msgdetails" />
+    <item
+        android:id="@+id/mnu_switch_mode_next"
+        android:title="@string/mnu_switch_next_mode" />
 
-    <item android:id="@+id/mnu_database_options" android:title="@string/mnu_local_database">
+    <item
+        android:title="@string/mnu_local_database">
         <menu>
-            <item android:id="@+id/mnu_upload_remaining_items" android:title="@string/lbl_upload_remaining"/>
-            <item android:id="@+id/mnu_database_export" android:title="@string/mnu_local_database_export" />
-            <item android:id="@+id/mnu_database_wipe" android:title="@string/mnu_local_database_wipe" />
+            <item
+                android:id="@+id/mnu_database_upload_remaining_items"
+                android:title="@string/lbl_upload_remaining" />
+            <item
+                android:id="@+id/mnu_database_export"
+                android:title="@string/mnu_local_database_export" />
+            <item
+                android:id="@+id/mnu_database_wipe"
+                android:title="@string/mnu_local_database_wipe" />
         </menu>
     </item>
 
-
-
-
-    <item android:id="@+id/mnu_about" android:title="@string/mnu_about"/>
+    <item
+        android:id="@+id/mnu_about"
+        android:title="@string/mnu_about" />
 </menu>

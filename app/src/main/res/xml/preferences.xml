@@ -2,113 +2,120 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/sets_urdata_group">
-
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/sets_urdata_group">
         <EditTextPreference
             android:defaultValue="R0TST"
             android:key="callsign"
             android:title="@string/sets_callsign_title"
+            app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
-
         <EditTextPreference
             android:defaultValue="LO05io"
             android:key="gridsq"
             android:title="@string/sets_grid_title"
+            app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
-
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/sets_powerarr_name"
             android:entryValues="@array/sets_powerarr_value"
             android:key="outpower"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/sets_your_power" />
-
+            android:title="@string/sets_your_power"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="14.0956"
             android:entries="@array/sets_bandarr_name"
             android:entryValues="@array/sets_bandarr_value"
             android:key="band"
-            app:useSimpleSummaryProvider="true"
-            android:title="@string/sets_band" />
-
-        <SwitchPreference
+            android:title="@string/sets_band"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="lsb_mode"
             android:summary="Use LSB mode (tx only, tune 3khz higher)"
-            android:title="LSB Mode" />
-        <SwitchPreference
+            android:title="LSB Mode"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="report_volume"
-            android:title="Show volume"
             android:summary="Looks cool, may freeze."
-            />
-
+            android:title="Show volume"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sets_location_group">
-        <SwitchPreference
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/sets_location_group">
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="use_gps"
             android:summary="@string/sets_use_gps_sum"
-            android:title="@string/sets_use_gps" />
-
-        <SwitchPreference
+            android:title="@string/sets_use_gps"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="use_celltowers"
             android:summary="@string/sets_use_celltower_summary"
-            android:title="@string/sets_use_celltower" />
-
-        <SwitchPreference
+            android:title="@string/sets_use_celltower"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="use_6letter"
             android:summary="@string/sets_use_6letter_sum"
-            android:title="@string/sets_use_6letter" />
-
+            android:title="@string/sets_use_6letter"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sets_transmit_group">
-        <SwitchPreference
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/sets_transmit_group">
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="use_tx"
             android:summary="@string/sets_use_transmit_sum"
-            android:title="@string/sets_use_transmit" />
-
+            android:title="@string/sets_use_transmit"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="25"
-            android:key="tx_probability"
             android:dependency="use_tx"
-            android:title="@string/sets_tx_dutycycle"
             android:inputType="number"
+            android:key="tx_probability"
             android:summary="@string/sets_tx_dutycycle_sum"
-            />
+            android:title="@string/sets_tx_dutycycle"
+            app:iconSpaceReserved="false" />
         <ListPreference
-            android:key="tx_output"
             android:defaultValue="call"
             android:dependency="use_tx"
             android:entries="@array/sets_sndoutarr_name"
             android:entryValues="@array/sets_sndoutarr_value"
-            app:useSimpleSummaryProvider="true"
+            android:key="tx_output"
             android:title="@string/sets_tx_sndout"
-            />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:key="ptt_ctl"
             android:defaultValue="none"
             android:dependency="use_tx"
             android:entries="@array/sets_pttctl_name"
             android:entryValues="@array/sets_pttctl_value"
-            app:useSimpleSummaryProvider="true"
+            android:key="ptt_ctl"
             android:title="@string/sets_tx_pttctl"
-            />
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sets_network_group">
-        <SwitchPreference
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/sets_network_group">
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="use_network"
             android:summary="@string/sets_use_upload_spots_sum"
-            android:title="@string/sets_use_upload_spots" />
+            android:title="@string/sets_use_upload_spots"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
-
 
 </PreferenceScreen>

@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
-import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +25,11 @@ import aq.metallists.loudbang.cutil.DBHelper;
 import aq.metallists.loudbang.cutil.WSPRNetSender;
 
 public class LBSpotUploadService extends Service implements Runnable {
+    public static final String NOTCH_ID = "LBSpotUploadServiceChannel";
+    NotificationCompat.Builder ncb;
+    Thread tht;
+    boolean quitter = false; // TODO: decide how to quit properly.
+
     public LBSpotUploadService() {
     }
 
@@ -33,9 +37,6 @@ public class LBSpotUploadService extends Service implements Runnable {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-    NotificationCompat.Builder ncb;
-    Thread tht;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -46,7 +47,8 @@ public class LBSpotUploadService extends Service implements Runnable {
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.state_uploading_spots))
                 .setSmallIcon(R.drawable.ic_bomb)
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, LBMainWindow.class), 0))
+                .setContentIntent(PendingIntent.getActivity(this, 0,
+                        new Intent(this, LBMainWindow.class), 0))
                 .setProgress(100, 0, true);
         startForeground(1, this.ncb.build());
         this.tht = new Thread(this);
@@ -55,12 +57,11 @@ public class LBSpotUploadService extends Service implements Runnable {
         return START_NOT_STICKY;
     }
 
-    public static final String NOTCH_ID = "LBSpotUploadServiceChannel";
-
     private void createNotificationChannel() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel nc = new NotificationChannel(NOTCH_ID, "Foreground SC", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationChannel nc = new NotificationChannel(
+                        NOTCH_ID, "Foreground SC", NotificationManager.IMPORTANCE_DEFAULT);
                 NotificationManager nm = getSystemService(NotificationManager.class);
                 nm.createNotificationChannel(nc);
             }
@@ -68,7 +69,6 @@ public class LBSpotUploadService extends Service implements Runnable {
             x.printStackTrace();
         }
     }
-
 
     private void getAndSendSpots() {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -87,7 +87,9 @@ public class LBSpotUploadService extends Service implements Runnable {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         if (sp.getString("callsign", "xxxRT3STxxx").equals("xxxRT3STxxx")) {
-            Toast.makeText(this, R.string.error_spotupload_nocall, Toast.LENGTH_LONG).show();
+            Toast.makeText(this,
+                    R.string.error_spotupload_nocall,
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -137,8 +139,6 @@ public class LBSpotUploadService extends Service implements Runnable {
 
         c.close();
     }
-
-    boolean quitter = false; // TODO: decide how to quit properly.
 
     @Override
     public void onDestroy() {
@@ -207,7 +207,9 @@ public class LBSpotUploadService extends Service implements Runnable {
         if (sfreq.startsWith("1296.5")) {
             return "1296.500";
         }
-        Toast.makeText(this.getApplicationContext(), "FRQ. does not belongs to any known band.\n".concat(sfreq), Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getApplicationContext(),
+                "FRQ. does not belongs to any known band.\n" + sfreq,
+                Toast.LENGTH_LONG).show();
         throw new IllegalArgumentException("Frequency dows not belong to any known band.");
     }
 
@@ -217,6 +219,7 @@ public class LBSpotUploadService extends Service implements Runnable {
             this.getAndSendSpots();
         } catch (Exception x) {
             x.printStackTrace();
+
 
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
@@ -228,7 +231,6 @@ public class LBSpotUploadService extends Service implements Runnable {
                             , Toast.LENGTH_LONG).show();
                 }
             });
-
 
         }
         stopSelf();

@@ -19,7 +19,7 @@ public class WSPRMessage {
         this.dt = dt;
         this.drift = drift;
 
-        out = "".concat(Float.toString(snr)).concat(" -> ").concat(Double.toString(freq)).concat(" -> ").concat(message);
+        out = "" + snr + " -> " + freq + " -> " + message;
     }
 
     public float getSNR() {
