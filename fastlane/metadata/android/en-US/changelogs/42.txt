@@ -1,0 +1,5 @@
+Fixed bugs from Github issues tab,
+such as about dialog crash,
+crash on upload failure,
+fixed typos in Russian (pull request)
+Accepted a pull request with numerous QoL fixes.
