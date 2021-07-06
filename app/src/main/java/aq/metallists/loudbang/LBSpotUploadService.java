@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -215,11 +217,19 @@ public class LBSpotUploadService extends Service implements Runnable {
             this.getAndSendSpots();
         } catch (Exception x) {
             x.printStackTrace();
-            Toast.makeText(getApplicationContext(),
-                    getString(R.string.error_uploading_spots)
-                            .concat("\n")
-                            .concat(x.getMessage())
-                    , Toast.LENGTH_LONG).show();
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_uploading_spots)
+                                    .concat("\n")
+                                    .concat(x.getMessage())
+                            , Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         }
         stopSelf();
     }
