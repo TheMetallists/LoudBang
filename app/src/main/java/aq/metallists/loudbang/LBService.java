@@ -100,11 +100,14 @@ public class LBService extends Service implements Runnable,
 
         this.sp.registerOnSharedPreferenceChangeListener(this);
 
+
         this.glm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (sp.getBoolean("use_gps", false)) {
             try {
-                glm.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 10, 0, this);
+
+                if (glm.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
+
             } catch (SecurityException sx) {
                 Toast.makeText(this,
                         getString(R.string.error_fine_loca), Toast.LENGTH_LONG)

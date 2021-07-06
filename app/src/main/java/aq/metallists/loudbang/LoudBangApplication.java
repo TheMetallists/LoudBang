@@ -21,7 +21,7 @@ public class LoudBangApplication extends Application {
                 .setResText(R.string.acra_sendmail_required)
                 .setEnabled(true);
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class)
-                .setMailTo("metallists@outlook.com")
+                .setMailTo("themetallists@freemail.hu")
                 .setSubject("ACRA ERROR REPORT")
                 .setReportAsFile(false)
                 .setEnabled(true);
