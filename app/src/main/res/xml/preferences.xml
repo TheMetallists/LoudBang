@@ -88,7 +88,7 @@
             android:title="@string/sets_tx_dutycycle"
             app:iconSpaceReserved="false" />
         <ListPreference
-            android:defaultValue="call"
+            android:defaultValue="music"
             android:dependency="use_tx"
             android:entries="@array/sets_sndoutarr_name"
             android:entryValues="@array/sets_sndoutarr_value"

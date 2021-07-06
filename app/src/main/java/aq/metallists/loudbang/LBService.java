@@ -446,7 +446,7 @@ public class LBService extends Service implements Runnable,
 
                 int output_line = AudioManager.STREAM_VOICE_CALL;
 
-                switch (this.sp.getString("tx_output", "call")) {
+                switch (this.sp.getString("tx_output", "music")) {
                     case "ring":
                         output_line = AudioManager.STREAM_RING;
                         break;
@@ -456,7 +456,7 @@ public class LBService extends Service implements Runnable,
                     case "alarm":
                         output_line = AudioManager.STREAM_ALARM;
                         break;
-                    case "call":
+                    //case "call":
                     default:
                         output_line = AudioManager.STREAM_VOICE_CALL;
                         break;
