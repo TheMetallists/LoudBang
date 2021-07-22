@@ -1,0 +1,3 @@
+Notifications are now silent
+(but still make sure you disable all sounds except selected output source)
+About window crash fixed

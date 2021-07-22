@@ -47,6 +47,7 @@ public class LBSpotUploadService extends Service implements Runnable {
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.state_uploading_spots))
                 .setSmallIcon(R.drawable.ic_bomb)
+                .setNotificationSilent()
                 .setContentIntent(PendingIntent.getActivity(this, 0,
                         new Intent(this, LBMainWindow.class), 0))
                 .setProgress(100, 0, true);

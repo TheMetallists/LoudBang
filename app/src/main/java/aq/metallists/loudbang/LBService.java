@@ -93,6 +93,7 @@ public class LBService extends Service implements Runnable,
                 .setContentText(getString(R.string.sv_status_startin))
                 .setSmallIcon(icon)
                 .setContentIntent(pi)
+                .setNotificationSilent()
                 .build();
 
         startForeground(1, nt);
@@ -228,8 +229,9 @@ public class LBService extends Service implements Runnable,
                     .setContentText(status)
                     .setSmallIcon(icon)
                     .setContentIntent(pi)
+                    .setNotificationSilent()
                     .build();
-
+            
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(1, nt);
         }
