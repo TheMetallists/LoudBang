@@ -9,8 +9,8 @@ android {
         applicationId "aq.metallists.loudbang"
         minSdkVersion 14
         targetSdkVersion 30
-        versionCode 43
-        versionName "0.43"
+        versionCode 44
+        versionName "0.44"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
