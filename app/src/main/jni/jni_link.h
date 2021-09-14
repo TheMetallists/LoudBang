@@ -23,6 +23,10 @@ extern "C" {
 JNIEXPORT jbyteArray JNICALL Java_aq_metallists_loudbang_cutil_CJarInterface_WSPREncodeToPCM
         (JNIEnv *, jclass, jstring, jstring, jint, jint,jboolean);
 
+extern "C"
+JNIEXPORT jint JNICALL
+Java_aq_metallists_loudbang_cutil_CJarInterface_radioCheck(JNIEnv *env, jclass clazz, jint testvar);
+
 
 }
 

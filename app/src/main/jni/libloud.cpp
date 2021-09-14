@@ -74,6 +74,14 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPREncodeToPCM
 }
 
 
+extern "C"
+JNIEXPORT jint JNICALL
+Java_aq_metallists_loudbang_cutil_CJarInterface_radioCheck(JNIEnv *env, jclass clazz,
+                                                           jint testvar) {
+    return (jint) (testvar * 42);
+}
+
+
 unsigned char *as_unsigned_char_array(JNIEnv *env, jbyteArray array) {
     int len = env->GetArrayLength(array);
     unsigned char *buf = new unsigned char[len];
@@ -82,7 +90,8 @@ unsigned char *as_unsigned_char_array(JNIEnv *env, jbyteArray array) {
 }
 
 extern "C" jobjectArray jani_do_process(JNIEnv *env, jclass clazz,
-                                        unsigned char *soundarr, int len, double jdialfreq,jboolean lsb_mode);
+                                        unsigned char *soundarr, int len, double jdialfreq,
+                                        jboolean lsb_mode);
 
 extern "C"
 JNIEXPORT jobjectArray
@@ -93,7 +102,7 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPRDecodeFromPcm(JNIEnv *env, j
                                                                   jdouble dialfreq, jboolean lsb) {
     unsigned char *soundarr = as_unsigned_char_array(env, sound);
 
-    return jani_do_process(env, clazz, soundarr, (int) env->GetArrayLength(sound), dialfreq,lsb);
+    return jani_do_process(env, clazz, soundarr, (int) env->GetArrayLength(sound), dialfreq, lsb);
 }
 
 

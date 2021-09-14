@@ -15,4 +15,6 @@ public class CJarInterface {
     public static native double WSPRGetDistanceBetweenLocators(String a, String b);
 
     public static native String WSPRLatLonToGSQ(double lat, double lon);
+
+    public static native int radioCheck(int testvar);
 }

@@ -1,28 +1,28 @@
 /*
  This file is part of program wsprd, a detector/demodulator/decoder
  for the Weak Signal Propagation Reporter (WSPR) mode.
- 
+
  File name: wsprd.c
- 
+
  Copyright 2001-2018, Joe Taylor, K1JT
- 
+
  Much of the present code is based on work by Steven Franke, K9AN,
  which in turn was based on earlier work by K1JT.
- 
+
  Copyright 2014-2018, Steven Franke, K9AN
- 
+
  License: GNU GPL v3
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -339,8 +339,8 @@ void sync_and_demodulate(float *id, float *qd, long np,
     if (mode == 2) {
         *sync = syncmax;
         for (i = 0; i < WSPR_NUMSYMBOLS; i++) {              //Normalize the soft symbols
-            fsum = fsum + fsymb[i] / (float)WSPR_NUMSYMBOLS;
-            f2sum = f2sum + fsymb[i] * fsymb[i] / (float)WSPR_NUMSYMBOLS;
+            fsum = fsum + fsymb[i] / (float) WSPR_NUMSYMBOLS;
+            f2sum = f2sum + fsymb[i] * fsymb[i] / (float) WSPR_NUMSYMBOLS;
         }
         fac = sqrt(f2sum - fsum * fsum);
         for (i = 0; i < WSPR_NUMSYMBOLS; i++) {
@@ -495,8 +495,8 @@ void noncoherent_sequence_detection(float *id, float *qd, long np,
         }
     }
     for (i = 0; i < WSPR_NUMSYMBOLS; i++) {              //Normalize the soft symbols
-        fsum = fsum + fsymb[i] / (float)WSPR_NUMSYMBOLS;
-        f2sum = f2sum + fsymb[i] * fsymb[i] / (float)WSPR_NUMSYMBOLS;
+        fsum = fsum + fsymb[i] / (float) WSPR_NUMSYMBOLS;
+        f2sum = f2sum + fsymb[i] * fsymb[i] / (float) WSPR_NUMSYMBOLS;
     }
     fac = sqrt(f2sum - fsum * fsum);
     for (i = 0; i < WSPR_NUMSYMBOLS; i++) {
@@ -770,7 +770,8 @@ ReadWavFileEx(unsigned char *soundarr, int sarlen, int ntrmin, float *idat, floa
     short *buf2;
 
 
-    buf2 = calloc(npoints, sizeof(short));
+    buf2 = malloc((npoints + 2) * sizeof(short)); // fatality?
+    printf("MEMCPY: %d -> %d", sarlen, npoints + 2 * sizeof(short));
     memcpy(buf2, soundarr, (size_t) sarlen);
 
 
@@ -1192,7 +1193,8 @@ jobjectArray jani_do_process(JNIEnv *env, jclass clazz,
                     for (idrift = -maxdrift; idrift <= maxdrift; idrift++) {  //Drift search
                         ss = 0.0;
                         pow = 0.0;
-                        for (k = 0; k < WSPR_NUMSYMBOLS; k++) {                             //Sum over symbols
+                        for (k = 0; k <
+                                    WSPR_NUMSYMBOLS; k++) {                             //Sum over symbols
                             ifd = ifr + ((float) k - 81.0) / 81.0 * ((float) idrift) / (2.0 * df);
                             kindex = k0 + 2 * k;
                             if (kindex < nffts) {
@@ -1345,14 +1347,14 @@ jobjectArray jani_do_process(JNIEnv *env, jclass clazz,
                         y = (float) symbols[i] - 128.0;
                         sq += y * y;
                     }
-                    rms = sqrt(sq / (float)WSPR_NUMSYMBOLS);
+                    rms = sqrt(sq / (float) WSPR_NUMSYMBOLS);
 
                     if ((sync1 > minsync2) && (rms > minrms)) {
                         deinterleave(symbols);
 
                         if (lsb_mode) {
                             for (i = 0; i < WSPR_NUMSYMBOLS; i++) {
-                                symbols[i] = (unsigned char)4 - symbols[i];
+                                symbols[i] = (unsigned char) 4 - symbols[i];
                             }
                         }
 
@@ -1993,7 +1995,8 @@ int main(int argc, char *argv[]) {
                     for (idrift = -maxdrift; idrift <= maxdrift; idrift++) {  //Drift search
                         ss = 0.0;
                         pow = 0.0;
-                        for (k = 0; k < WSPR_NUMSYMBOLS; k++) {                             //Sum over symbols
+                        for (k = 0; k <
+                                    WSPR_NUMSYMBOLS; k++) {                             //Sum over symbols
                             ifd = ifr + ((float) k - 81.0) / 81.0 * ((float) idrift) / (2.0 * df);
                             kindex = k0 + 2 * k;
                             if (kindex < nffts) {
@@ -2146,7 +2149,7 @@ int main(int argc, char *argv[]) {
                         y = (float) symbols[i] - 128.0;
                         sq += y * y;
                     }
-                    rms = sqrt(sq / (float)WSPR_NUMSYMBOLS);
+                    rms = sqrt(sq / (float) WSPR_NUMSYMBOLS);
 
                     if ((sync1 > minsync2) && (rms > minrms)) {
                         deinterleave(symbols);

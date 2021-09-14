@@ -20,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import aq.metallists.loudbang.cutil.CJarInterface;
 import aq.metallists.loudbang.cutil.DBToXMLConverter;
 import aq.metallists.loudbang.ui.main.SectionsPagerAdapter;
 
@@ -79,6 +80,8 @@ public class LBMainWindow extends AppCompatActivity {
 
             ab.create().show();
         }
+
+        CJarInterface.radioCheck(42);
     }
 
     @Override
