@@ -22,7 +22,9 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.text.format.Time;
 import android.util.Log;
@@ -32,6 +34,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
+
+import org.acra.ACRA;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -110,9 +114,7 @@ public class LBService extends Service implements Runnable,
                     glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
 
             } catch (SecurityException sx) {
-                Toast.makeText(this,
-                        getString(R.string.error_fine_loca), Toast.LENGTH_LONG)
-                        .show();
+                showErrorToast(getString(R.string.error_fine_loca));
             }
         }
 
@@ -121,9 +123,7 @@ public class LBService extends Service implements Runnable,
                 glm.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER, 10, 0, this);
             } catch (SecurityException sx) {
-                Toast.makeText(this,
-                        getString(R.string.error_crap_loca), Toast.LENGTH_LONG)
-                        .show();
+                showErrorToast(getString(R.string.error_crap_loca));
             }
         }
 
@@ -196,9 +196,8 @@ public class LBService extends Service implements Runnable,
                 default:
             }
         } catch (Exception x) {
-            Toast.makeText(getApplicationContext(), getString(R.string.lbl_cannot_disable)
-                    + "\n\n" + x.getMessage(), Toast.LENGTH_LONG
-            ).show();
+            showErrorToast(getString(R.string.lbl_cannot_disable)
+                    + "\n\n" + x.getMessage());
         }
         try {
             if (wake != null)
@@ -231,7 +230,7 @@ public class LBService extends Service implements Runnable,
                     .setContentIntent(pi)
                     .setNotificationSilent()
                     .build();
-            
+
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(1, nt);
         }
@@ -246,14 +245,10 @@ public class LBService extends Service implements Runnable,
                 String cameraID = cmm.getCameraIdList()[flashbangID];
                 cmm.setTorchMode(cameraID, doBang);
             } catch (Exception x) {
-                Toast.makeText(this,
-                        getString(R.string.sv_error_flashbang),
-                        Toast.LENGTH_LONG).show();
+                showErrorToast(getString(R.string.sv_error_flashbang));
             }
         } else {
-            Toast.makeText(this,
-                    getString(R.string.sv_error_flashbang_oldjunk),
-                    Toast.LENGTH_LONG).show();
+            showErrorToast(getString(R.string.sv_error_flashbang_oldjunk));
         }
 
     }
@@ -628,6 +623,26 @@ public class LBService extends Service implements Runnable,
         }
     }
 
+    private void showErrorToast(String errorMessage) {
+        try {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Toast.makeText(getApplicationContext(),
+                                errorMessage,
+                                Toast.LENGTH_LONG).show();
+                    } catch (Exception x) {
+                        ACRA.getErrorReporter().handleSilentException(x);
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            ACRA.getErrorReporter().handleSilentException(ex);
+        }
+
+    }
+
     private void decodersRun(byte[] record, Date recordTimestamp) {
         this.setStatus(getString(R.string.sv_status_decoding));
 
@@ -654,7 +669,7 @@ public class LBService extends Service implements Runnable,
             long nmid = dh.getWritableDatabase().insert("messages", null, cv);
 
             // determine message type
-            Pattern pt1 = Pattern.compile("^[A-Z0-9]?[A-Z0-9][0-9][A-Z0-9]{0,3} [A-Z0-9]{4} \\d+$");
+            Pattern pt1 = Pattern.compile("^[A-Z0-9]?[A-Z0-9][0-9][A-Z0-9]{0,3} [A-Z0-9]{4} +?\\d+$");
             Pattern pt2 = Pattern.compile("[A-Z0-9/]{1,13} \\d+$");
             Pattern pt3 = Pattern.compile("^#[0-9]{1,6} [A-Z0-9]{6} \\d+$");
 
@@ -664,9 +679,9 @@ public class LBService extends Service implements Runnable,
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
                     Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
-                    Toast.makeText(this,
-                            "Error parsing message: " + wm.getMSG(),
-                            Toast.LENGTH_LONG).show();
+                    //fatality right here!
+
+                    showErrorToast("Error parsing message: " + wm.getMSG());
                     continue;
                 }
 
@@ -691,9 +706,7 @@ public class LBService extends Service implements Runnable,
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 2) {
                     Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
-                    Toast.makeText(this,
-                            "Error parsing message: " + wm.getMSG(),
-                            Toast.LENGTH_LONG).show();
+                    showErrorToast("Error parsing message: " + wm.getMSG());
                     continue;
                 }
 
@@ -718,9 +731,7 @@ public class LBService extends Service implements Runnable,
                 String[] parst = wm.getMSG().split(" ");
                 if (parst.length != 3) {
                     Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
-                    Toast.makeText(this,
-                            "Error parsing message: " + wm.getMSG(),
-                            Toast.LENGTH_LONG).show();
+                    showErrorToast("Error parsing message: " + wm.getMSG());
                     continue;
                 }
 
@@ -736,9 +747,7 @@ public class LBService extends Service implements Runnable,
                 } catch (Exception x) {
                     x.printStackTrace();
                     Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
-                    Toast.makeText(this,
-                            "Error parsing message: " + wm.getMSG(),
-                            Toast.LENGTH_LONG).show();
+                    showErrorToast("Error parsing message: " + wm.getMSG());
                     continue;
                 }
 
@@ -781,9 +790,7 @@ public class LBService extends Service implements Runnable,
 
             } else {
                 Log.e("MSGPARSE", "Error parsing message: " + wm.getMSG());
-                Toast.makeText(this,
-                        "Error parsing message: " + wm.getMSG(),
-                        Toast.LENGTH_LONG).show();
+                showErrorToast("Error parsing message: " + wm.getMSG());
             }
 
 

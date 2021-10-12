@@ -1,0 +1,1 @@
+Fixed crashes while decoding messages with dBm < 10.

@@ -201,6 +201,7 @@
     <string name="state_uploading_spots_progress">Uploading spots [%d/%d]</string>
     <string name="error_uploading_spots">Error uploading spots. Check internet connection, try again or report a bug.</string>
     <string name="error_spotupload_nocall">Your callsign is not set. Set at least a random SWL callsign and try again.</string>
+    <string name="error_uploading_wrong_freq">FRQ. does not belongs to any known band.</string>
 
     <string name="uploadabort_title">Spot upload abort</string>
     <string name="uploadabort_text"><![CDATA[

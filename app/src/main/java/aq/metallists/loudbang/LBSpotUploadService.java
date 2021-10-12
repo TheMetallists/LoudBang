@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
+import org.acra.ACRA;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,9 +90,7 @@ public class LBSpotUploadService extends Service implements Runnable {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         if (sp.getString("callsign", "xxxRT3STxxx").equals("xxxRT3STxxx")) {
-            Toast.makeText(this,
-                    R.string.error_spotupload_nocall,
-                    Toast.LENGTH_LONG).show();
+            showErrorToast(getString(R.string.error_spotupload_nocall));
             return;
         }
 
@@ -208,10 +208,8 @@ public class LBSpotUploadService extends Service implements Runnable {
         if (sfreq.startsWith("1296.5")) {
             return "1296.500";
         }
-        Toast.makeText(this.getApplicationContext(),
-                "FRQ. does not belongs to any known band.\n" + sfreq,
-                Toast.LENGTH_LONG).show();
-        throw new IllegalArgumentException("Frequency dows not belong to any known band.");
+        showErrorToast(getString(R.string.error_uploading_wrong_freq) + "\n" + sfreq);
+        throw new IllegalArgumentException("Frequency does not belong to any known band.");
     }
 
     @Override
@@ -222,18 +220,31 @@ public class LBSpotUploadService extends Service implements Runnable {
             x.printStackTrace();
 
 
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_uploading_spots)
-                                    .concat("\n")
-                                    .concat(x.getMessage())
-                            , Toast.LENGTH_LONG).show();
-                }
-            });
+            showErrorToast(getString(R.string.error_uploading_spots)
+                    .concat("\n")
+                    .concat(x.getMessage()));
 
         }
         stopSelf();
+    }
+
+    private void showErrorToast(String errorMessage) {
+        try {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Toast.makeText(getApplicationContext(),
+                                errorMessage,
+                                Toast.LENGTH_LONG).show();
+                    } catch (Exception x) {
+                        ACRA.getErrorReporter().handleSilentException(x);
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            ACRA.getErrorReporter().handleSilentException(ex);
+        }
+
     }
 }
