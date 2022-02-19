@@ -266,5 +266,10 @@
         press cancel and do what you like. Or press OK to review and send the crash report.
     </string>
     <string name="spot_upload_aborted">Spot upload aborted by you.</string>
+    <string name="audiorecord_buggy_crap">
+        "Cannot initialize AudioRecord-ing of your device.\n"
+        "This might be due to the app being incompatible with your device.\n"
+        "Please contact me with some information about your device model and manufacturer."
+    </string>
 
 </resources>

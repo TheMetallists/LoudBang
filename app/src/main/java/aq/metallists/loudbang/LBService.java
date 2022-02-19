@@ -113,7 +113,7 @@ public class LBService extends Service implements Runnable,
                 if (glm.isProviderEnabled(LocationManager.GPS_PROVIDER))
                     glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
 
-            } catch (SecurityException sx) {
+            } catch (Exception sx) {
                 showErrorToast(getString(R.string.error_fine_loca));
             }
         }
@@ -122,7 +122,7 @@ public class LBService extends Service implements Runnable,
             try {
                 glm.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER, 10, 0, this);
-            } catch (SecurityException sx) {
+            } catch (Exception sx) {
                 showErrorToast(getString(R.string.error_crap_loca));
             }
         }
@@ -398,6 +398,13 @@ public class LBService extends Service implements Runnable,
             //prepairing buffersfor recording...
             ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 12000 * 60 * 2
             this.ar = new AudioRecord(AUDIO_SOURCE, SAMPLE_RATE, CHANNEL_MASK, ENCODING, BUFFER_SIZE);
+            while (this.ar.getState() != AudioRecord.STATE_INITIALIZED && !quitter) {
+                Toast.makeText(getApplicationContext(), R.string.audiorecord_buggy_crap, Toast.LENGTH_LONG).show();
+                try {
+                    Thread.sleep(500);
+                } catch (Exception x) {
+                }
+            }
             //final preparation
             boolean run = true;
             byte[] buffer = new byte[BUFFER_SIZE];

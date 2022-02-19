@@ -3,7 +3,7 @@ The Loud Bang
 Wanna WSPR? You've got it!
 First RX/TX capable WSPR client for android.
 
-This application allow amateur radio operators and shortwave listeners to transmit 
+This application allow amateur radio operators and shortwave listeners to transmit
 and receive WSPR packets by utilizing their android device's soundcard in the field.
 Received packets can be autouploaded to wsprnet.org, transmitted location can
 follow your GPS positions. Torch (camera flashlight) can be enabled during transmission
@@ -19,8 +19,8 @@ cycles to allow usage of small solar cell or photodiode to trigger your radio's 
 
 
 =====================
-WARNING: Contrary to the provocative icon, the authors of this product do not like the 
-use of nuclear power for any purpose apart from peaceful energy generation/medical/scientific 
+WARNING: Contrary to the provocative icon, the authors of this product do not like the
+use of nuclear power for any purpose apart from peaceful energy generation/medical/scientific
 purposes.
 However we shall note that even peaceful nuclear energy generaton can be VERY dangerous.
 
@@ -30,10 +30,10 @@ This program is redistributed under GNU GPL v3 and contains parts of other softw
 open source licenses.
 
 =====================
-WARNING. Allthought this program cannot transmit substantial ammounts of electromagnetic 
+WARNING. Allthought this program cannot transmit substantial ammounts of electromagnetic
 waves (a.k.a. radio waves) on its own we shall inform any person who intends to connect
-this software to a transmission-capable radio that in almost all countries you should 
-obitain some sort of license from government to do this. Radio emissions without such a 
+this software to a transmission-capable radio that in almost all countries you should
+obitain some sort of license from government to do this. Radio emissions without such a
 license or permit may result in suspicious guys with weapons knocking on your door at 6 am.
 
 Radio receiving on the other hand is allowed in most countries without any licenses,
@@ -54,15 +54,15 @@ not be required for app to work without that features.
 
 ===================
 CRASHES & BUGZ
-I wanted to release this app ASAP, so i haven't included any crash reporting system. This means that
-if an app crashes on you, you have to tell me as much details as possible, so I can reproduce the crash.
-I will add such a system in future, but becasue of my opinion and F-droid rules it will require you
-to send the crash log via email.
-If you know what is logcat, you can send crash report with backtrace for now.
+
+The app now has a error reporting library included. So you can send a bug report.
+There is also a native (C++) crash reporter that has no e-mail reporting, so files from
+/sdcard/Android/files/.../crashes (exact folder on your device may vary) has to be sent
+manually.
 
 ==================
 CONTACT
-You can write to metallists ALFA_TANGO outlook DELTA_OSCAR_TANGO com
+You can write to metallists ALFA_TANGO freemail DELTA_OSCAR_TANGO hu
 
 ==================
 TRANSLATE
@@ -74,19 +74,19 @@ mine, you need to provide additional details on what I should do with
 numerals etc. But it may take a long time to implement all this, so
 it's better if you prepare a separate file that will work somehow without
 modifying large portions of code.
-There is NO Iphone(r)©(tm) version planned. I do not have any Apple inc. 
+There is NO Iphone(r)©(tm) version planned. I do not have any Apple inc.
 devices to code/test/debug on, I am unfamiliar with their systems.
 
 
 =================
 EMOTIONAL SUPPORT
-We, HAMs need more skilled coders. So, if you want to say thanks with a coin, go and 
-pay someone who will create and release a new cool opensource app like this one. 
+We, HAMs need more skilled coders. So, if you want to say thanks with a coin, go and
+pay someone who will create and release a new cool opensource app like this one.
 (I mean REALLY cool, not another logbook).
-If you still want to donate, you have to do this in Bitcoin, 
+If you still want to donate, you have to do this in Bitcoin,
 since I prefer to remain anonymity:
 - 3LHpmYMo2Zo3RaZqTvHsT3isFJ5rvj4xWU or:
-- bc1qy633s5me0ytyalgl3ra8k2pgc4eaqcgcl3srwc 
+- bc1qy633s5me0ytyalgl3ra8k2pgc4eaqcgcl3srwc
 
 
 

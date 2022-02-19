@@ -1,0 +1,1 @@
+Fixed a crash when you have enabled GPS/CELLTOWER geolocation in settings but your device has no appropriate geolocation capabilities.
