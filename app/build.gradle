@@ -1,18 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
     ndkVersion "22.0.7026061"
 
     defaultConfig {
         applicationId "aq.metallists.loudbang"
         minSdkVersion 14
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 46
         versionName "0.46"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+        externalNativeBuild {
+            cmake {
+                targets "native-lib"
+            }
         }
     }
 
@@ -33,16 +38,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'aq.metallists.loudbang'
 }
 
 dependencies {
 // AndroidX
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.3.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.0'
-    implementation 'androidx.preference:preference:1.1.1'
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
 // Third-party
     def acraVersion = "5.7.0"

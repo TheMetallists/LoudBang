@@ -183,21 +183,3 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPRLatLonToGSQ(JNIEnv *env, jcl
     return env->NewStringUTF(result);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

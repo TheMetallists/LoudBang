@@ -12,6 +12,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 # ./src/main/cppfft/fftw-3.3.8/
 
+project(native-lib)
 
 # Adds the CMakeLists.txt file located in the specified directory
 # as a build dependency.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="aq.metallists.loudbang">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:exported="false"
             android:name=".AboutWindow"
             android:label="@string/mnu_about"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -31,13 +32,15 @@
         <service
             android:name=".LBSpotUploadService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false"
+            android:permission="TODO" />
 
         <activity
             android:name=".MessageDetailsActivity"
             android:label="@string/title_activity_message_details"
             android:parentActivityName=".LBMainWindow"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="aq.metallists.loudbang.LBMainWindow" />
@@ -45,7 +48,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".LBMainWindow">
+            android:parentActivityName=".LBMainWindow"
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="aq.metallists.loudbang.LBMainWindow" />
@@ -54,11 +58,13 @@
         <service
             android:name=".LBService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false"
+            android:permission="TODO" />
 
         <activity
             android:name=".LBMainWindow"
             android:label="@string/title_activity_lbmain_window"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
