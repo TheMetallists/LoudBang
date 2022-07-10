@@ -131,6 +131,10 @@ public class LBMainWindow extends AppCompatActivity {
 
         } else if (itemId == R.id.mnu_switch_mode_next) {
             sp.edit().putBoolean("switch_mode_next", true).apply();
+            int txNextCtr = sp.getInt("tx_next_counter", 0);
+            if (txNextCtr > 0) {
+                sp.edit().putInt("tx_next_counter", 0).apply();
+            }
             if (sp.getBoolean("use_tx", false)) {
                 Toast.makeText(getApplicationContext(),
                         R.string.status_lbl_mode_switched_rx, Toast.LENGTH_SHORT).show();

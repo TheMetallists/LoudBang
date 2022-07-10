@@ -165,6 +165,10 @@ public class PlaceholderFragment extends Fragment
 
 
             if (!isMyServiceRunning(LBService.class)) {
+                int txNextCtr = this.sp.getInt("tx_next_counter", 0);
+                if (txNextCtr > 0) {
+                    this.sp.edit().putInt("tx_next_counter", 0).apply();
+                }
                 PlaceholderFragment.this.getActivity().startService(
                         new Intent(PlaceholderFragment.this.getActivity(), LBService.class));
                 ltb.setChecked(true);
