@@ -269,6 +269,10 @@ public class LBService extends Service implements Runnable,
 
         wake.acquire();
         while (!quitter) {
+            int txNextCounter = sp.getInt("tx_next_counter", 0);
+            if (txNextCounter > 0) {
+                sp.edit().putInt("tx_next_counter", txNextCounter - 1).apply();
+            }
             if (setsVersion != this.settings_version) {
                 setsVersion = this.settings_version;
                 doTx = this.sp.getBoolean("use_tx", false);
@@ -428,7 +432,7 @@ public class LBService extends Service implements Runnable,
             }
 
 
-            if (doTx && (rnd.nextInt(100) < probability || next_is_txsound2)) {
+            if (doTx && (rnd.nextInt(100) < probability || next_is_txsound2 || txNextCounter > 0)) {
                 this.setStatus(getString(R.string.sv_status_playingbk));
 
                 switch (this.sp.getString("ptt_ctl", "none")) {

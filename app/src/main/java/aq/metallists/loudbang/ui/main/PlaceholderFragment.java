@@ -1,6 +1,7 @@
 package aq.metallists.loudbang.ui.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -94,6 +95,7 @@ public class PlaceholderFragment extends Fragment
         super.onDestroyView();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -103,6 +105,7 @@ public class PlaceholderFragment extends Fragment
         final ProgressBar pbbm = root.findViewById(R.id.progressBar);
         final TextView state = root.findViewById(R.id.statusLabel1);
         final ToggleButton ltb = root.findViewById(R.id.launch_toggle_btn);
+        final TextView lblTxNExt = root.findViewById(R.id.lblTransmitNextCount);
 
         if (LBService.lastKnownState.length() > 0) {
             state.setText(LBService.lastKnownState);
@@ -184,6 +187,7 @@ public class PlaceholderFragment extends Fragment
 
         TextView grid = root.findViewById(R.id.lbl_grid);
         grid.setText(this.sp.getString("gridsq", "LO05io"));
+        lblTxNExt.setText(Integer.toString(this.sp.getInt("tx_next_counter", 0)));
 
         TextView txstate = root.findViewById(R.id.lbl_txstate);
         String rxtx_state = "";
@@ -292,6 +296,11 @@ public class PlaceholderFragment extends Fragment
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
             switch (key) {
+                case "tx_next_counter":
+                    TextView lblTxNExt = this.getView().findViewById(R.id.lblTransmitNextCount);
+                    if (lblTxNExt != null)
+                        lblTxNExt.setText(Integer.toString(this.sp.getInt("tx_next_counter", 0)));
+                    break;
                 case "band":
                     TextView bandname = this.getView().findViewById(R.id.lbl_band);
                     if (bandname != null)

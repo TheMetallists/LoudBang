@@ -217,4 +217,5 @@
     <string name="error_uploading_wrong_freq">Частота не в рамках известных диапазонов.</string>
     <string name="audiorecord_buggy_crap">Не могу инициализировать AudioRecord. Возможно, это связано с тем, что запись аудио с таким сэмплрейтом не поддерживается вашим устройством. Пожалуйста свяжитесь со мной, указав модель и марку вашего устройства.</string>
     <string name="mnu_tx_next">Принуд. перед. сл. цикл</string>
+    <string name="lbl_tx_next_cnt">Передавать в сл. циклах:</string>
 </resources>

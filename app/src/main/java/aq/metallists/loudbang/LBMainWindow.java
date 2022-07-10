@@ -117,7 +117,7 @@ public class LBMainWindow extends AppCompatActivity {
         int itemId = item.getItemId();
         if (this.menuDealWithBandSwitch(itemId))
             return true;
-        // mnu_tx_next
+
         if (itemId == R.id.mnu_settings) {
             Intent i = new Intent(this, SettingsActivity.class);
             startActivity(i);
@@ -138,7 +138,8 @@ public class LBMainWindow extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         R.string.status_lbl_mode_switched_tx, Toast.LENGTH_SHORT).show();
             }
-
+        } else if (itemId == R.id.mnu_tx_next) {
+            sp.edit().putInt("tx_next_counter", sp.getInt("tx_next_counter", 0) + 1).apply();
         } else if (itemId == R.id.mnu_database_upload_remaining_items) {
             if (!this.isMyServiceRunning(LBSpotUploadService.class)) {
                 startService(new Intent(this, LBSpotUploadService.class));
