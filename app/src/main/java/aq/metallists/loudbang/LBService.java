@@ -266,13 +266,17 @@ public class LBService extends Service implements Runnable,
         boolean next_is_txsound2 = false;
         int setsVersion = -1;
         Random rnd = new Random();
+        boolean globalTxEnable = false;
+        Pattern cspatrn = Pattern.compile(
+                "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
+
+        if (cspatrn.matcher(this.sp.getString("callsign", "XXX")).matches()) {
+            globalTxEnable = true;
+        }
 
         wake.acquire();
         while (!quitter) {
             int txNextCounter = sp.getInt("tx_next_counter", 0);
-            if (txNextCounter > 0) {
-                sp.edit().putInt("tx_next_counter", txNextCounter - 1).apply();
-            }
             if (setsVersion != this.settings_version) {
                 setsVersion = this.settings_version;
                 doTx = this.sp.getBoolean("use_tx", false);
@@ -296,7 +300,7 @@ public class LBService extends Service implements Runnable,
                     probability = 25;
                 }
 
-                if (doTx) {
+                if (doTx && globalTxEnable) {
                     // update txsound
                     boolean lsb_mode = this.sp.getBoolean("lsb_mode", false);
 
@@ -432,7 +436,10 @@ public class LBService extends Service implements Runnable,
             }
 
 
-            if (doTx && (rnd.nextInt(100) < probability || next_is_txsound2 || txNextCounter > 0)) {
+            if (globalTxEnable && doTx && (rnd.nextInt(100) < probability || next_is_txsound2 || txNextCounter > 0)) {
+                if (txNextCounter > 0) {
+                    sp.edit().putInt("tx_next_counter", txNextCounter - 1).apply();
+                }
                 this.setStatus(getString(R.string.sv_status_playingbk));
 
                 switch (this.sp.getString("ptt_ctl", "none")) {

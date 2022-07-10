@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity
                         "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
 
                 if (!cspatrn.matcher(callsign).matches()) {
-                    sharedPreferences.edit().putString("callsign", "R0TES").apply();
+                    //sharedPreferences.edit().putString("callsign", "R0TES").apply();
                     showFuckupDialog(R.string.sets_error_callsign);
                 }
                 break;

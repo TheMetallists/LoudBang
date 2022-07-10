@@ -20,6 +20,7 @@
     <string name="lbl_tx_default">DISABLED, no PTT</string>
     <string name="lbl_tx_enabled">ENABLED</string>
     <string name="lbl_tx_disabled">DISABLED</string>
+    <string name="lbl_tx_swlmode">SWL-MODE</string>
     <string name="tbt_txptt_noptt">, no PTT</string>
     <string name="tbt_txptt_fc">, frontflash</string>
     <string name="tbt_txptt_rc">, backflash</string>
@@ -129,6 +130,7 @@
     <string name="sets_error_callsign"><![CDATA[
         Invalid callsign provided.\n
         The WSPR does not allow all the types of callsigns.\n
+        (The app will run in SWL mode - without TX)\n
         You may either use:\n
         XXX/XX0XXX (RA0/IT0AAA, RU/DE3A)\n
         XX0XXX (R0TST, RA0TST, R0T)\n

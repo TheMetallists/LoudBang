@@ -84,6 +84,7 @@
     <string name="sets_error_callsign"><![CDATA[
         Указан недопустимый позывной.\n
         WSPR не позволяет использовать некоторые типы позывных.\n
+        (Приложение будет работать в режиме SWL - без передачи)\n
         Вы можете использовать:\n
         XXX/XX0XXX (RA0/IT0AAA, RU/DE3A)\n
         XX0XXX (R0TST, RA0TST, R0T)\n
@@ -218,4 +219,5 @@
     <string name="audiorecord_buggy_crap">Не могу инициализировать AudioRecord. Возможно, это связано с тем, что запись аудио с таким сэмплрейтом не поддерживается вашим устройством. Пожалуйста свяжитесь со мной, указав модель и марку вашего устройства.</string>
     <string name="mnu_tx_next">Принуд. перед. сл. цикл</string>
     <string name="lbl_tx_next_cnt">Передавать в сл. циклах:</string>
+    <string name="lbl_tx_swlmode">РЕЖИМ SWL</string>
 </resources>

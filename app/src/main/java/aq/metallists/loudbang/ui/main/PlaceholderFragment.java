@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 import aq.metallists.loudbang.LBService;
 import aq.metallists.loudbang.R;
@@ -201,6 +202,13 @@ public class PlaceholderFragment extends Fragment
             rxtx_state = getString(R.string.lbl_tx_disabled);
         }
 
+        Pattern cspatrn = Pattern.compile(
+                "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
+
+        if (!cspatrn.matcher(this.sp.getString("callsign", "XXX")).matches()) {
+            rxtx_state = getString(R.string.lbl_tx_swlmode);
+        }
+
         switch (this.sp.getString("ptt_ctl", "none")) {
             case "none":
                 rxtx_state = rxtx_state + getString(R.string.tbt_txptt_noptt);
@@ -332,6 +340,12 @@ public class PlaceholderFragment extends Fragment
                         rxtx_state = getString(R.string.lbl_tx_enabled);
                     } else {
                         rxtx_state = getString(R.string.lbl_tx_disabled);
+                    }
+                    Pattern cspatrn = Pattern.compile(
+                            "^[A-Z0-9]{1,3}/[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[A-Z0-9]$|^[A-Z0-9]{1,2}[0-9][A-Z0-9]{1,3}/[0-9]{2}$");
+
+                    if (!cspatrn.matcher(this.sp.getString("callsign", "XXX")).matches()) {
+                        rxtx_state = getString(R.string.lbl_tx_swlmode);
                     }
 
                     switch (this.sp.getString("ptt_ctl", "none")) {
