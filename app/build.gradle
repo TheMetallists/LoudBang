@@ -16,7 +16,7 @@ android {
         }
         externalNativeBuild {
             cmake {
-                targets "native-lib"
+                targets "QuietScream"
             }
         }
     }

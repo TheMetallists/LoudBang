@@ -214,7 +214,8 @@
     <string name="uploadabort_yes">Yes</string>
     <string name="uploadabort_no">No</string>
     <string name="mnu_about">About</string>
-    <string name="large_text">
+    <string name="mnu_tx_next">TX Next</string>
+    <string name="large_text" tools:ignore="Typos">
         "The Loud Bang project, Fully operational WSPR client for Android. v 0.41\n"
         "Wanna WSPR? You've got it!\n"
         "© 2020 Nuclear Awareness Team. \n\n"

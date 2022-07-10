@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 # ./src/main/cppfft/fftw-3.3.8/
 
-project(native-lib)
+project(QuietScream)
 
 # Adds the CMakeLists.txt file located in the specified directory
 # as a build dependency.
@@ -37,7 +37,7 @@ set(wenc_CSRCS
         )
 
 add_library( # Specifies the name of the library.
-        native-lib
+        QuietScream
 
         # Sets the library as a shared library.
         SHARED
@@ -49,8 +49,8 @@ add_library( # Specifies the name of the library.
         ${wenc_CSRCS}
         )
 
-target_include_directories(native-lib PRIVATE ./src/main/cppfft/fftw-3.3.8/api/)
-target_link_libraries(native-lib
+target_include_directories(QuietScream PRIVATE ./src/main/cppfft/fftw-3.3.8/api/)
+target_link_libraries(QuietScream
         fftw3f
         m
         log

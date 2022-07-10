@@ -3,7 +3,7 @@ package aq.metallists.loudbang.cutil;
 public class CJarInterface {
     static {
         System.loadLibrary("fftw3f");
-        System.loadLibrary("native-lib");
+        System.loadLibrary("QuietScream");
     }
 
     public static native byte[] WSPREncodeToPCM(String callsign, String locator, int power, int offset, boolean lsb);
