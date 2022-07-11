@@ -1,0 +1,2 @@
+Added the "TX Next" button in menu. Implemented as a counter, so you can transmit several next timeslots.
+Added SWL mode - no valid callsign needed to receive anymore.
