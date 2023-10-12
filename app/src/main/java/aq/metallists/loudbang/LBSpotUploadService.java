@@ -45,13 +45,17 @@ public class LBSpotUploadService extends Service implements Runnable {
         this.createNotificationChannel();
 
         this.ncb = new NotificationCompat.Builder(this, NOTCH_ID);
+        int ncbFlags = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            ncbFlags = PendingIntent.FLAG_IMMUTABLE;
+        }
         this.ncb = this.ncb
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.state_uploading_spots))
                 .setSmallIcon(R.drawable.ic_bomb)
-                .setNotificationSilent()
+                .setSilent(true)
                 .setContentIntent(PendingIntent.getActivity(this, 0,
-                        new Intent(this, LBMainWindow.class), 0))
+                        new Intent(this, LBMainWindow.class), ncbFlags))
                 .setProgress(100, 0, true);
         startForeground(1, this.ncb.build());
         this.tht = new Thread(this);

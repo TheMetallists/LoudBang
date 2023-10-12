@@ -1,5 +1,6 @@
 package aq.metallists.loudbang;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 import android.hardware.camera2.CameraManager;
@@ -31,6 +33,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
@@ -87,7 +90,11 @@ public class LBService extends Service implements Runnable,
         this.createNotificationChannel();
 
         Intent ni = new Intent(this, LBMainWindow.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, ni, 0);
+        int ncbFlags = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ncbFlags = PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pi = PendingIntent.getActivity(this, 0, ni, ncbFlags);
         int icon = R.drawable.ic_bomb_colorful;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             icon = R.drawable.ic_bomb;
@@ -97,7 +104,7 @@ public class LBService extends Service implements Runnable,
                 .setContentText(getString(R.string.sv_status_startin))
                 .setSmallIcon(icon)
                 .setContentIntent(pi)
-                .setNotificationSilent()
+                .setSilent(true)
                 .build();
 
         startForeground(1, nt);
@@ -111,8 +118,9 @@ public class LBService extends Service implements Runnable,
             try {
 
                 if (glm.isProviderEnabled(LocationManager.GPS_PROVIDER))
-                    glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
-
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        glm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
+                    }
             } catch (Exception sx) {
                 showErrorToast(getString(R.string.error_fine_loca));
             }
@@ -222,13 +230,17 @@ public class LBService extends Service implements Runnable,
             }
 
             Intent ni = new Intent(this, LBMainWindow.class);
-            PendingIntent pi = PendingIntent.getActivity(this, 0, ni, 0);
+            int ncbFlags = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                ncbFlags = PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pi = PendingIntent.getActivity(this, 0, ni, ncbFlags);
             Notification nt = new NotificationCompat.Builder(this, NSC_ID)
                     .setContentTitle(getText(R.string.app_name))
                     .setContentText(status)
                     .setSmallIcon(icon)
                     .setContentIntent(pi)
-                    .setNotificationSilent()
+                    .setSilent(true)
                     .build();
 
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
