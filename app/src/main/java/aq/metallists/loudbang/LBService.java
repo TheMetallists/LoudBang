@@ -157,6 +157,7 @@ public class LBService extends Service implements Runnable,
         }
     }
 
+
     @Override
     public void onDestroy() {
         this.quitter = true;
@@ -166,7 +167,12 @@ public class LBService extends Service implements Runnable,
         itt.putExtra("eme.eva.loudbang.state", getString(R.string.sv_status_quittin));
         LocalBroadcastManager.getInstance(this).sendBroadcast(itt);
 
-        this.sp.unregisterOnSharedPreferenceChangeListener(this);
+        try {
+            if (this.sp != null)
+                this.sp.unregisterOnSharedPreferenceChangeListener(this);
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
 
         try {
             if (audio != null) {
@@ -207,6 +213,7 @@ public class LBService extends Service implements Runnable,
             showErrorToast(getString(R.string.lbl_cannot_disable)
                     + "\n\n" + x.getMessage());
         }
+
         try {
             if (wake != null)
                 wake.release();
@@ -417,6 +424,7 @@ public class LBService extends Service implements Runnable,
 
             //prepairing buffersfor recording...
             ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 12000 * 60 * 2
+            //TODO: do a proper permission check and initialize this object only if receiving is enabled!
             this.ar = new AudioRecord(AUDIO_SOURCE, SAMPLE_RATE, CHANNEL_MASK, ENCODING, BUFFER_SIZE);
             while (this.ar.getState() != AudioRecord.STATE_INITIALIZED && !quitter) {
                 Toast.makeText(getApplicationContext(), R.string.audiorecord_buggy_crap, Toast.LENGTH_LONG).show();

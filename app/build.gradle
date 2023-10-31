@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
     ndkVersion "22.0.7026061"
 
     defaultConfig {
         applicationId "aq.metallists.loudbang"
         minSdkVersion 14
-        targetSdkVersion 32
-        versionCode 48
-        versionName "0.48"
+        targetSdkVersion 33
+        versionCode 49
+        versionName "0.49"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
@@ -43,16 +43,17 @@ android {
 
 dependencies {
 // AndroidX
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.preference:preference:1.2.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
 
 // Third-party
     def acraVersion = "5.7.0"
     implementation "ch.acra:acra-dialog:$acraVersion"
     implementation "ch.acra:acra-mail:$acraVersion"
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }
