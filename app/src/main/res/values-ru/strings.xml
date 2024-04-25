@@ -220,4 +220,5 @@
     <string name="mnu_tx_next">Принуд. перед. сл. цикл</string>
     <string name="lbl_tx_next_cnt">Передавать в сл. циклах:</string>
     <string name="lbl_tx_swlmode">РЕЖИМ SWL</string>
+    <string name="audiorecord_permission_failed">Ошибка получения пермишна на микрофон. Проверьте настройки.</string>
 </resources>

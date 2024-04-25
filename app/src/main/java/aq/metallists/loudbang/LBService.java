@@ -424,10 +424,16 @@ public class LBService extends Service implements Runnable,
 
             //prepairing buffersfor recording...
             ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 12000 * 60 * 2
-            //TODO: do a proper permission check and initialize this object only if receiving is enabled!
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                showErrorToast(getString(R.string.audiorecord_permission_failed));
+                stopSelf();
+                return;
+            }
             this.ar = new AudioRecord(AUDIO_SOURCE, SAMPLE_RATE, CHANNEL_MASK, ENCODING, BUFFER_SIZE);
+            this.ar.startRecording();
             while (this.ar.getState() != AudioRecord.STATE_INITIALIZED && !quitter) {
-                Toast.makeText(getApplicationContext(), R.string.audiorecord_buggy_crap, Toast.LENGTH_LONG).show();
+                showErrorToast(getString(R.string.audiorecord_buggy_crap));
                 try {
                     Thread.sleep(500);
                 } catch (Exception x) {

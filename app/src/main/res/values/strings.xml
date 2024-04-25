@@ -275,5 +275,6 @@
         "This might be due to the app being incompatible with your device.\n"
         "Please contact me with some information about your device model and manufacturer."
     </string>
+    <string name="audiorecord_permission_failed">Error acquiring microphone permission. Triplecheck your settings.</string>
 
 </resources>
