@@ -232,10 +232,12 @@
     <string name="sndinput_device_invalid">Выбранное вами устройство записи неверно. Откат к настройкам по-умолчанию</string>
     <string name="sndinput_low_android_version2">Версия Android на вашем устройстве слишком низкая для выбора источника звука.</string>
     <string name="sndinput_error_acquiring">Ошибка получения информации об устройствах записи:</string>
+    <string name="sndinput_bluemode_desc">Если аудиоввод не выбран (-1), предпочитать микрофоны, подключенные по Bluetooth</string>
     <string name="sndinput_low_android_version">Версия Android на вашем устройстве слишком низкая для этой функции.</string>
     <string name="sndinput_mediacapture_low_android_version">Версия Android на вашем устройстве слишком низкая для МедиаЗахвата. Отключите эту функцию в настройках программы.</string>
     <string name="sndinput_mediacapture_denied">Вы отклонили запрос МедиаЗахвата. Отключите опцию в настройках, если хотите писать звук с микрофона.</string>
     <string name="sndinput_mediacapture_failed">Ошибка получения разрешения на МедиаЗахват. Он может не поддерживаться вашим устройством.</string>
     <string name="str_btn_soundcheck_label">ТЕСТ ЗВУКА</string>
     <string name="welcomdlg_button">Скрыть и запомнить</string>
+    <string name="sndinput_bluemode_title">Режим Bluetooth</string>
 </resources>

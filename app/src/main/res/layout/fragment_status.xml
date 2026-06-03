@@ -103,7 +103,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="143dp"
                     android:layout_height="18dp"
-                    android:max="32768"
+                    android:max="16385"
                     android:progress="42"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"

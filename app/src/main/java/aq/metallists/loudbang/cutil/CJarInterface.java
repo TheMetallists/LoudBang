@@ -6,7 +6,8 @@ public class CJarInterface {
         System.loadLibrary("QuietScream");
     }
 
-    public static short DEFAULT_VOLUME = 16383;
+    //public static short DEFAULT_VOLUME = 16383;
+    public static short DEFAULT_VOLUME = 32767;
 
     public static native byte[] GenTestBeep(short volume, int offset);
 

@@ -77,10 +77,12 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPREncodeToPCM
 
 
 extern "C"
-JNIEXPORT jint JNICALL
+JNIEXPORT jint
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CJarInterface_radioCheck(JNIEnv *env, jclass clazz,
                                                            jint testvar) {
-    return (jint) (testvar * 42);
+    return (jint)(testvar * 42);
 }
 
 
@@ -124,12 +126,14 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPRNhash(JNIEnv *env, jclass cl
     int ret = nhash(callsign, strlen(callsign), WSPRD_NHASH_CONSTANT);
     env->ReleaseStringUTFChars(call, callsign);
     return (jint)
-            ret;
+    ret;
 }
 
 
 extern "C"
-JNIEXPORT jstring JNICALL
+JNIEXPORT jstring
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CJarInterface_WSPRLatLonToGSQ(JNIEnv *env, jclass clazz,
                                                                 jdouble lon, jdouble lat) {
     if (isnan(lat) || isnan(lon)) {
@@ -191,7 +195,9 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_WSPRLatLonToGSQ(JNIEnv *env, jcl
 #define TEST_SOUND_LEN 12000 // 1 second
 
 extern "C"
-JNIEXPORT jbyteArray JNICALL
+JNIEXPORT jbyteArray
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CJarInterface_GenTestBeep
         (JNIEnv *env, jclass clazz, jshort volume, jint j_offset) {
     double TAU = 2 * M_PI;
@@ -219,23 +225,31 @@ Java_aq_metallists_loudbang_cutil_CJarInterface_GenTestBeep
 }
 
 extern "C"
-JNIEXPORT jint JNICALL
+JNIEXPORT jint
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CJarInterface_getVolume(JNIEnv *env, jclass clazz,
                                                           jbyteArray sound) {
     short *soundarr = (short *) as_unsigned_char_array(env, sound);
     int len = env->GetArrayLength(sound) / 2;
-    int sum = 0;
+    //int sum = 0;
+    int max = 0;
 
     for (int i = 0; i < len; i++) {
-        sum += abs((int) soundarr[i]);
+        if (((int) soundarr[i]) > max) {
+            max = (int) soundarr[i];
+        }
+        //sum += abs((int) soundarr[i]);
     }
 
     delete soundarr;
-    return sum / len;
+    return max;//sum / len;
 }
 
 extern "C"
-JNIEXPORT jint JNICALL
+JNIEXPORT jint
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CChronograph_getMinute(JNIEnv *env, jclass clazz) {
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
     time_t tt = std::chrono::system_clock::to_time_t(now);
@@ -244,7 +258,9 @@ Java_aq_metallists_loudbang_cutil_CChronograph_getMinute(JNIEnv *env, jclass cla
 }
 
 extern "C"
-JNIEXPORT jint JNICALL
+JNIEXPORT jint
+
+JNICALL
 Java_aq_metallists_loudbang_cutil_CChronograph_getSecond(JNIEnv *env, jclass clazz) {
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
     time_t tt = std::chrono::system_clock::to_time_t(now);

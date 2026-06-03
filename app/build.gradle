@@ -8,8 +8,8 @@ android {
         applicationId "aq.metallists.loudbang"
         minSdkVersion 16
         targetSdkVersion 36
-        versionCode 53
-        versionName "0.53"
+        versionCode 54
+        versionName "0.54"
         multiDexEnabled true
         buildConfigField 'boolean', 'IS_DEBUGG', 'false'
         archivesBaseName = "LoudBang-v${versionName}"

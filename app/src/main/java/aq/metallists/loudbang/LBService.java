@@ -620,8 +620,9 @@ public class LBService extends Service implements Runnable,
 
                     if (bDoReportVolume) {
                         Intent itt = new Intent("eme.eva.loudbang.recordlevel");
-                        itt.putExtra("eme.eva.loudbang.level", CJarInterface.getVolume(buffer));
-
+                        int volume = CJarInterface.getVolume(buffer);
+                        itt.putExtra("eme.eva.loudbang.level", volume);
+                        //Log.i("VOL", String.valueOf(volume));
                         LocalBroadcastManager.getInstance(this).sendBroadcast(itt);
                     }
 

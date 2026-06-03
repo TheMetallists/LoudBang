@@ -54,6 +54,12 @@
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:key="snd_bluemode"
+            android:summary="@string/sndinput_bluemode_desc"
+            android:title="@string/sndinput_bluemode_title"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="mediacapture_mode"
             android:summary="@string/sets_rx_mediacapture_sum"
             android:title="@string/sets_rx_mediacapture"

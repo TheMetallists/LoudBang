@@ -17,6 +17,8 @@ import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import androidx.preference.PreferenceManager;
 
 import java.util.Locale;
 
+import aq.metallists.loudbang.LBService;
 import aq.metallists.loudbang.R;
 
 public class AudioRecordTools {
@@ -123,6 +126,8 @@ public class AudioRecordTools {
                 sp.edit().putInt("rx_deviceid", -1).apply();
             }
 
+            boolean blueMode = sp.getBoolean("snd_bluemode", false);
+
             if (sourceId > 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     AudioDeviceInfo[] inputDevices = am.getDevices(AudioManager.GET_DEVICES_INPUTS);
@@ -148,11 +153,34 @@ public class AudioRecordTools {
 
                     if (!hasRequestedDevice) {
                         //TODO: run on UI thread
-                        Toast.makeText(ctx, R.string.sndinput_device_vanished, Toast.LENGTH_LONG).show();
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            Toast.makeText(ctx, R.string.sndinput_device_vanished, Toast.LENGTH_LONG).show();
+                        });
                     }
 
                 } else {
-                    Toast.makeText(ctx, R.string.sndinput_low_android_version2, Toast.LENGTH_LONG).show();
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        Toast.makeText(ctx, R.string.sndinput_low_android_version2, Toast.LENGTH_LONG).show();
+                    });
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    AudioDeviceInfo[] inputDevices = am.getDevices(AudioManager.GET_DEVICES_INPUTS);
+
+                    for (AudioDeviceInfo dev : inputDevices) {
+                        if (dev.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                            Log.i("ART", "Starting BluetothSCO!");
+                            /*
+                             * TODO:
+                             *  the stream type must be STREAM_VOICE_CALL
+                             * the format must be mono
+                             * the sampling must be 16kHz or 8kHz
+                             * */
+
+                            isBluetooth = true;
+                            tgtDev = dev;
+                        }
+                    }
                 }
             }
         }
@@ -169,7 +197,7 @@ public class AudioRecordTools {
                                     .build()
                     );
 
-            if (isBluetooth){
+            if (isBluetooth) {
                 Log.i("ART", "VOICE_COMMUNICATION");
                 arb.setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION);
             }
@@ -193,7 +221,7 @@ public class AudioRecordTools {
             ar = new AudioRecord(AUDIO_SOURCE, SAMPLE_RATE, CHANNEL_MASK, ENCODING, BUFFER_SIZE);
         }
 
-        if(isBluetooth){
+        if (isBluetooth) {
             am.setMode(AudioManager.MODE_IN_COMMUNICATION);
             am.setBluetoothScoOn(true);
             am.startBluetoothSco();
